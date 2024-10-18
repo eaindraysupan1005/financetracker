@@ -1,9 +1,13 @@
 
 .home-container{
-  min-width: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .banner {
+  min-height: 70vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -11,15 +15,16 @@
   }
   
   .home-image img {
-    max-width: 100%;
+    max-width: 70%;
     height: auto;
     border-radius: 10px;
   }
     
   .home-description {
     margin-left: 20px;
-    max-width:60%;
-    font-size: 1.5rem;
+    padding:20px;
+    max-width: 35%;
+    font-size: 1.5nrem;
   }  
   .how1{
     display: flex;
@@ -29,12 +34,97 @@
   }
  .text{
   margin-left: 20px;
-  max-width:60%;
-  font-size: 1.5rem;
+  max-width:600px;
+  font-size: 1.4rem;
  }
+ 
 .howimage img{
-  max-width: 80%;
+  max-width: 70%;
+  min-width:50%;
   height: auto;
   border-radius: 10px;
 }  
-  
+
+.feedback-section-wrapper {
+  position: relative;
+  margin-left: 20px;
+  width: 90%;
+  text-align: center;
+  padding: 20px;
+}
+
+.feedback-container {
+  display: flex;
+  gap: 10px;
+  overflow: hidden; /* Hide scroll bar */
+  scroll-behavior: smooth;
+  padding-top:60px;
+  width: calc(310px * 3 + 20px); /* Adjusted for card width and gap */
+  margin: 0 auto;
+}
+
+.feedback-card {
+  flex: 0 0 310px; /* Ensure each card is 310px */
+  position: relative;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding-top: 20px; /* Space for user photo */
+  text-align: center;
+  overflow: visible; /* Allow overflow for user photo */
+}
+
+.user-photo {
+  position: absolute;
+  top: -30px; /* Pull the photo up */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px; /* Size of user photo */
+  height: 60px; /* Size of user photo */
+  border-radius: 50%; /* Circular image */
+  border: 3px solid #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.feedback-content {
+  padding: 20px; /* Padding for feedback text */
+}
+
+.user-name {
+  margin: 10px 0 5px;
+  font-size: 18px;
+}
+
+.feedback-message {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Arrows */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 10; /* Ensure arrows are above other elements */
+}
+
+.left-arrow {
+  left: 30px; /* Adjust based on where you want the arrow */
+}
+
+.right-arrow {
+  right: 30px; /* Adjust based on where you want the arrow */
+}
+
+.arrow:disabled {
+  background-color: #bbb;
+  cursor: not-allowed;
+}
+
