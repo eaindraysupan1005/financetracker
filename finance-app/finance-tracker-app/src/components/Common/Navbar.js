@@ -1,6 +1,6 @@
-
 import React, { useState } from 'react';
 import './Navbar.css';  // Import the CSS file
+
 
 const Navbar = ({ username }) => { 
   // to select currency
@@ -15,10 +15,11 @@ const Navbar = ({ username }) => {
       {/* Logo */}
       <div className="logo">
       <img src="/logo.png" alt="Logo" className="logo-img" />
-        <h1>Finance Tracker</h1>
+        <h1 className='logo-title'>Budget Bee</h1>
       </div>
 
-      {/* Links */}
+      <div className='main-nav'>
+        {/* Links */}
       <ul className="nav-links">
         <li><a href="/dashboard" className="link">Dashboard</a></li>
         <li><a href="/budgets" className="link">Budgets</a></li>
@@ -27,18 +28,19 @@ const Navbar = ({ username }) => {
 
       {/* Currency Dropdown */}
       <div className="currency">
-        <label htmlFor="currency">Currency: </label>
+        <label htmlFor="currency"></label>
         <select id="currency" value={currency} onChange={handleCurrencyChange} className="dropdown">
-          <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
-          <option value="THB">THB</option>
+          <option value="USD" className='dropdown-option'>USD</option>
+          <option value="EUR" className='dropdown-option'>EUR</option>
+          <option value="THB" className='dropdown-option'>THB</option>
         </select>
       </div>
 
       {/* Profile Section */}
-      <div className='profile'>
-        <span>{username}</span>
+      
+        <button className='profile'><i className="fas fa-user-circle profile-icon"></i>{username}</button>
         {/* You can add a profile picture or menu later */}
+      
       </div>
     </nav>
   );
