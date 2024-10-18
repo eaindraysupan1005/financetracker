@@ -1,25 +1,29 @@
 /* src/components/Layout/Layout.css */
-html, body {
+/* html, body {
     height: 100%;
     margin: 0;
-  }
+  } */
   
-  .app-container {
+  /* .app-container {
     display: flex;
-    flex-direction: column; /* Stack header, main, and footer vertically */
-    min-height: 100vh; /* Ensure it takes at least the full height of the viewport */
-  }
+    flex-direction: column;  */
+    /* Stack header, main, and footer vertically */
+    /* min-height: 100vh;  */
+    /* Ensure it takes at least the full height of the viewport */
+  /* } */
   
-  .header {
+  /* .header {
     background-color: #f8f9fa;
     padding: 20px;
     text-align: center;
-  }
-  
+  } */
+/*   
   .main-content {
-    flex: 1; /* This allows the main content to expand and push the footer down */
-    padding: 20px;
-    overflow: auto; /* Allows scrolling if content is too long */
-  }
+    flex: 1;  */
+    /* This allows the main content to expand and push the footer down */
+    /* padding: 10px;
+    overflow: auto; */
+     /* Allows scrolling if content is too long */
+  /* } */
  
   
