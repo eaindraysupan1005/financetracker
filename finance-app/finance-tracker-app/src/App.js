@@ -32,24 +32,24 @@
 
 // src/App.js
 import './App.css';
-import React from 'react';
-import Navbar from './components/Common/Navbar';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Navbar from "./components/Common/Navbar";  // Importing the Navbar
+import Budget from "./components/finance/Budget";  // Importing the Budget page
 
 const App = () => {
   const username = 'Eaindray Su Pan';
-
   return (
-    <div className="App">
-      <Navbar username={username}/>
-       {/* <Routes>
-        <Route element={<LayoutWithHeader />}>
-          <Route path="/" element={<Home />} />
-        </Route>
-        <Route path="/create-concert" element={<CreateConcert />} />
-        <Route path="/list-concert" element={<ListConcert />} />
-      </Routes> */}
-    </div>
+    <Router>
+      <Navbar username={username}/>  {/* Navbar displayed across pages */}
+      <Routes>
+        <Route path="/dashboard" element={<div>Dashboard Page</div>} />
+        <Route path="/budgets" element={<Budget />} />  {/* Route to Budget */}
+        <Route path="/settings" element={<div>Settings Page</div>} />
+      </Routes>
+    </Router>
   );
 };
 
 export default App;
+
