@@ -1,8 +1,8 @@
-import logo from './logo.svg';
-import './App.css';
-import { Route, Routes } from 'react-router-dom';
-import LayoutWithHeader from './components/Layout/LayoutWithHeader';
-import Home from './components/Layout/Home';
+// import logo from './logo.svg';
+
+// import { Route, Routes } from 'react-router-dom';
+// import LayoutWithHeader from './components/Layout/LayoutWithHeader';
+// import Home from './components/Layout/Home';
 
 // function App() {
 //   return (
@@ -27,23 +27,27 @@ import Home from './components/Layout/Home';
 
 // export default App;
 
+
+
+
 // src/App.js
+import './App.css';
 import React from 'react';
-import Navbar from './components/Navbar';
+import Navbar from './components/Common/Navbar';
 
 const App = () => {
-  // You can fetch the username from an API or auth context later
-  const username = 'JohnDoe';
+  const username = 'Eaindray Su Pan';
 
   return (
     <div className="App">
-       <Routes>
+      <Navbar username={username}/>
+       {/* <Routes>
         <Route element={<LayoutWithHeader />}>
           <Route path="/" element={<Home />} />
         </Route>
         <Route path="/create-concert" element={<CreateConcert />} />
         <Route path="/list-concert" element={<ListConcert />} />
-      </Routes>
+      </Routes> */}
     </div>
   );
 };

@@ -36,7 +36,7 @@ const Navbar = ({ username }) => {
       </div>
 
       {/* Profile Section */}
-      <div className="profile">
+      <div className='profile'>
         <span>{username}</span>
         {/* You can add a profile picture or menu later */}
       </div>
