@@ -1,8 +1,8 @@
-// src/components/Navbar.js
+
 import React, { useState } from 'react';
 import './Navbar.css';  // Import the CSS file
 
-const Navbar = ({ username }) => {
+const Navbar = ({ username }) => { 
   // to select currency
   const [currency, setCurrency] = useState('USD');
 
