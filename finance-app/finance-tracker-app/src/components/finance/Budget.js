@@ -1,77 +1,48 @@
-// src/pages/Budget.js
-import React from "react";
-import "./Budget.css";
+import React, { useState } from 'react';
+import './Budget.css';
 
 const Budget = () => {
+  const [category, setCategory] = useState('');
+  
+  const handleSetCategory = (categoryName) => {
+    setCategory(categoryName);
+  };
+
   return (
     <div>
-      <div
-          className="col-lg-10 col-md-9 col-sm-8 ms-sm-auto px-md-4"
-          id="budgets"
-        >
-          
-          <h2>Set Budget for this month</h2>
-
-          <div className="budget-categories mt-4">
-            <div
-              className="category-item d-flex justify-content-between align-items-center mb-3"
-            >
-              <div><i className="fas fa-utensils"></i> Food</div>
-              <button
-                className="btn btn-outline-dark set-budget-btn"
-                data-bs-toggle="modal"
-                data-bs-target="#budgetModal"
-                onclick="setCategory('Food')"
-              >
-                Set Budget
-              </button>
-            </div>
-            <div
-              className="category-item d-flex justify-content-between align-items-center mb-3"
-            >
-              <div><i className="fas fa-shopping-cart"></i> Shopping</div>
-              <button
-                className="btn btn-outline-dark set-budget-btn"
-                data-bs-toggle="modal"
-                data-bs-target="#budgetModal"
-                onclick="setCategory('Shopping')"
-              >
-                Set Budget
-              </button>
-            </div>
-            <div
-              className="category-item d-flex justify-content-between align-items-center mb-3"
-            >
-              <div><i className="fas fa-car"></i> Transportation</div>
-              <button
-                className="btn btn-outline-dark set-budget-btn"
-                data-bs-toggle="modal"
-                data-bs-target="#budgetModal"
-                onclick="setCategory('Transportation')"
-              >
-                Set Budget
-              </button>
-            </div>
-            <div
-              className="category-item d-flex justify-content-between align-items-center mb-3"
-            >
-              <div><i className="fas fa-film"></i> Entertainment</div>
-              <button
-                className="btn btn-outline-dark set-budget-btn"
-                data-bs-toggle="modal"
-                data-bs-target="#budgetModal"
-                onclick="setCategory('Entertainment')"
-              >
-                Set Budget
-              </button>
-            </div>
-
-            <button className="btn shadow add-category-btn">
+      <main className="budget-main">
+      <h2>Set Budget for this month</h2>
+      <div className="budget-categories">
+        <div className="category-item">
+          <div><i className="fas fa-utensils"></i> Food</div>
+          <button className="set-budget-btn" onClick={() => handleSetCategory('Food')}>
+            Set Budget
+          </button>
+        </div>
+        <div className="category-item">
+          <div><i className="fa-solid fa-cart-shopping"></i> Shopping</div>
+          <button className="set-budget-btn" onClick={() => handleSetCategory('Shopping')}>
+            Set Budget
+          </button>
+        </div>
+        <div className="category-item">
+          <div><i className="fa-solid fa-car"></i> Transportation</div>
+          <button className="set-budget-btn" onClick={() => handleSetCategory('Transportation')}>
+            Set Budget
+          </button>
+        </div>
+        <div className="category-item">
+          <div><i class="fa-solid fa-film"></i> Entertainment</div>
+          <button className="set-budget-btn" onClick={() => handleSetCategory('Entertainment')}>
+            Set Budget
+          </button>
+        </div>
+        <button className="btn shadow add-category-btn">
               + Add New Category
             </button>
-          </div>
+      </div>
 
-          <h4 className="mt-5">Budgeted categories:</h4>
+      <h4 className="mt-5">Budgeted categories:</h4>
           <p className="text-muted">
             Currently, no budget is applied. Set budget-limit for this month.
           </p>
@@ -117,7 +88,6 @@ const Budget = () => {
                 </div>
               </div>
             </div>
-
             <div className="col">
               <div className="card h-100">
                 <div className="card-body">
@@ -157,13 +127,13 @@ const Budget = () => {
               </div>
             </div>
           </div>
-
           <div className="mt-4">
             <button className="btn btn-outline-success">+ Add New Target</button>
           </div>
-    </div>
-     
-    <div
+      {/* Saving goal section */}
+
+      {/* Modal or other components can be added here */}
+      <div
       className="modal fade"
       id="budgetModal"
       tabindex="-1"
@@ -219,6 +189,7 @@ const Budget = () => {
         </div>
       </div>
     </div>
+    </main>
     </div>
   );
 };
