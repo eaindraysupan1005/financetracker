@@ -5,7 +5,9 @@
     height: 100vh; /* Full viewport height */
     font-family: 'Battambang';
 }
-
+h1,h2{
+    color: black;
+}
 .logo{
     max-width: 80px; /* Adjust the size of your logo as needed */
     margin-right: 10px;
