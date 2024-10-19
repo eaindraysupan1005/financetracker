@@ -1,0 +1,61 @@
+/* src/components/Login.css */
+
+.login-container {
+    display: flex;
+    height: 100vh; /* Full viewport height */
+}
+
+.login-form {
+    flex: 1;
+    background-color: white; /* White side */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.login-form h1 {
+    margin-bottom: 20px;
+}
+
+.login-form input {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-button {
+    background-color: #1f665e; /* Your preferred green color */
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.google-button {
+    background-color: #db4437; /* Google red */
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.login-image {
+    flex: 1;
+    background-color: #1f665e; /* Green side */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-image img {
+    max-width: 100%;
+    height: auto;
+}

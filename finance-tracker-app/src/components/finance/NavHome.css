@@ -1,0 +1,48 @@
+/* src/components/NavHome.css */
+/* #1f665e green
+    #eac60b yellow
+    #ffe662 hover
+ */
+ .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #1f665e; /* Change to your preferred background color */
+    color: white;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo-img {
+    max-width: 50px; /* Adjust the size of your logo as needed */
+    margin-right: 10px;
+  }
+  
+  .logo-title {
+    font-size: 1.5rem; /* Adjust the font size as needed */
+  }
+  
+  .main-nav {
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-button {
+    background-color: transparent; /* Or a specific color */
+    color: white;
+    border: 1px solid white; /* Border color */
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-left: 10px; /* Space between buttons */
+    cursor: pointer;
+    font-size: 1rem; /* Adjust font size as needed */
+  }
+  
+  .nav-button:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Hover effect */
+  }
+  

@@ -1,16 +1,18 @@
-// src/components/Layout/Layout.js
+// src/components/Layout.js
 import React from 'react';
-import Footer from '../Common/Footer'; // Adjust path as necessary
-import './Layout.css';  // Ensure this file is linked correctly
+import { Outlet } from 'react-router-dom';
+import Navbar from '../Common/Navbar';  // Adjust the path as necessary
+  // Adjust the path as necessary
+// If you have styles for layout
 
-const Layout = ({ children }) => {
+const Layout = ({ username }) => {
   return (
-    <div className="app-container">
-     
-      <main className="main-content">{children}</main>
-     
-      <Footer/>
-    {/* The footer will be rendered after all content */}
+    <div className="layout">
+      <Navbar username={username} />
+      <main className="main-content">
+        <Outlet />  {/* This will render the matched child route */}
+      </main>
+    
     </div>
   );
 };
