@@ -1,11 +1,46 @@
-/* src/components/Footer.css */
-.footer {
-    background-color: #282c34;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-  }
-  
+/* Footer.css */
+.footer{
+  color: white;
+  background-color: #1f665e; 
+  padding:10px;
+}
+h1{
+  color: #eac60b;
+}
+.footer-section {
+  display: flex;
+  font-family: 'Battambang';
+  justify-content: space-around; 
+  align-items: center;
+}
+.logo-section{
+  display:flex;
+  align-items: center;      
+  justify-content: center; 
+}
+.contact-section p{
+  text-align: left;
+  font-size: 0.9rem;
+}
+.contact-section i{
+  padding:10px;
+}
+.logo {
+  max-width: 100px;
+}
+.social-section{
+  padding:10px;
+}
+.social-icons {
+  display: flex;
+  gap: 30px; 
+}
+.links{
+  padding: 20px 0px;
+  display: flex;
+  gap: 30px;
+}
+.links a{
+  color: white;
+  text-decoration-line: none;
+}
