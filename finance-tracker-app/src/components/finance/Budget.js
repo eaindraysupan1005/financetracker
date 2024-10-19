@@ -1,169 +1,155 @@
-// src/pages/Budget.js
-import React from "react";
-import "./Budget.css";
+import React, { useState } from 'react';
+import './Budget.css';
 
 const Budget = () => {
+  const [category, setCategory] = useState('');
+  
+  const handleSetCategory = (categoryName) => {
+    setCategory(categoryName);
+  };
+
   return (
     <div>
-      <div
-          className="col-lg-10 col-md-9 col-sm-8 ms-sm-auto px-md-4"
-          id="budgets"
-        >
-          
-          <h2>Set Budget for this month</h2>
-
-          <div className="budget-categories mt-4">
-            <div
-              className="category-item d-flex justify-content-between align-items-center mb-3"
-            >
-              <div><i className="fas fa-utensils"></i> Food</div>
-              <button
-                className="btn btn-outline-dark set-budget-btn"
+      <main className="budget-main">
+      <h3 className='fw-bold setBudget'>Set Budget for this month</h3>
+      <div className="budget-categories">
+        <div className="mb-4 category-item">
+          <div><i className="fas fa-utensils me-3"></i> Food</div>
+          <button className="btn btn-outline-dark set-budget-btn"
                 data-bs-toggle="modal"
-                data-bs-target="#budgetModal"
-                onclick="setCategory('Food')"
-              >
-                Set Budget
-              </button>
-            </div>
-            <div
-              className="category-item d-flex justify-content-between align-items-center mb-3"
-            >
-              <div><i className="fas fa-shopping-cart"></i> Shopping</div>
-              <button
-                className="btn btn-outline-dark set-budget-btn"
+                data-bs-target="#budgetModal" onClick={() => handleSetCategory('Food')}>
+            Set Budget
+          </button>
+        </div>
+        <div className="mb-4 category-item">
+          <div><i className="fa-solid fa-cart-shopping me-3"></i> Shopping</div>
+          <button className="btn btn-outline-dark set-budget-btn"
                 data-bs-toggle="modal"
-                data-bs-target="#budgetModal"
-                onclick="setCategory('Shopping')"
-              >
-                Set Budget
-              </button>
-            </div>
-            <div
-              className="category-item d-flex justify-content-between align-items-center mb-3"
-            >
-              <div><i className="fas fa-car"></i> Transportation</div>
-              <button
-                className="btn btn-outline-dark set-budget-btn"
+                data-bs-target="#budgetModal" onClick={() => handleSetCategory('Shopping')}>
+            Set Budget
+          </button>
+        </div>
+        <div className="mb-4 category-item">
+          <div><i className="fa-solid fa-car me-3"></i> Transportation</div>
+          <button className="btn btn-outline-dark set-budget-btn"
                 data-bs-toggle="modal"
-                data-bs-target="#budgetModal"
-                onclick="setCategory('Transportation')"
-              >
-                Set Budget
-              </button>
-            </div>
-            <div
-              className="category-item d-flex justify-content-between align-items-center mb-3"
-            >
-              <div><i className="fas fa-film"></i> Entertainment</div>
-              <button
-                className="btn btn-outline-dark set-budget-btn"
+                data-bs-target="#budgetModal" onClick={() => handleSetCategory('Transportation')}>
+            Set Budget
+          </button>
+        </div>
+        <div className="mb-4 category-item">
+          <div><i class="fa-solid fa-film me-3"></i> Entertainment</div>
+          <button className="btn btn-outline-dark set-budget-btn"
                 data-bs-toggle="modal"
-                data-bs-target="#budgetModal"
-                onclick="setCategory('Entertainment')"
-              >
-                Set Budget
-              </button>
-            </div>
-
-            <button className="btn shadow add-category-btn">
+                data-bs-target="#budgetModal" onClick={() => handleSetCategory('Entertainment')}>
+            Set Budget
+          </button>
+        </div>
+        <div className="mt-5 add-category">
+        <button className="btn shadow add-category-btn">
               + Add New Category
             </button>
-          </div>
+        </div>
+      </div>
 
-          <h4 className="mt-5">Budgeted categories:</h4>
-          <p className="text-muted">
+      <div className='set-budgeted'>
+      <h3 className="fw-bold mt-5">Budgeted categories:</h3>
+          <p className="text-muted mt-5 no-budget">
             Currently, no budget is applied. Set budget-limit for this month.
           </p>
+      </div>
 
-          <h2>Saving Goal</h2>
+          
+          <h3 className='fw-bold mt-5 saving-title'>Saving Goal</h3>
 
-          <div className="row row-cols-1 row-cols-md-2 g-4 mt-4">
-            <div className="col">
-              <div className="card h-100">
-                <div className="card-body">
-                  <h5 className="card-title">Summer Trip</h5>
-                  <p>Target: 800 $</p>
-                  <p>Saved: 356 $</p>
-                  <p>Deadline: April 2025</p>
-                </div>
-                <div className="card-footer">
-                  <div
-                    className="d-flex justify-content-between align-items-center"
-                  >
-                    <div
-                      className="progress-circle"
-                      style={{width: '50px', height: '50px'}}
-                    >
-                      <svg viewBox="0 0 36 36">
-                        <path
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                          fill="none"
-                          stroke="#ccc"
-                          stroke-width="4"
-                        />
-                        <path
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
-                          fill="none"
-                          stroke="#eac60b"
-                          stroke-width="4"
-                          stroke-dasharray="44.5, 100"
-                        />
-                      </svg>
-                      <div className="progress-text">44.5%</div>
-                    </div>
-                    <button className="btn btn-outline-secondary">...</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col">
-              <div className="card h-100">
-                <div className="card-body">
-                  <h5 className="card-title">To buy iPad</h5>
-                  <p>Target: 1500 $</p>
-                  <p>Saved: 237 $</p>
-                  <p>Deadline: April 2025</p>
-                </div>
-                <div className="card-footer">
-                  <div
-                    className="d-flex justify-content-between align-items-center"
-                  >
-                    <div
-                      className="progress-circle"
-                      style={{width: '50px', height: '50px'}}
-                    >
-                      <svg viewBox="0 0 36 36">
-                        <path
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                          fill="none"
-                          stroke="#ccc"
-                          stroke-width="4"
-                        />
-                        <path
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
-                          fill="none"
-                          stroke="#eac60b"
-                          stroke-width="4"
-                          stroke-dasharray="15.8, 100"
-                        />
-                      </svg>
-                      <div className="progress-text">15.8%</div>
-                    </div>
-                    <button className="btn btn-outline-secondary">...</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+<div className="row row-cols-1 row-cols-md-2 g-4 mt-4">
+  <div className="col">
+    <div className="card h-100">
+      <div className="card-body">
+        <h5 className="card-title">Summer Trip</h5>
+        <p>Target: 800 $</p>
+        <p>Saved: 356 $</p>
+        <p>Deadline: April 2025</p>
+      </div>
+      <div className="card-footer">
+        <div
+          className="d-flex justify-content-between align-items-center"
+        >
+          <div
+            className="progress-circle"
+            style={{width: '50px', height: '50px'}}
+          >
+            <svg viewBox="0 0 36 36">
+              <path
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                fill="none"
+                stroke="#ccc"
+                stroke-width="4"
+              />
+              <path
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
+                fill="none"
+                stroke="#eac60b"
+                stroke-width="4"
+                stroke-dasharray="44.5, 100"
+              />
+            </svg>
+            <div className="progress-text">44.5%</div>
           </div>
-
-          <div className="mt-4">
-            <button className="btn btn-outline-success">+ Add New Target</button>
-          </div>
+          <button className="btn btn-outline-secondary">...</button>
+        </div>
+      </div>
     </div>
-     
-    <div
+  </div>
+  <div className="col">
+    <div className="card h-100">
+      <div className="card-body">
+        <h5 className="card-title">To buy iPad</h5>
+        <p>Target: 1500 $</p>
+        <p>Saved: 237 $</p>
+        <p>Deadline: April 2025</p>
+      </div>
+      <div className="card-footer">
+        <div
+          className="d-flex justify-content-between align-items-center"
+        >
+          <div
+            className="progress-circle"
+            style={{width: '50px', height: '50px'}}
+          >
+            <svg viewBox="0 0 36 36">
+              <path
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                fill="none"
+                stroke="#ccc"
+                stroke-width="4"
+              />
+              <path
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
+                fill="none"
+                stroke="#eac60b"
+                stroke-width="4"
+                stroke-dasharray="15.8, 100"
+              />
+            </svg>
+            <div className="progress-text">15.8%</div>
+          </div>
+          <button className="btn btn-outline-secondary">...</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div className="mt-5 add-target">
+<button className="btn shadow add-category-btn">
+    + Add New Target
+  </button>
+</div>
+          
+      {/* Saving goal section */}
+
+      {/* Modal or other components can be added here */}
+      <div
       className="modal fade"
       id="budgetModal"
       tabindex="-1"
@@ -219,6 +205,7 @@ const Budget = () => {
         </div>
       </div>
     </div>
+    </main>
     </div>
   );
 };
