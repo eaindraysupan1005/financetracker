@@ -1,10 +1,28 @@
-/* Budget-specific styles */
+/* 
+--- 01 Typography system
+- Font Size(px)
+    10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+
+- Font Weight
+    Default 400
+
+- Line Height
+    Default 1 
+
+- spacing System
+    2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
+*/
 
 .budget-main {
   padding: 20px;
+  margin: 0 50px;
 }
 
+.setBudget{
+  margin-top: 2rem;
+}
 .budget-categories {
+  margin-top: 2rem;
   max-width: 500px;
 }
 
@@ -12,15 +30,27 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  font-size: 1.4rem;
 }
 
+.category-item i {
+  font-size: 1.8rem;
+}
 .set-budget-btn {
   transition: all 0.3s ease;
 }
-/* .add-category-btn {
+
+.add-category{
+  display: flex;
+  max-width: 500px;
+  justify-content: center;
+}
+.add-category-btn {
   color: #1f665e;
   width: 200px;
-  padding: 2rem 1rem;
-  font-size: 3rem;
-} */
+  transition: all 0.5s ease;
+}
+.add-category-btn:hover{
+  color: #fff;
+  background-color: #1f665e;
+}
