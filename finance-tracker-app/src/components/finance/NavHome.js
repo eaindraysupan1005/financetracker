@@ -12,8 +12,8 @@ const NavHome = () => {
 
       <div className='main-nav'>
         {/* Buttons */}
-        <button className='nav-button login'>Login</button>
-        <button className='nav-button signup'>Sign Up</button>
+        <a href ="/login" className='nav-button login'>Login</a>
+        <a href ="/signup" className='nav-button signup'>Sign Up</a>
       </div>
     </nav>
   );
