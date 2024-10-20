@@ -147,9 +147,33 @@ font-size: 1.2rem;
   font-weight: bold;
 }
 
-/* Custom dots button */
-.btn-outline-secondary {
-  border-radius: 10px;
+.card-saving{
+  color: #fff;
+  background-color: #1f665e;
+}
+
+.btn-edit {
+  border: none;
+  color: #eac60b;
+  font-size: 20px;
+  text-align: center;
   width: 36px;
   height: 36px;
+}
+
+.btn-edit:hover{
+  color: #ffe662;
+}
+
+.btn-trash{
+    border: none;
+    color: #f01e2c;
+    font-size: 20px;
+    text-align: center;
+    width: 36px;
+    height: 36px;
+}
+
+.btn-trash:hover{
+  color: #c30010;
 }

@@ -66,16 +66,20 @@ const Budget = () => {
       <div className="row row-cols-1 row-cols-md-3 g-5 mt-4">
         {/* First Card - Summer Trip */}
         <div className="col">
-          <div className="card h-100 shadow d-flex flex-row">
+          <div className="card h-100 shadow d-flex flex-row card-saving">
             <div className="card-body text-start ms-3">
               <h5 className="card-title">Summer Trip</h5>
               <p>Target: 800 $</p>
               <p>Saved: 356 $</p>
               <p>Deadline: <strong>April 2025</strong></p>
             </div>
-            <div className="d-flex flex-coloum">
-              <div className="d-flex justify-content-between">
-              <div className="progress-circle mt-4 me-5" style={{ width: "120px", height: "120px" }}>
+            <div>
+              <div className='me-3'>
+                <div>
+                <button className="btn btn-edit"><i className="fa-solid fa-pen-to-square"></i></button>
+                <button className="btn btn-trash"><i className="fa-solid fa-trash-can"></i></button>
+                </div>
+                <div className="progress-circle mt-3" style={{ width: "100px", height: "100px" }}>
                   <svg viewBox="0 0 36 36">
                     <path
                       d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
@@ -93,7 +97,6 @@ const Budget = () => {
                   </svg>
                   <div className="progress-text">44.5%</div>
                 </div>
-                <button className="btn btn-outline-secondary mt-2 me-2">...</button>
               </div>
             </div>
           </div>
@@ -101,17 +104,21 @@ const Budget = () => {
 
         {/* Second Card - To Buy iPad */}
         <div className="col">
-          <div className="card h-100 shadow d-flex flex-row">
-            <div className="card-body">
+          <div className="card h-100 shadow d-flex flex-row card-saving">
+            <div className="card-body text-start ms-3">
               <h5 className="card-title">To buy iPad</h5>
               <p>Target: 1500 $</p>
               <p>Saved: 237 $</p>
               <p>Deadline: April 2025</p>
             </div>
-            <div className="d-flex flex-column">
-              <div className="d-flex justify-content-between align-items-center">
-                <div className="progress-circle" style={{ width: "120px", height: "120px" }}>
-                  <svg viewBox="0 0 36 36">
+            <div>
+              <div className='me-3'>
+                <div>
+                <button className="btn btn-edit"><i className="fa-solid fa-pen-to-square"></i></button>
+                <button className="btn btn-trash"><i className="fa-solid fa-trash-can"></i></button>
+                </div>
+                <div className="progress-circle mt-3" style={{ width: "100px", height: "100px" }}>
+                <svg viewBox="0 0 36 36">
                     <path
                       d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                       fill="none"
@@ -128,7 +135,6 @@ const Budget = () => {
                   </svg>
                   <div className="progress-text">15.8%</div>
                 </div>
-                <button className="btn btn-outline-secondary">...</button>
               </div>
             </div>
           </div>
@@ -136,7 +142,7 @@ const Budget = () => {
       </div>
 
       {/* Add New Target Button */}
-      <div className="mt-5 text-center">
+      <div className="mt-5 mb-5 text-center">
         <button className="btn shadow add-category-btn">+ Add New Target</button>
       </div>
     </div>
