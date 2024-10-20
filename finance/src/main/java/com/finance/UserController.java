@@ -6,8 +6,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
+@CrossOrigin(origins = "https://miniature-succotash-x557wvxpvvqphggg-3000.app.github.dev") // Adjust the URL accordingly
 @RestController
 public class UserController {
 
@@ -28,23 +31,29 @@ public class UserController {
         return new ResponseEntity<>("Signup successful", HttpStatus.CREATED);
     }
 
-    // Login method
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User loginRequest) {
-        // Find the user by email
-        Optional<User> existingUser = userRepository.findByEmail(loginRequest.getEmail());
+   // Login method
+@PostMapping("/login")
+public ResponseEntity<Map<String, String>> login(@RequestBody User loginRequest) {
+    Map<String, String> response = new HashMap<>();
+    
+    // Find the user by email
+    Optional<User> existingUser = userRepository.findByEmail(loginRequest.getEmail());
 
-        if (existingUser.isPresent()) {
-            // Check if the password matches
-            User user = existingUser.get();
-            if (user.getPassword().equals(loginRequest.getPassword())) {
-                return new ResponseEntity<>("Login successful", HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>("Invalid password", HttpStatus.UNAUTHORIZED);
-            }
+    if (existingUser.isPresent()) {
+        // Check if the password matches
+        User user = existingUser.get();
+        if (user.getPassword().equals(loginRequest.getPassword())) {
+            response.put("message", "Login successful");
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+            response.put("message", "Invalid password");
+            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
         }
+    } else {
+        response.put("message", "User not found");
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+}
+
 }
 

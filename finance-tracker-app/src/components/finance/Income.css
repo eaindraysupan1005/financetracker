@@ -1,0 +1,39 @@
+/* src/components/IncomeComponent.css */
+/* #1f665e green
+    #eac60b yellow
+    #ffe662 hover
+ */
+.income-box {
+    width: 200px;
+    height: 150px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.income-box:hover {
+    transform: scale(1.05);
+}
+.income-card{
+    color:white;
+    background-color:#1f665e;
+}
+.income-head{
+    font-size: 1.4rem;
+    margin-left: 65px;
+    text-align: start;
+}
+.row-income{
+    display:flex;
+}
+.circle-icon {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa; /* Light background for the icon circle */
+    margin: 0 auto;
+}
