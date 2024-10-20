@@ -8,6 +8,7 @@ import Login from './components/finance/Login';// import login
 import SignUp from './components/finance/SignUp';
 import Budget from './components/finance/Budget';  // Import Budget page
 import NavHome from './components/finance/NavHome'; // Import NavHome for Home Page
+import Profile from './components/finance/Profile';
 
 
 const App = () => {
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/dashboard" element={<div>Dashboard Page</div>} />
           <Route path="/budgets" element={<Budget />} />  {/* Route to Budget */}
           <Route path="/settings" element={<div>Settings Page</div>} />
+          <Route path="/profile" element={<Profile/>} />
 
           </Route>
         </Routes>

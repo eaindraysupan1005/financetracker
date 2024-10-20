@@ -37,8 +37,10 @@ const Navbar = ({ username }) => {
       </div>
 
       {/* Profile Section */}
-      
-        <button className='profile'><i className="fas fa-user-circle profile-icon"></i>{username}</button>
+      <button className="profile">
+            <i className="fas fa-user-circle profile-icon"></i>
+            <a href='/profile' className='profile-link'>{username}</a>
+          </button>
         {/* You can add a profile picture or menu later */}
       
       </div>

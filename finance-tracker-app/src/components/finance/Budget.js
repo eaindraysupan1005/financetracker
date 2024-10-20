@@ -3,10 +3,19 @@ import './Budget.css';
 
 const Budget = () => {
   const [category, setCategory] = useState('');
-  
+  const [newCategory, setNewCategory] = useState('');
+  const [targetCategory, setTargetCategory] = useState('');
   const handleSetCategory = (categoryName) => {
     setCategory(categoryName);
   };
+
+  const handleSetNewCategory = (newCategoryName) => {
+    setNewCategory(newCategoryName);
+  }
+
+  const handleTargetCategory = (targetName) =>{
+    setTargetCategory(targetName);
+  }
 
   return (
     <div>
@@ -46,7 +55,8 @@ const Budget = () => {
           </button>
         </div>
         <div className="mt-5 add-category">
-        <button className="btn shadow add-category-btn">
+        <button className="btn shadow add-category-btn" data-bs-toggle="modal"
+                data-bs-target="#newCategoryModal" onClick={() => handleSetNewCategory('Shopping')}>
               + Add New Category
             </button>
         </div>
@@ -143,7 +153,8 @@ const Budget = () => {
 
       {/* Add New Target Button */}
       <div className="mt-5 mb-5 text-center">
-        <button className="btn shadow add-category-btn">+ Add New Target</button>
+        <button className="btn shadow add-category-btn" data-bs-toggle="modal"
+                data-bs-target="#targetModal" onClick={() => handleTargetCategory('Shopping')}>+ Add New Target</button>
       </div>
     </div>
           
@@ -174,10 +185,10 @@ const Budget = () => {
               <div className="mb-3 d-flex me-2 budget-form">
                 <label for="limit" className="form-label me-5 ">Limit:</label>
                 <input
-                  type="number"
+                  type="text"
                   className="form-control"
                   id="limit"
-                  value="0"
+                  placeholder='0'
                 />
               </div>
               <div className="mb-3">
@@ -194,6 +205,133 @@ const Budget = () => {
               Cancel
             </button>
             <button type="button" className="btn set-btn">Set</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Add New Category Pop up */}
+    <div
+      className="modal fade"
+      id="newCategoryModal"
+      tabindex="-1"
+      aria-labelledby="budgetModalLabel"
+      aria-hidden="true"
+    >
+      <div className="modal-dialog modal-dialog-centered">
+        <div className="modal-content budget-popup">
+        <h5 className="modal-title fw-bold m-auto mt-3 mb-4 budget-form-title" id="budgetModalLabel">Add New Category</h5>
+
+        {/* Category Name Input  */} 
+        <div className="mb-3 ms-3 me-3 text-start">
+          <label for="newCategoryName" className="form-label fw-bold">Enter Category Name</label>
+          <input type="text" className="form-control" id="newCategoryName" placeholder="Name"/>
+        </div>
+        
+        {/* Icon Selection */}
+        <div className="mb-3 me-3 ms-3 text-start">
+          <label className="form-label fw-bold">Choose Icon</label>
+          <div className="row text-center">
+
+          <div className="icon-grid d-flex flex-wrap justify-content-between">
+            {/* First row of 5 icons */}
+            <div className="icon-item">
+              <i className="fas fa-graduation-cap fa-2x"></i>
+            </div>
+            <div className="icon-item">
+              <i className="fas fa-tshirt fa-2x"></i>
+            </div>
+            <div className="icon-item">
+              <i className="fas fa-home fa-2x"></i>
+            </div>
+            <div className="icon-item">
+            <i className="fa-solid fa-heart fa-2x"></i>
+            </div>
+            <div className="icon-item">
+            <i class="fa-solid fa-sack-dollar"></i>
+            </div>
+
+            {/* Second row of 5 icons */}
+            <div className="icon-item">
+            <i class="fa-solid fa-sack-dollar"></i>
+            </div>
+            <div className="icon-item">
+              <i className="fas fa-receipt fa-2x"></i>
+            </div>
+            <div className="icon-item">
+            <i class="fa-solid fa-hand-holding-dollar fa-2x"></i>
+            </div>
+            <div className="icon-item">
+              <i className="fas fa-users fa-2x"></i>
+            </div>
+            <div className="icon-item">
+              <i className="fas fa-table-tennis fa-2x"></i>
+            </div>
+            
+          </div>
+          </div>
+        </div>
+        
+         {/* Amount Input  */}
+        <div className="mb-4 ms-3 me-3 text-start">
+          <label for="budgetAmount" className="form-label fw-bold">Enter Amount</label>
+          <input type="text" className="form-control" id="budgetAmount" placeholder="Amount"/>
+        </div>
+
+        <div className="mb-5 budget-form-btn">
+            <button
+              type="button"
+              className="btn me-3 cancel-btn"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="button" className="btn set-btn">Set</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Add New Target pop up */}
+    <div
+      className="modal fade"
+      id="targetModal"
+      tabindex="-1"
+      aria-labelledby="budgetModalLabel"
+      aria-hidden="true"
+    >
+      <div className="modal-dialog modal-dialog-centered">
+        <div className="modal-content budget-popup">
+        <h5 className="modal-title fw-bold m-auto mt-3 budget-form-title" id="budgetModalLabel">Add New Target</h5>
+          <div className="modal-body">
+            <form>
+            <div className="mb-3 ms-3 me-3 text-start">
+          <label for="description" className="form-label fw-bold">Description</label>
+          <input type="text" className="form-control" id="description" placeholder="Description"/>
+        </div>
+        <div className="mb-3 ms-3 me-3 text-start">
+          <label for="targetAmount" className="form-label fw-bold">Target Amount</label>
+          <input type="text" className="form-control" id="targetAmount" placeholder="amount"/>
+        </div>
+        <div className="mb-3 ms-3 me-3 text-start">
+          <label for="savedAmount" className="form-label fw-bold">Saved Amount</label>
+          <input type="text" className="form-control" id="savedAmount" placeholder="amount"/>
+        </div>
+        <div className="mb-3 ms-3 me-3 text-start">
+          <label for="deadline" className="form-label fw-bold">Deadline</label>
+          <input type="date" className="form-control" id="deadline" placeholder="mm/dd/yyyy"/>
+        </div>
+            </form>
+          </div>
+          <div className="mb-5 budget-form-btn">
+            <button
+              type="button"
+              className="btn me-3 cancel-btn"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="button" className="btn set-btn">Add</button>
           </div>
         </div>
       </div>
