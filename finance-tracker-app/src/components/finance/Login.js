@@ -21,7 +21,7 @@ const Login = () => {
         event.preventDefault();
         try {
             setIsLoading(true);
-            const response = await fetch('https://your-api-url.com/login', { // Replace with your login API URL
+            const response = await fetch('https://jubilant-spork-97w64qq7gwr2659-8080.app.github.dev/login', { // Replace with your login API URL
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ const Login = () => {
                 const data = await response.json();
                 console.log('Login successful:', data);
                 // You can store user data in local storage or context here
-                navigate('/dashboard'); // Redirect to a dashboard or home page
+                navigate('/budgets'); // Redirect to a dashboard or home page
             } else {
                 const errorData = await response.json();
                 setError(errorData.message || 'Login failed! Please try again.');
