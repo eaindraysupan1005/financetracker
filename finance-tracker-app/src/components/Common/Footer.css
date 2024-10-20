@@ -4,7 +4,8 @@
   background-color: #1f665e; 
   padding:10px;
 }
-h1{
+.footer-h{
+  font-size: 1.7rem;
   color: #eac60b;
 }
 .footer-section {
