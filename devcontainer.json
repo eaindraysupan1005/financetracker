@@ -3,7 +3,7 @@
     "image": "mcr.microsoft.com/vscode/devcontainers/java",
     "features": {
         "ghcr.io/devcontainers/features/java": {
-            "version": "17",
+            "version": "17",  // Ensure this is set to "21"
             "maven": true
         }
     }
