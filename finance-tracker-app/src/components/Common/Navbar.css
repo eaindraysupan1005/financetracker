@@ -18,7 +18,7 @@
 
 .logo-title{
   color: #eac60b;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
 }
 .logo-img {
   width: 70px;
@@ -37,6 +37,7 @@
 .nav-links {
   list-style: none;
   display: flex;
+  margin: auto;
   gap: 50px;
 }
 

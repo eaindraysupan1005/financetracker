@@ -59,94 +59,89 @@ const Budget = () => {
           </p>
       </div>
 
-          
-          <h3 className='fw-bold mt-5 saving-title'>Saving Goal</h3>
-
-<div className="row row-cols-1 row-cols-md-2 g-4 mt-4">
-  <div className="col">
-    <div className="card h-100">
-      <div className="card-body">
-        <h5 className="card-title">Summer Trip</h5>
-        <p>Target: 800 $</p>
-        <p>Saved: 356 $</p>
-        <p>Deadline: April 2025</p>
-      </div>
-      <div className="card-footer">
-        <div
-          className="d-flex justify-content-between align-items-center"
-        >
-          <div
-            className="progress-circle"
-            style={{width: '50px', height: '50px'}}
-          >
-            <svg viewBox="0 0 36 36">
-              <path
-                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                fill="none"
-                stroke="#ccc"
-                stroke-width="4"
-              />
-              <path
-                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
-                fill="none"
-                stroke="#eac60b"
-                stroke-width="4"
-                stroke-dasharray="44.5, 100"
-              />
-            </svg>
-            <div className="progress-text">44.5%</div>
-          </div>
-          <button className="btn btn-outline-secondary">...</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div className="col">
-    <div className="card h-100">
-      <div className="card-body">
-        <h5 className="card-title">To buy iPad</h5>
-        <p>Target: 1500 $</p>
-        <p>Saved: 237 $</p>
-        <p>Deadline: April 2025</p>
-      </div>
-      <div className="card-footer">
-        <div
-          className="d-flex justify-content-between align-items-center"
-        >
-          <div
-            className="progress-circle"
-            style={{width: '50px', height: '50px'}}
-          >
-            <svg viewBox="0 0 36 36">
-              <path
-                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                fill="none"
-                stroke="#ccc"
-                stroke-width="4"
-              />
-              <path
-                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
-                fill="none"
-                stroke="#eac60b"
-                stroke-width="4"
-                stroke-dasharray="15.8, 100"
-              />
-            </svg>
-            <div className="progress-text">15.8%</div>
-          </div>
-          <button className="btn btn-outline-secondary">...</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div className="mt-5 add-target">
-<button className="btn shadow add-category-btn">
-    + Add New Target
-  </button>
-</div>
-          
       {/* Saving goal section */}
+      <div className=" mt-5">
+      <h3 className="fw-bold saving-title">Saving Goal</h3>
+
+      <div className="row row-cols-1 row-cols-md-3 g-5 mt-4">
+        {/* First Card - Summer Trip */}
+        <div className="col">
+          <div className="card h-100 shadow d-flex flex-row">
+            <div className="card-body text-start ms-3">
+              <h5 className="card-title">Summer Trip</h5>
+              <p>Target: 800 $</p>
+              <p>Saved: 356 $</p>
+              <p>Deadline: <strong>April 2025</strong></p>
+            </div>
+            <div className="d-flex flex-coloum">
+              <div className="d-flex justify-content-between">
+              <div className="progress-circle mt-4 me-5" style={{ width: "120px", height: "120px" }}>
+                  <svg viewBox="0 0 36 36">
+                    <path
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                      fill="none"
+                      stroke="#ccc"
+                      strokeWidth="4"
+                    />
+                    <path
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
+                      fill="none"
+                      stroke="#eac60b"
+                      strokeWidth="4"
+                      strokeDasharray="44.5, 100"
+                    />
+                  </svg>
+                  <div className="progress-text">44.5%</div>
+                </div>
+                <button className="btn btn-outline-secondary mt-2 me-2">...</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Second Card - To Buy iPad */}
+        <div className="col">
+          <div className="card h-100 shadow d-flex flex-row">
+            <div className="card-body">
+              <h5 className="card-title">To buy iPad</h5>
+              <p>Target: 1500 $</p>
+              <p>Saved: 237 $</p>
+              <p>Deadline: April 2025</p>
+            </div>
+            <div className="d-flex flex-column">
+              <div className="d-flex justify-content-between align-items-center">
+                <div className="progress-circle" style={{ width: "120px", height: "120px" }}>
+                  <svg viewBox="0 0 36 36">
+                    <path
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                      fill="none"
+                      stroke="#ccc"
+                      strokeWidth="4"
+                    />
+                    <path
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
+                      fill="none"
+                      stroke="#eac60b"
+                      strokeWidth="4"
+                      strokeDasharray="15.8, 100"
+                    />
+                  </svg>
+                  <div className="progress-text">15.8%</div>
+                </div>
+                <button className="btn btn-outline-secondary">...</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Add New Target Button */}
+      <div className="mt-5 text-center">
+        <button className="btn shadow add-category-btn">+ Add New Target</button>
+      </div>
+    </div>
+          
+      {/* End Saving goal section */}
 
       {/* Modal or other components can be added here */}
       <div
@@ -157,20 +152,12 @@ const Budget = () => {
       aria-hidden="true"
     >
       <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title" id="budgetModalLabel">Set Budget</h5>
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
+        <div className="modal-content budget-popup">
+        <h5 className="modal-title fw-bold m-auto mt-3 budget-form-title" id="budgetModalLabel">Set Budget</h5>
           <div className="modal-body">
             <form>
-              <div className="mb-3">
-                <label for="category" className="form-label">Category:</label>
+              <div className="mb-3 d-flex me-2 budget-form">
+                <label for="category" className="form-label me-3 ">Category:</label>
                 <input
                   type="text"
                   className="form-control"
@@ -178,8 +165,8 @@ const Budget = () => {
                   readonly
                 />
               </div>
-              <div className="mb-3">
-                <label for="limit" className="form-label">Limit:</label>
+              <div className="mb-3 d-flex me-2 budget-form">
+                <label for="limit" className="form-label me-5 ">Limit:</label>
                 <input
                   type="number"
                   className="form-control"
@@ -192,15 +179,15 @@ const Budget = () => {
               </div>
             </form>
           </div>
-          <div className="modal-footer">
+          <div className="mb-5 budget-form-btn">
             <button
               type="button"
-              className="btn btn-secondary"
+              className="btn me-3 cancel-btn"
               data-bs-dismiss="modal"
             >
               Cancel
             </button>
-            <button type="button" className="btn btn-warning">Set</button>
+            <button type="button" className="btn set-btn">Set</button>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@
     #eac60b yellow
     #ffe662 hover
  */
- .navbar {
+ .navbarhome {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -27,7 +27,7 @@
     color: #eac60b;
   }
   
-  .main-nav {
+  .main-navhome {
     display: flex;
     align-items: center;
   }
