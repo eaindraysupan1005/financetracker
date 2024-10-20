@@ -177,3 +177,35 @@ font-size: 1.2rem;
 .btn-trash:hover{
   color: #c30010;
 }
+
+/* Add New Category */
+
+.modal-content {
+  max-width: 400px;
+  margin: 0 auto;
+  border-radius: 10px;
+  border: none;
+}
+
+/* Icon grid styles */
+.icon-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px; /* Space between icons */
+}
+
+.icon-item {
+  width: 18%; 
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: color 0.3s ease;
+}
+
+.icon-item:hover {
+  color: #eac60b;
+}
+
+
+

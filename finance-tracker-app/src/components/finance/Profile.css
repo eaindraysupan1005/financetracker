@@ -1,0 +1,35 @@
+.profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .profile-avatar {
+    color: #2c6d66;
+  }
+  
+  .form-control {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    box-shadow: none;
+    padding: 0.5rem;
+  }
+  
+  .btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #fff;
+  }
+  
+  .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #fff;
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: #fff;
+  }
+  
