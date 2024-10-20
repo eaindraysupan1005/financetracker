@@ -52,8 +52,8 @@ const Login = () => {
                 <img src="/Login.png" alt="Login Visual" />
             </div>
             <div className="col-lg-6 col-md-8 col-sm-12 login-form">
-                <div className="logo-section">
-                    <img src="/logo.png" alt="Logo" className="logo" />
+                <div className="logo-section logo-login">
+                    <img src="/logo.png" alt="Logo" className="logo-img" />
                     <h1 className="logohead">Budget Bee</h1>
                 </div>
                 <h1 style={{ color }}>{isLoading ? 'Logging in...' : 'Login'}</h1>
@@ -87,7 +87,7 @@ const Login = () => {
                         <button type="submit">Log In</button>
                     </div>
                     <div className='form-actions'>
-                        <button type="button"><img src="/Google.png" alt="google" style={{ height: '24px', width: '24px' }}></img> Login with Google</button>
+                        <button type="button" className='login-btn'><img src="/Google.png" alt="google" style={{ height: '24px', width: '24px' }}></img> Login with Google</button>
                     </div>
                 </form>
                 <div>

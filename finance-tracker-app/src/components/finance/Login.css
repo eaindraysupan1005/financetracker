@@ -8,7 +8,7 @@
 h1,h2{
     color: black;
 }
-.logo{
+.logo-login{
     max-width: 80px; /* Adjust the size of your logo as needed */
     margin-right: 10px;
   }
@@ -77,7 +77,7 @@ button[type="submit"] {
     margin-bottom: 10px; /* Space between buttons */
 }
 
-button[type="button"] {
+.login-btn {
    border: 1px solid black;
    background-color: white;
    width: 100%;

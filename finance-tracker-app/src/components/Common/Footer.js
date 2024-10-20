@@ -6,8 +6,8 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className='footer-section'>
-      <div className="logo-section">
-        <img src="/logo.png" alt="Logo" className="logo" />
+      <div className="logo-section logo-footer">
+        <img src="/logo.png" alt="Logo" className="logo-img" />
         <h1>Budget Bee</h1>
       </div>
       <div className="contact-section">
