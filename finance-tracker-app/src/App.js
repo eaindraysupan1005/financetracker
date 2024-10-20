@@ -9,6 +9,7 @@ import SignUp from './components/finance/SignUp';
 import Budget from './components/finance/Budget';  // Import Budget page
 import NavHome from './components/finance/NavHome'; // Import NavHome for Home Page
 import Income from './components/finance/Income';
+import Profile from './components/finance/Profile';
 
 
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/budgets" element={<Budget />} />  {/* Route to Budget */}
           <Route path="/income" element={<Income />}/>
           <Route path="/settings" element={<div>Settings Page</div>} />
+          <Route path="/profile" element={<Profile/>} />
 
           </Route>
         </Routes>
