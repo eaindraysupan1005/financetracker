@@ -1,0 +1,10 @@
+{
+    "name": "Java & Maven",
+    "image": "mcr.microsoft.com/vscode/devcontainers/java",
+    "features": {
+        "ghcr.io/devcontainers/features/java": {
+            "version": "17",
+            "maven": true
+        }
+    }
+}
