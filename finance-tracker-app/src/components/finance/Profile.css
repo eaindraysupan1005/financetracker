@@ -3,8 +3,11 @@
     margin: 0 auto;
   }
   
+  .profile-card{
+    background-color: #1f665e;
+  }
   .profile-avatar {
-    color: #2c6d66;
+    color: #fff;
   }
   
   .form-control {
@@ -13,6 +16,20 @@
     border-radius: 0.25rem;
     box-shadow: none;
     padding: 0.5rem;
+  }
+
+  .profile-label{
+    font-size: 1.2rem;
+  }
+
+  .profile-btn{
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    transition: all 0.3s ease;
+  }
+
+  .profile-btn:hover{
+    background-color: #e7e7e7fd;
   }
   
   .btn-warning {

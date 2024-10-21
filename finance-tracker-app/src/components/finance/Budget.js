@@ -119,7 +119,7 @@ const Budget = () => {
               <h5 className="card-title">To buy iPad</h5>
               <p>Target: 1500 $</p>
               <p>Saved: 237 $</p>
-              <p>Deadline: April 2025</p>
+              <p>Deadline: <strong>April 2025</strong></p>
             </div>
             <div>
               <div className='me-3'>

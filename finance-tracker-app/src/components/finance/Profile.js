@@ -6,7 +6,7 @@ const Profile = () => {
   const [profile, setProfile] = useState({
     username: 'Irene',
     email: 'eaindraysu@gmail.com',
-    password: '********',
+    password: '12345678',
   });
 
   // State to toggle edit mode
@@ -63,62 +63,79 @@ const Profile = () => {
   
 
   return (
-    <div className="container profile-container mt-5">
-      <div className="card">
-        <div className="card-body text-center">
+    <div>
+      <div className="container profile-container mt-5">
+      <div className="card rounded profile-card">
+        <div className="card-body text-center ">
           <div className="profile-avatar mb-4">
             <i className="fa fa-user-circle fa-5x" aria-hidden="true"></i>
           </div>
-          <div className="form-group">
-            <label>UserName</label>
+          <form>
+          <div className="form-group row mb-4 me-3">
+            <label className="col-sm-3 col-form-label text-white text-end profile-label">Name</label>
+            <div className="col-sm-9">
             <input
-              type="text"
-              name="username"
-              className="form-control"
-              value={profile.username}
-              onChange={handleInputChange}
-              readOnly={!isEditing}
-            />
-          </div>
-          <div className="form-group">
-            <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              className="form-control"
-              value={profile.email}
-              onChange={handleInputChange}
-              readOnly={!isEditing}
-            />
-          </div>
-          <div className="form-group">
-            <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              className="form-control"
-              value={profile.password}
-              onChange={handleInputChange}
-              readOnly={!isEditing}
-            />
-          </div>
+      type="text"
+      name="username"
+      className="form-control"
+      value={profile.username}
+      onChange={handleInputChange}
+      readOnly={!isEditing}
+    />
+  </div>
+</div>
 
+<div className="form-group row mb-4 me-3">
+  <label className="col-sm-3 col-form-label text-white text-end profile-label">Email</label>
+  <div className="col-sm-9">
+    <input
+      type="email"
+      name="email"
+      className="form-control"
+      value={profile.email}
+      onChange={handleInputChange}
+      readOnly={!isEditing}
+    />
+  </div>
+</div>
+
+<div className="form-group row mb-4 me-3">
+  <label className="col-sm-3 col-form-label text-white text-end profile-label">Password</label>
+  <div className="col-sm-9">
+    <input
+      type="password"
+      name="password"
+      className="form-control"
+      value={profile.password}
+      onChange={handleInputChange}
+      readOnly={!isEditing}
+    />
+  </div>
+</div>
+          </form>
           <button
-            className={`btn ${isEditing ? 'btn-success' : 'btn-warning'} mt-3`}
+            className='mt-3 profile-btn'
             onClick={handleEditProfile}
           >
-            {isEditing ? 'Save Changes' : 'Edit Profile'}
-          </button>
-
-          <button className="btn btn-danger mt-3 ml-3" onClick={handleDeleteAccount}>
-            Delete Account
-          </button>
+            Edit Profile
+          </button>  
         </div>
       </div>
-
-      <div className="text-center mt-4">
-        <button className="btn btn-secondary">Log Out</button>
+      
+      <div className="text-start mt-5">
+      <h4 className='mb-3'>Account Management</h4>
+        <p>
+        Logging out will end your current session. You will need to log in again to access your account, but your data will remain intact and unaffected.
+        </p>
+        <button className="btn profile-btn">Log Out</button>
+        <p className='mt-3'>
+        Deleting your account means removing all of your data from your account permanently and you cannot log in it again at any time.
+      </p>
+      <button className="btn btn-danger mt-3 ml-3 mb-5 delete-btn" onClick={handleDeleteAccount}>
+            Delete Account
+          </button>
       </div>
+    </div>
     </div>
   );
 };
