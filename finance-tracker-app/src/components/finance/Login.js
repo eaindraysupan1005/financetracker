@@ -60,9 +60,10 @@ const Login = () => {
                 <h1 style={{ color }}>{isLoading ? 'Logging in...' : 'Login'}</h1>
                 {error && <p className="error-message">{error}</p>} {/* Display error message */}
                 <form className="flex-form" onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="email">Enter Your Email Address</label>
+                    <div className="login-form-group">
+                        <label htmlFor="email" className='login-label'>Enter Your Email Address</label>
                         <input
+                            className='login-input'
                             type="email"
                             id="email"
                             name="email"
@@ -72,9 +73,10 @@ const Login = () => {
                             onChange={handleInput}
                         />
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="password">Enter Your Password</label>
+                    <div className="login-form-group">
+                        <label htmlFor="password" className='login-label'>Enter Your Password</label>
                         <input
+                            className='login-input'
                             type="password"
                             id="password"
                             name="password"
