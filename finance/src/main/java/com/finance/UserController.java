@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-@CrossOrigin(origins = "https://miniature-succotash-x557wvxpvvqphggg-3000.app.github.dev") // Adjust the URL accordingly
+// @CrossOrigin(origins = "https://miniature-succotash-x557wvxpvvqphggg-3000.app.github.dev") // Adjust the URL accordingly
 @RestController
 public class UserController {
 

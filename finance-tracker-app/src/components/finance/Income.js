@@ -46,7 +46,7 @@ const Income = () => {
                             }}
                         >
                             <div className="circle-icon mb-3">
-                                <i className={`fas fa-${incomeType === 'Add' ? 'plus' : incomeType.toLowerCase()}`} style={{ fontSize: '24px' }}></i>
+                            <i class="fa-solid fa-wallet"></i>
                             </div>
                             <h5>{incomeType}</h5>
                         </div>
@@ -61,7 +61,7 @@ const Income = () => {
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title">Add {selectedIncome}</h5>
-                                <button type="button" className="close" onClick={handleClose}>
+                                <button type="button" className="modalclose" onClick={handleClose}>
                                     <span>&times;</span>
                                 </button>
                             </div>

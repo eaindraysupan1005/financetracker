@@ -5,19 +5,19 @@ import './Footer.css'; // Ensure this path is correct
 const Footer = () => {
   return (
     <footer className="footer">
-      <div className='footer-section'>
-      <div className="logo-section logo-footer">
+      <div className='row footer-section'>
+      <div className="col-lg-4 col-md-4 col-sm-12 logo-section-foot logo-footer text-center">
         <img src="/logo.png" alt="Logo" className="logo-img" />
         <h1 className='footer-h'>Budget Bee</h1>
       </div>
-      <div className="contact-section">
-        <h2>Contact Us</h2>
+      <div className="col-lg-4 col-md-8 col-sm-12 contact-section text-center">
+        <h2 className='footer-head'>Contact Us</h2>
         <p><i className="fa-solid fa-envelope" style={{ color: 'white', fontSize: '24px' }}></i>budgetbee@hotmail.com, budgetbeeservices@gmail.com</p>
         <p><i className="fa-solid fa-phone" style={{ color: 'white', fontSize: '24px' }}></i>+66-7639880114, +66-392845618, +66-274917375</p>
         <p><i className="fa-solid fa-building" style={{ color: 'white', fontSize: '24px' }}></i>333, Moo1, Thasud, Mueang Chiang Rai District, Thailand, 57100</p>
       </div>
-      <div className="social-section">
-        <h2>Follow Us</h2>
+      <div className="col-lg-4 col-md-12 col-sm-12 social-section text-center">
+        <h2 className='footer-head'>Follow Us</h2>
         <div className="social-icons">
         <i className="fa-brands fa-twitter-square" style={{ color: 'white', fontSize: '40px' }}></i>
         <i className="fa-brands fa-instagram-square" style={{ color: 'white', fontSize: '40px' }}></i>

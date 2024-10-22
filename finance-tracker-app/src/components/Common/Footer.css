@@ -1,4 +1,3 @@
-/* Footer.css */
 .footer{
   color: white;
   background-color: #1f665e; 
@@ -8,33 +7,25 @@
   font-size: 1.7rem;
   color: #eac60b;
 }
-.footer-section {
-  display: flex;
-  font-family: 'Battambang';
-  justify-content: space-around; 
-  align-items: center;
-}
-.logo-section{
+.logo-section-foot{
   display:flex;
-  align-items: center;      
+  align-items: center;   
   justify-content: center; 
 }
-.contact-section p{
-  text-align: left;
-  font-size: 0.9rem;
-}
-.contact-section i{
-  padding:10px;
-}
-.logo-footer {
-  max-width: 100px;
-}
-.social-section{
-  padding:10px;
+.footer-head{
+  color:white;
 }
 .social-icons {
+  margin-top:20px;
   display: flex;
+  justify-content: center;
   gap: 30px; 
+}
+.social-section{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding:20px;
 }
 .links{
   padding: 20px 0px;
