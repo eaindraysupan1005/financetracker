@@ -18,6 +18,13 @@
     padding: 0.5rem;
   }
 
+  .profile-form{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+  }
+
   .profile-label{
     font-size: 1.2rem;
   }
@@ -50,3 +57,38 @@
     color: #fff;
   }
   
+  /* Edit profile pop up */
+
+  .edit-profile-popup{
+    max-width: 400px;
+  }
+  .edit-profile-title{
+    color: #1f665e;
+  }
+
+  .edit-form-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .cancel-btn{
+    border-color: #1f665e;
+    transition: all 0.5s ease;
+    width: 100px;
+  }
+  .cancel-btn:hover{
+  background-color: #e7e7e7;
+  }
+  
+  .save-btn{
+    color: #fff;
+    background-color: #eac60b;
+    width: 100px;
+    transition: all 0.5s ease;
+  }
+  
+  .save-btn:hover{
+    color: #fff;
+    background-color: #ffe662;
+  }
