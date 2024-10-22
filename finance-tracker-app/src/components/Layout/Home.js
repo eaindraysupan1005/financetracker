@@ -45,7 +45,7 @@ const Home = () => {
       <div className='banner'>
         <div className="home-description">
           <h1>Personal Finance Tracker</h1>
-          <p>
+          <p className='home-p'>
             Welcome to BUDGET BEE!!<br></br>Your all-in-one personal finance tracker!!<br></br>
             Our intuitive platform helps you manage your money, track spending, and reach your financial goals effortlessly.Whether you want to budget, save, or analysis, we've got the tools you need to stay organized and financially fit.
           </p>

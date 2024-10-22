@@ -21,7 +21,7 @@ const Login = () => {
         event.preventDefault();
         try {
             setIsLoading(true);
-            const response = await fetch('https://miniature-succotash-x557wvxpvvqphggg-8080.app.github.dev/login', { // Replace with your login API URL
+            const response = await fetch('https://probable-doodle-977r9jw5j745cp7wv-8080.app.github.dev/login', { // Replace with your login API URL
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -58,8 +58,9 @@ const Login = () => {
                     <h1 className="logohead">Budget Bee</h1>
                 </div>
                 <h1 style={{ color }}>{isLoading ? 'Logging in...' : 'Login'}</h1>
+
                 {error && <p className="error-message">{error}</p>} {/* Display error message */}
-                <form className="flex-form" onSubmit={handleSubmit}>
+                <form className="login-flex-form" onSubmit={handleSubmit}>
                     <div className="login-form-group">
                         <label htmlFor="email" className='login-label'>Enter Your Email Address</label>
                         <input
