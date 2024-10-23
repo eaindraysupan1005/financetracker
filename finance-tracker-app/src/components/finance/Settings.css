@@ -1,0 +1,27 @@
+/* SettingsPage.css */
+.settings-container {
+    margin-top: 20px;
+    padding: 20px;
+  }
+  
+  .setting-title {
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+
+  
+  .accordion-item {
+    margin-bottom: 10px;
+  }
+  
+  .accordion-header button {
+    font-size: 20px;
+    background-color: #1f665e;
+    color: #fff;
+  }
+
+  .setting-icon{
+    font-size: 30px;
+  }
+  
+ 
