@@ -1,5 +1,7 @@
 package com.finance.domain;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -16,8 +18,20 @@ public class User {
 
     private String name;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Income> incomes;
+
+    public List<Income> getIncomes() {
+        return incomes;
+    }
+
+    public void setIncomes(List<Income> incomes) {
+        this.incomes = incomes;
+    }
+
     // Constructors, Getters, and Setters
-    public User() {}
+    public User() {
+    }
 
     public User(String email, String password, String name) {
         this.email = email;

@@ -21,7 +21,7 @@ const Login = () => {
         event.preventDefault();
         try {
             setIsLoading(true);
-            const response = await fetch('https://probable-doodle-977r9jw5j745cp7wv-8080.app.github.dev/login', { // Replace with your login API URL
+            const response = await fetch('https://fluffy-funicular-977r9jw5j57x395xq-8080.app.github.dev/login', { // Replace with your login API URL
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ const Login = () => {
                         />
                     </div>
                     <div className="form-actions">
-                        <button type="submit">Log In</button>
+                        <button type="submit" className='login-submit'>Log In</button>
                     </div>
                     <div className='form-actions'>
                         <button type="button" className='login-btn'><img src="/Google.png" alt="google" style={{ height: '24px', width: '24px' }}></img> Login with Google</button>

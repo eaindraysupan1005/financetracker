@@ -68,7 +68,7 @@ button {
     font-size: 1.1rem;
 }
 
-button[type="submit"] {
+.login-submit {
     background-color: #eac60b; /* Your preferred button color */
     border:none;
     width: 100%;
