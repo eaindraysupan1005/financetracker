@@ -143,8 +143,9 @@ const Profile = () => {
               
             <div className="modal-body">
               <form>
-                <div className="form-group mb-3 profile-form">
-                  <label className='me-3'>Name</label>
+                <div className="form-group row mb-3 profile-form">
+                  <label className=' col-2 text-start'>Name</label>
+                  <div className='col-10'>
                   <input
                     type="text"
                     name="username"
@@ -152,9 +153,11 @@ const Profile = () => {
                     value={profile.username}
                     onChange={handleInputChange}
                   />
+                  </div>
                 </div>
-                <div className="form-group mb-3 profile-form">
-                  <label className='me-3'>Email</label>
+                <div className="form-group row mb-3 profile-form">
+                  <label className='col-2 text-start'>Email</label>
+                  <div className='col-10'>
                   <input
                     type="email"
                     name="email"
@@ -162,9 +165,11 @@ const Profile = () => {
                     value={profile.email}
                     onChange={handleInputChange}
                   />
+                  </div>
                 </div>
-                <div className="form-group mb-3 profile-form">
-                  <label className='me-3'>Password</label>
+                <div className="form-group row mb-3 profile-form">
+                  <label className='col-2 text-start'>Password</label>
+                  <div className='col-10'>
                   <input
                     type="password"
                     name="password"
@@ -172,6 +177,7 @@ const Profile = () => {
                     value={profile.password}
                     onChange={handleInputChange}
                   />
+                  </div>
                 </div>
               </form>
             </div>
@@ -184,7 +190,7 @@ const Profile = () => {
             >
               Cancel
             </button>
-            <button type="button" className="btn save-btn">Save </button>
+            <button type="button" className="btn save-btn" onClick={handleSaveChanges}>Save </button>
           </div>
             
           </div>

@@ -1,94 +1,94 @@
 .profile-container {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  .profile-card{
-    background-color: #1f665e;
-  }
-  .profile-avatar {
-    color: #fff;
-  }
-  
-  .form-control {
-    background-color: #f8f9fa;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    box-shadow: none;
-    padding: 0.5rem;
-  }
+  max-width: 600px;
+  margin: 0 auto;
+}
 
-  .profile-form{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    align-items: center;
-  }
+.profile-card{
+  background-color: #1f665e;
+}
+.profile-avatar {
+  color: #fff;
+}
 
-  .profile-label{
-    font-size: 1.2rem;
-  }
+.form-control {
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  box-shadow: none;
+  padding: 0.5rem;
+}
 
-  .profile-btn{
-    background-color: #f8f9fa;
-    border: 1px solid #ced4da;
-    transition: all 0.3s ease;
-  }
+.profile-form{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+}
 
-  .profile-btn:hover{
-    background-color: #e7e7e7fd;
-  }
-  
-  .btn-warning {
-    background-color: #ffc107;
-    border-color: #ffc107;
-    color: #fff;
-  }
-  
-  .btn-danger {
-    background-color: #dc3545;
-    border-color: #dc3545;
-    color: #fff;
-  }
-  
-  .btn-secondary {
-    background-color: #6c757d;
-    border-color: #6c757d;
-    color: #fff;
-  }
-  
-  /* Edit profile pop up */
+.profile-label{
+  font-size: 1.2rem;
+}
 
-  .edit-profile-popup{
-    max-width: 400px;
-  }
-  .edit-profile-title{
-    color: #1f665e;
-  }
+.profile-btn{
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  transition: all 0.3s ease;
+}
 
-  .edit-form-btn{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .cancel-btn{
-    border-color: #1f665e;
-    transition: all 0.5s ease;
-    width: 100px;
-  }
-  .cancel-btn:hover{
-  background-color: #e7e7e7;
-  }
-  
-  .save-btn{
-    color: #fff;
-    background-color: #eac60b;
-    width: 100px;
-    transition: all 0.5s ease;
-  }
-  
-  .save-btn:hover{
-    color: #fff;
-    background-color: #ffe662;
-  }
+.profile-btn:hover{
+  background-color: #e7e7e7fd;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  border-color: #ffc107;
+  color: #fff;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: #fff;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: #fff;
+}
+
+/* Edit profile pop up */
+
+.edit-profile-popup{
+  max-width: 500px;
+}
+.edit-profile-title{
+  color: #1f665e;
+}
+
+.edit-form-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cancel-btn{
+  border-color: #1f665e;
+  transition: all 0.5s ease;
+  width: 100px;
+}
+.cancel-btn:hover{
+background-color: #e7e7e7;
+}
+
+.save-btn{
+  color: #fff;
+  background-color: #eac60b;
+  width: 100px;
+  transition: all 0.5s ease;
+}
+
+.save-btn:hover{
+  color: #fff;
+  background-color: #ffe662;
+}
