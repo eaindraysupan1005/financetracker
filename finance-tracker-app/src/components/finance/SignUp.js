@@ -33,7 +33,7 @@ const SignUp = () => {
         
         try {
             setIsLoading(true);
-            const response = await fetch('https://probable-doodle-977r9jw5j745cp7wv-8080.app.github.dev/signup', {
+            const response = await fetch('https://fluffy-funicular-977r9jw5j57x395xq-8080.app.github.dev/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

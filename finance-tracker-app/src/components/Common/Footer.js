@@ -12,9 +12,9 @@ const Footer = () => {
       </div>
       <div className="col-lg-4 col-md-8 col-sm-12 contact-section text-center">
         <h2 className='footer-head'>Contact Us</h2>
-        <p><i className="fa-solid fa-envelope" style={{ color: 'white', fontSize: '24px' }}></i>budgetbee@hotmail.com, budgetbeeservices@gmail.com</p>
-        <p><i className="fa-solid fa-phone" style={{ color: 'white', fontSize: '24px' }}></i>+66-7639880114, +66-392845618, +66-274917375</p>
-        <p><i className="fa-solid fa-building" style={{ color: 'white', fontSize: '24px' }}></i>333, Moo1, Thasud, Mueang Chiang Rai District, Thailand, 57100</p>
+        <p><i className="fa-solid fa-envelope" style={{ color: 'white', fontSize: '24px',marginRight:'10px' }}></i>budgetbee@hotmail.com, budgetbeeservices@gmail.com</p>
+        <p><i className="fa-solid fa-phone" style={{ color: 'white', fontSize: '24px',marginRight:'10px'  }}></i>+66-7639880114, +66-392845618, +66-274917375</p>
+        <p><i className="fa-solid fa-building" style={{ color: 'white', fontSize: '24px',marginRight:'10px'  }}></i>333, Moo1, Thasud, Mueang Chiang Rai District, Thailand, 57100</p>
       </div>
       <div className="col-lg-4 col-md-12 col-sm-12 social-section text-center">
         <h2 className='footer-head'>Follow Us</h2>

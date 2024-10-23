@@ -3,6 +3,9 @@
     #eac60b yellow
     #ffe662 hover
  */
+ .income-container{
+    padding:10px;
+ }
 .income-box {
     width: 200px;
     height: 150px;
@@ -12,9 +15,6 @@
     transition: transform 0.3s;
 }
 
-.income-box:hover {
-    transform: scale(1.05);
-}
 .income-card{
     color:white;
     background-color:#1f665e;
@@ -27,13 +27,41 @@
 .row-income{
     display:flex;
 }
-.circle-icon {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
+.income-modal {
+
     display: flex;
-    align-items: center;
     justify-content: center;
-    background-color: #f8f9fa; /* Light background for the icon circle */
-    margin: 0 auto;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    z-index: 9999;
 }
+
+.income-m {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+}
+
+.income-modal-c {
+    position: relative;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+ text-align: center;
+}
+
+.circle-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #f1f1f1;
+    margin: auto;
+}
+

@@ -4,13 +4,21 @@ import './Income.css';
 
 const Income = () => {
     const [modalVisible, setModalVisible] = useState(false);
+    const [categoryModalVisible, setCategoryModalVisible] = useState(false);
     const [selectedIncome, setSelectedIncome] = useState('');
     const [amount, setAmount] = useState('');
 
     const handleBoxClick = (incomeType) => {
+       if(incomeType=='Add'){
+        setSelectedIncome(incomeType);
+        setCategoryModalVisible(true);
+       }else{
         setSelectedIncome(incomeType);
         setModalVisible(true);
+       }
     };
+
+    
 
     const handleClose = () => {
         setModalVisible(false);
@@ -31,7 +39,7 @@ const Income = () => {
                 {['Salary', 'Freelance', 'Pocket Money', 'Add'].map((incomeType, index) => (
                     <div
                         key={index}
-                        className="col-md-3 d-flex justify-content-start"
+                        className="col-md-3 d-flex justify-content-center"
                         onClick={() => handleBoxClick(incomeType)}
                         style={{ cursor: 'pointer', marginBottom: '20px' }}
                     >
@@ -56,21 +64,18 @@ const Income = () => {
 
             {/* Modal */}
             {modalVisible && (
-                <div className="modal show" style={{ display: 'block' }} onClick={handleClose}>
-                    <div className="modal-dialog">
-                        <div className="modal-content">
+                <div className="modal show modal-dialog-centered" style={{ display: 'block' }} onClick={handleClose}>
+                    <div className="modal-dialog income-m">
+                        <div className="modal-content income-modal-c">
                             <div className="modal-header">
-                                <h5 className="modal-title">Add {selectedIncome}</h5>
-                                <button type="button" className="modalclose" onClick={handleClose}>
-                                    <span>&times;</span>
-                                </button>
+                                <h5>Add {selectedIncome}</h5>
                             </div>
                             <form onSubmit={handleSubmit}>
                                 <div className="modal-body">
                                     <div className="form-group">
                                         <label htmlFor="amount">Amount</label>
                                         <input
-                                            type="number"
+                                            type="text"
                                             className="form-control"
                                             id="amount"
                                             value={amount}
@@ -80,16 +85,62 @@ const Income = () => {
                                     </div>
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" onClick={handleClose}>
-                                        Close
-                                    </button>
+                                    <button type="button" className="cancel-btn" onClick={handleClose}>Cancel</button>
+                                    <button type="submit" className="btn set-btn">Add</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            )}  {/* Modal */}
+
+
+
+            {/*Add Category Modal */}
+            {categoryModalVisible && (
+                <div className="modal show" style={{ display: 'block' }} onClick={handleClose}>
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Add new Category</h5>
+                                <button type="button" className="modalclose" onClick={handleClose}>
+                                    <span>&times;</span>
+                                </button>
+                            </div>
+                            <form onSubmit={handleSubmit}>
+                                <div className="modal-body">
+                                    <div className="form-group">
+                                    <label htmlFor="amount">Amount</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="amount"
+                                            value={amount}
+                                            onChange={(e) => setAmount(e.target.value)}
+                                            required
+                                        />
+                                        <label htmlFor="amount">Amount</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="amount"
+                                            value={amount}
+                                            onChange={(e) => setAmount(e.target.value)}
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <div className="modal-footer">
                                     <button type="submit" className="btn btn-primary">Submit</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
-            )}
+            )} 
+            {/*Add Category Modal */}
+            
+
         </div>
     );
 };

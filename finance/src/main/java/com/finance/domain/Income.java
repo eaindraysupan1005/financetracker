@@ -1,6 +1,6 @@
 package com.finance.domain;
 
-import jakarta.persistence.*;\
+import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -20,8 +20,9 @@ public class Income {
         this.category=category;
         this.amount=amount;
     }
-
-    @ManyToOne
+    
+    @ManyToOne(fetch = FetchType.LAZY) // Or FetchType.EAGER if necessary
+    @JoinColumn(name = "user_id", nullable = false) // Foreign key to the User entity
     private User user;
 
     public long getId() {
