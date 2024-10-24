@@ -5,16 +5,16 @@ CREATE TABLE IF NOT EXISTS users (
     name VARCHAR(50)
 );
 
-INSERT INTO "USERS" (email, password, name) VALUES ('alice.smith@example.com', 'pass123', 'Alice Smith');
-INSERT INTO "USERS" (email, password, name) VALUES ('bob.johnson@example.com', 'pass121', 'Bob Johnson');
-INSERT INTO "USERS" (email, password, name) VALUES ('charlie.brown@example.com', 'pass183', 'Charlie Brown');
-INSERT INTO "USERS" (email, password, name) VALUES ('david.wilson@example.com', 'pass923', 'David Wilson');
-INSERT INTO "USERS" (email, password, name) VALUES ('emma.jones@example.com', 'pass103', 'Emma Jones');
-INSERT INTO "USERS" (email, password, name) VALUES ('fiona.miller@example.com', 'pass423', 'Fiona Miller');
-INSERT INTO "USERS" (email, password, name) VALUES ('george.davis@example.com', 'pass133', 'George Davis');
-INSERT INTO "USERS" (email, password, name) VALUES ('hannah.garcia@example.com', 'pass223', 'Hannah Garcia');
-INSERT INTO "USERS" (email, password, name) VALUES ('ian.thompson@example.com', 'pass120', 'Ian Thompson');
-INSERT INTO "USERS" (email, password, name) VALUES ('julia.martinez@example.com', 'pass723', 'Julia Martinez');
+INSERT INTO "USERS" (email, password, name) VALUES ('alice.smith@example.com', 'pass1234', 'Alice Smith');
+INSERT INTO "USERS" (email, password, name) VALUES ('bob.johnson@example.com', 'pass1214', 'Bob Johnson');
+INSERT INTO "USERS" (email, password, name) VALUES ('charlie.brown@example.com', 'pass1834', 'Charlie Brown');
+INSERT INTO "USERS" (email, password, name) VALUES ('david.wilson@example.com', 'pass9243', 'David Wilson');
+INSERT INTO "USERS" (email, password, name) VALUES ('emma.jones@example.com', 'pass1034', 'Emma Jones');
+INSERT INTO "USERS" (email, password, name) VALUES ('fiona.miller@example.com', 'pass4243', 'Fiona Miller');
+INSERT INTO "USERS" (email, password, name) VALUES ('george.davis@example.com', 'pass1433', 'George Davis');
+INSERT INTO "USERS" (email, password, name) VALUES ('hannah.garcia@example.com', 'pass4223', 'Hannah Garcia');
+INSERT INTO "USERS" (email, password, name) VALUES ('ian.thompson@example.com', 'pass1240', 'Ian Thompson');
+INSERT INTO "USERS" (email, password, name) VALUES ('julia.martinez@example.com', 'pass7243', 'Julia Martinez');
 
 
 CREATE TABLE IF NOT EXISTS income (
@@ -26,16 +26,16 @@ CREATE TABLE IF NOT EXISTS income (
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES USERS(id) ON DELETE CASCADE
 );
 
-INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-01', 'Salary', 5000.00, 1);
-INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-09-15', 'Freelance', 1500.00, 2);
-INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-05', 'Bonus', 2000.00, 1);
-INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-09-10', 'Rental Income', 800.00, 2);
-INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-09-20', 'Dividend', 300.00, 3);
-INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-01', 'Salary', 4800.00, 3);
-INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-03', 'Stock Gains', 1200.00, 3);
-INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-08', 'Consulting', 2500.00, 3);
-INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-09-29', 'Interest', 500.00, 3);
-INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-09-25', 'Bonus', 1800.00, 3);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-24', 'Salary', 5000.00, 1);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-24', 'Freelance', 1500.00, 2);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-24', 'Bonus', 2000.00, 1);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-24', 'Rental Income', 800.00, 2);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-24', 'Dividend', 300.00, 3);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-24', 'Salary', 4800.00, 3);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-24', 'Stock Gains', 1200.00, 3);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-20', 'Consulting', 2500.00, 3);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-20', 'Interest', 500.00, 3);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-22', 'Bonus', 1800.00, 3);
 
 
 
