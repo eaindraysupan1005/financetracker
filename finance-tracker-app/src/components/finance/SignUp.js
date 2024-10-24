@@ -33,7 +33,7 @@ const SignUp = () => {
         
         try {
             setIsLoading(true);
-            const response = await fetch('https://fluffy-funicular-977r9jw5j57x395xq-8080.app.github.dev/signup', {
+            const response = await fetch('https://vigilant-funicular-v669vqwrqqww24pq-8080.app.github.dev/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -123,7 +123,7 @@ const SignUp = () => {
                         {error && user.retypePassword && <p className="error-message">{error}</p>} {/* Display error message for password mismatch */}
                     </div>
                     <div className="form-actions">
-                        <button type="submit">Sign Up</button>
+                        <button type="submit" className='signup-submit'>Sign Up</button>
                     </div>
                     <div className='form-actions'>
                         <button type="button" className='google-signup'>

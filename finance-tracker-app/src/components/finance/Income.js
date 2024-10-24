@@ -1,15 +1,38 @@
 // src/components/Income.js
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './Income.css';
+import { useParams } from 'react-router-dom';
 
 const Income = () => {
+
+    const { userId } = useParams();  // Retrieve the userId from the URL
+
+    const fetchIncomeData = useCallback((type) => {
+        fetch(`https://vigilant-funicular-v669vqwrqqww24pq-8080.app.github.dev/income/${userId}/${type}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => setIncomeList(data))
+            .catch(error => console.error('Error fetching income data:', error));
+            console.log(`Fetching income data for userId: ${userId}, type: ${type}`);
+    }, [userId]);  
+
+
     const [modalVisible, setModalVisible] = useState(false);
     const [categoryModalVisible, setCategoryModalVisible] = useState(false);
     const [selectedIncome, setSelectedIncome] = useState('');
     const [amount, setAmount] = useState('');
+    const [category, setCategory] = useState('');
+    const [incomeList, setIncomeList] = useState([]);
+    const [viewType, setViewType] = useState('daily');
+
+    const icons = ['fa-solid fa-wallet', 'fa-solid fa-briefcase', 'fa-solid fa-coins', 'fa-solid fa-plus-circle'];
 
     const handleBoxClick = (incomeType) => {
-       if(incomeType=='Add'){
+       if(incomeType==='Add'){
         setSelectedIncome(incomeType);
         setCategoryModalVisible(true);
        }else{
@@ -18,19 +41,36 @@ const Income = () => {
        }
     };
 
-    
 
     const handleClose = () => {
         setModalVisible(false);
+        setCategoryModalVisible(false);
         setAmount('');
+        setCategory('');
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
         // Handle the amount submission
         console.log(`Amount for ${selectedIncome}: ${amount}`);
+        console.log(`Amount for ${category}: ${amount}`);
         handleClose();
     };
+
+    useEffect(() => {
+        fetchIncomeData(viewType);
+    }, [viewType, fetchIncomeData]);
+    
+
+    const handleDelete = (incomeId) => {
+        fetch(`https://vigilant-funicular-v669vqwrqqww24pq-8080.app.github.dev/${userId}/${incomeId}`, { method: 'DELETE' })
+            .then(() => {
+                // After deletion, refresh the current view
+                fetchIncomeData(viewType);
+            })
+            .catch(error => console.error('Error deleting income:', error));
+    };
+
 
     return (
         <div className="container mt-5">
@@ -54,7 +94,7 @@ const Income = () => {
                             }}
                         >
                             <div className="circle-icon mb-3">
-                            <i class="fa-solid fa-wallet"></i>
+                            <i className={icons[index]} style={{color:'black'}}></i>
                             </div>
                             <h5>{incomeType}</h5>
                         </div>
@@ -64,29 +104,31 @@ const Income = () => {
 
             {/* Modal */}
             {modalVisible && (
-                <div className="modal show modal-dialog-centered" style={{ display: 'block' }} onClick={handleClose}>
-                    <div className="modal-dialog income-m">
+                <div className="modal show " style={{ display: 'block' }} onClick={handleClose}>
+                    <div className="modal-dialog modal-dialog-centered income-m">
                         <div className="modal-content income-modal-c">
                             <div className="modal-header">
                                 <h5>Add {selectedIncome}</h5>
                             </div>
                             <form onSubmit={handleSubmit}>
                                 <div className="modal-body">
-                                    <div className="form-group">
-                                        <label htmlFor="amount">Amount</label>
+                                    <div className="income-form">
+                                       <div className='form-items-income'>
+                                       <label htmlFor="amount">Amount: </label>
                                         <input
                                             type="text"
-                                            className="form-control"
+                                            className="form-control income-inputtext"
                                             id="amount"
                                             value={amount}
                                             onChange={(e) => setAmount(e.target.value)}
                                             required
                                         />
+                                       </div>
                                     </div>
                                 </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="cancel-btn" onClick={handleClose}>Cancel</button>
-                                    <button type="submit" className="btn set-btn">Add</button>
+                                <div className="modal-footer income-mfoot">
+                                    <button type="button" className="income-cbtn" onClick={handleClose}>Cancel</button>
+                                    <button type="submit" className="btn income-addbtn">Add</button>
                                 </div>
                             </form>
                         </div>
@@ -94,44 +136,44 @@ const Income = () => {
                 </div>
             )}  {/* Modal */}
 
-
-
             {/*Add Category Modal */}
             {categoryModalVisible && (
                 <div className="modal show" style={{ display: 'block' }} onClick={handleClose}>
-                    <div className="modal-dialog">
+                    <div className="modal-dialog modal-dialog-centered">
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title">Add new Category</h5>
-                                <button type="button" className="modalclose" onClick={handleClose}>
-                                    <span>&times;</span>
-                                </button>
                             </div>
                             <form onSubmit={handleSubmit}>
                                 <div className="modal-body">
-                                    <div className="form-group">
-                                    <label htmlFor="amount">Amount</label>
+                                    <div className="income-form">
+                                        <div className='form-items-income'>
+                                    <label htmlFor="category">Enter Category Name: </label>
                                         <input
                                             type="text"
-                                            className="form-control"
+                                            className="form-control income-inputtext"
                                             id="amount"
                                             value={amount}
                                             onChange={(e) => setAmount(e.target.value)}
                                             required
                                         />
-                                        <label htmlFor="amount">Amount</label>
+                                        </div>
+                                        <div className='form-items-income'>
+                                        <label htmlFor="amount">Enter Amount: </label>
                                         <input
                                             type="text"
-                                            className="form-control"
+                                            className="form-control income-inputtext"
                                             id="amount"
                                             value={amount}
                                             onChange={(e) => setAmount(e.target.value)}
                                             required
                                         />
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="modal-footer">
-                                    <button type="submit" className="btn btn-primary">Submit</button>
+                                <div className="modal-footer income-mfoot">
+                                <button type="button" className="income-cbtn" onClick={handleClose}>Cancel</button>
+                                <button type="submit" className="btn income-addbtn">Add</button>
                                 </div>
                             </form>
                         </div>
@@ -139,6 +181,43 @@ const Income = () => {
                 </div>
             )} 
             {/*Add Category Modal */}
+
+
+
+            {/*Income List */}
+
+            <div>
+            <div style={{ marginBottom: '20px' }}>
+                <button onClick={() => setViewType('daily')}>Daily</button>
+                <button onClick={() => setViewType('weekly')}>Weekly</button>
+                <button onClick={() => setViewType('monthly')}>Monthly</button>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                {incomeList.map(income => (
+                    <div key={income.id} className='income-lists'>
+                        <p>Category: {income.category}</p>
+                        <p>Amount: ${income.amount}</p>
+                        <p>Date: {new Date(income.date).toLocaleDateString()}</p>
+                        <button onClick={() => handleDelete(income.id)}>Delete</button>
+                    </div>
+                ))}
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             
 
         </div>

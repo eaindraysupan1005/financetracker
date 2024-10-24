@@ -31,29 +31,30 @@ public class UserController {
         return new ResponseEntity<>("Signup successful", HttpStatus.CREATED);
     }
 
-   // Login method
-@PostMapping("/login")
-public ResponseEntity<Map<String, String>> login(@RequestBody User loginRequest) {
-    Map<String, String> response = new HashMap<>();
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, Object>> login(@RequestBody User loginRequest) {
+        Map<String, Object> response = new HashMap<>();
+        
+        // Find the user by email
+        Optional<User> existingUser = userRepository.findByEmail(loginRequest.getEmail());
     
-    // Find the user by email
-    Optional<User> existingUser = userRepository.findByEmail(loginRequest.getEmail());
-
-    if (existingUser.isPresent()) {
-        // Check if the password matches
-        User user = existingUser.get();
-        if (user.getPassword().equals(loginRequest.getPassword())) {
-            response.put("message", "Login successful");
-            return new ResponseEntity<>(response, HttpStatus.OK);
+        if (existingUser.isPresent()) {
+            // Check if the password matches
+            User user = existingUser.get();
+            if (user.getPassword().equals(loginRequest.getPassword())) {
+                response.put("message", "Login successful");
+                response.put("user", Map.of("id", user.getId())); // Add user ID to the response
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            } else {
+                response.put("message", "Invalid password");
+                return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+            }
         } else {
-            response.put("message", "Invalid password");
-            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+            response.put("message", "User not found");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
-    } else {
-        response.put("message", "User not found");
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
-}
+    
 
 }
 

@@ -21,23 +21,22 @@ const Login = () => {
         event.preventDefault();
         try {
             setIsLoading(true);
-            const response = await fetch('https://fluffy-funicular-977r9jw5j57x395xq-8080.app.github.dev/login', { // Replace with your login API URL
+            const response = await fetch('https://vigilant-funicular-v669vqwrqqww24pq-8080.app.github.dev/login', { // Replace with your login API URL
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(user),
             });
-
             if (response.ok) {
                 const data = await response.json();
-                console.log('Login successful:', data.message); // Access the message from JSON
-                // You can store user data in local storage or context here
-                navigate('/budgets'); // Redirect to a dashboard or home page
-            } else {
-                const errorData = await response.json();
-                setError(errorData.message || 'Login failed! Please try again.');
+                // Store user data in localStorage or context here
+                localStorage.setItem('userId', data.user.id);  // Store user ID in localStorage
+            
+                // Navigate to the income page, passing the user ID in the URL
+                navigate(`/income/${data.user.id}`);
             }
+            
             
         } catch (error) {
             setError('An error occurred: ' + error.message);
