@@ -245,15 +245,16 @@ const Budget = () => {
               <i className="fas fa-home fa-2x"></i>
             </div>
             <div className="icon-item">
-            <i className="fa-solid fa-heart fa-2x"></i>
-            </div>
-            <div className="icon-item">
             <i class="fa-solid fa-sack-dollar"></i>
             </div>
+            <div className="icon-item">
+            <i class="fa-solid fa-heart-pulse fa-2x"></i>
+            </div>
+            
 
             {/* Second row of 5 icons */}
             <div className="icon-item">
-            <i class="fa-solid fa-sack-dollar"></i>
+            <i class="fa-solid fa-circle-dollar-to-slot fa-2x"></i>
             </div>
             <div className="icon-item">
               <i className="fas fa-receipt fa-2x"></i>
