@@ -109,6 +109,8 @@ const Income = () => {
                         <div className="modal-content income-modal-c">
                             <div className="modal-header">
                                 <h5>Add {selectedIncome}</h5>
+                                <h5>Add {selectedIncome}</h5>
+
                             </div>
                             <form onSubmit={handleSubmit}>
                                 <div className="modal-body">
@@ -205,23 +207,10 @@ const Income = () => {
             </div>
         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
             
 
         </div>
     );
 };
-
+//testing
 export default Income;
