@@ -116,9 +116,40 @@
   }
   
 
-.income-list{
-     border: 1px solid #ccc;
-    padding: 10px;
-    width: 100%;
-    border-radius:  5px;
+  .income-lists {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.income-lists:hover {
+    transform: scale(1.02);
+}
+
+.income-lists p {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.income-lists button {
+    padding: 5px 10px;
+    font-size: 14px;
+    color: white;
+    background-color: #e74c3c;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.income-lists button:hover {
+    background-color: #c0392b;
 }

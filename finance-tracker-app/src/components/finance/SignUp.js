@@ -33,7 +33,7 @@ const SignUp = () => {
         
         try {
             setIsLoading(true);
-            const response = await fetch('http://localhost:8080/signup', {
+            const response = await fetch('https://gloomy-spooky-goblin-4jj57w6vwvv927gp6-8080.app.github.dev/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

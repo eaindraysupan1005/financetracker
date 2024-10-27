@@ -11,29 +11,31 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/income/{userId}")
+@RequestMapping("/api/income")
 public class IncomeController {
 
     @Autowired
     private IncomeRepository incomeRepository;
 
     // Fetch daily income
-    @GetMapping("/daily")
+    @GetMapping("/daily/{userId}")
     public List<Income> getDailyIncome(@PathVariable Long userId) {
         return incomeRepository.findDailyIncomeByUserId(userId);
     }
 
     // Fetch weekly income
-    @GetMapping("/weekly")
+    @GetMapping("/weekly/{userId}")
     public List<Income> getWeeklyIncome(@PathVariable Long userId) {
         LocalDate today = LocalDate.now();
         LocalDate startOfWeek = today.with(TemporalAdjusters.previousOrSame(java.time.DayOfWeek.MONDAY));
         LocalDate endOfWeek = today.with(TemporalAdjusters.nextOrSame(java.time.DayOfWeek.SUNDAY));
+        System.out.println("Weekly Start: " + startOfWeek + ", End: " + endOfWeek);
         return incomeRepository.findIncomeByUserIdAndDateRange(userId, java.sql.Date.valueOf(startOfWeek), java.sql.Date.valueOf(endOfWeek));
+
     }
 
     // Fetch monthly income
-    @GetMapping("/monthly")
+    @GetMapping("/monthly/{userId}")
     public List<Income> getMonthlyIncome(@PathVariable Long userId) {
         LocalDate today = LocalDate.now();
         LocalDate startOfMonth = today.with(TemporalAdjusters.firstDayOfMonth());
@@ -42,7 +44,7 @@ public class IncomeController {
     }
 
     // Delete an income record
-    @DeleteMapping("/{incomeId}")
+    @DeleteMapping("/{userId}/{incomeId}")
     public void deleteIncome(@PathVariable Long userId, @PathVariable Long incomeId) {
         incomeRepository.deleteByIdAndUserId(incomeId, userId);
     }
