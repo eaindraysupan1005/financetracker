@@ -33,7 +33,7 @@ const SignUp = () => {
         
         try {
             setIsLoading(true);
-            const response = await fetch('https://shadowy-monster-r44qgpw6pp4whpx9w-8080.app.github.dev/signup', {
+            const response = await fetch('http://localhost:8080/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

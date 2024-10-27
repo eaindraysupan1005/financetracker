@@ -1,5 +1,5 @@
 // src/components/Income.js
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import './Income.css';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -15,7 +15,8 @@ const Income = () => {
     const [viewType, setViewType] = useState('daily'); // Default to daily
     const [error, setError] = useState(null);
     const icons = ['fa-solid fa-wallet', 'fa-solid fa-briefcase', 'fa-solid fa-coins', 'fa-solid fa-plus-circle'];
-    const incomeApi = `https://shadowy-monster-r44qgpw6pp4whpx9w-8080.app.github.dev/income`;
+    const incomeApi = `http://localhost:8080/income`;
+    const dailyButtonRef = useRef(null);
 
     // Function to fetch income data based on the view type
     const fetchIncomeData = useCallback(async (type) => {
@@ -28,10 +29,17 @@ const Income = () => {
         }
         console.log(`Fetching income data for userId: ${userId}, type: ${type}`);
     }, [userId, incomeApi]);
-    
+
     useEffect(() => {
         fetchIncomeData(viewType); // Fetch data when viewType changes
     }, [viewType, fetchIncomeData]);
+
+    useEffect(() => {
+        // Set focus on the Daily button when the component mounts
+        if (dailyButtonRef.current) {
+            dailyButtonRef.current.focus();
+        }
+    }, []);
 
     const handleBoxClick = (incomeType) => {
         if (incomeType === 'Add') {
@@ -71,30 +79,22 @@ const Income = () => {
     };
 
     return (
-        <div className="container mt-5">
+        <div className="income-container mt-5">
             <p className='income-head'>Choose Category</p>
             <div className="row-income">
                 {['Salary', 'Freelance', 'Pocket Money', 'Add'].map((incomeType, index) => (
                     <div
                         key={index}
-                        className="col-md-3 d-flex justify-content-center"
+                        className="col-md-3 d-flex justify-content-start"
                         onClick={() => handleBoxClick(incomeType)}
                         style={{ cursor: 'pointer', marginBottom: '20px' }}
                     >
-                        <div
-                            className="income-card text-center p-4"
-                            style={{
-                                width: '150px',
-                                height: '170px',
-                                border: '1px solid #ccc',
-                                borderRadius: '8px',
-                                boxShadow: '2px 2px 10px rgba(0,0,0,0.1)'
-                            }}
-                        >
+                        <div className="income-card text-center p-4" >
+                            <h5 className='income-type'>{incomeType}</h5>
                             <div className="circle-icon mb-3">
                                 <i className={icons[index]} style={{ color: 'black' }}></i>
                             </div>
-                            <h5>{incomeType}</h5>
+
                         </div>
                     </div>
                 ))}
@@ -181,22 +181,22 @@ const Income = () => {
 
             {/* Income List */}
             <div>
-                <div style={{ marginBottom: '20px' }}>
-                    <button onClick={() => setViewType('daily')}>Daily</button>
-                    <button onClick={() => setViewType('weekly')}>Weekly</button>
-                    <button onClick={() => setViewType('monthly')}>Monthly</button>
+                <div className='buttongroup' style={{ marginBottom: '20px' }}>
+                    <button ref={dailyButtonRef} onClick={() => setViewType('daily')} className='filter-income' id="incomedaily">Daily</button>
+                    <button onClick={() => setViewType('weekly')} className='filter-income'>Weekly</button>
+                    <button onClick={() => setViewType('monthly')} className='filter-income'>Monthly</button>
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                <div className='income-lists'>
                     {incomeList.map(income => (
-                        <div key={income.id} className='income-lists'>
-                            <p>Category: {income.category}</p>
-                            <p>Amount: ${income.amount}</p>
-                            <p>Date: {new Date(income.date).toLocaleDateString()}</p>
-                            <button onClick={() => handleDelete(income.id)}>Delete</button>
+                        <div key={income.id} className='income-item'>
+                            <div className='income-category'>{income.category}</div>
+                            <div className='income-amount'>${income.amount}</div>
+                            <div className='income-date'>{new Date(income.date).toLocaleDateString()}</div>
                         </div>
                     ))}
                 </div>
+
             </div>
         </div>
     );

@@ -31,20 +31,23 @@ public class IncomeController {
         LocalDate startOfWeek = today.with(TemporalAdjusters.previousOrSame(java.time.DayOfWeek.MONDAY));
         LocalDate endOfWeek = today.with(TemporalAdjusters.nextOrSame(java.time.DayOfWeek.SUNDAY));
     
-        List<Income> incomes = incomeRepository.findIncomeByUserIdAndDateRange(userId,
-                java.sql.Date.valueOf(startOfWeek), java.sql.Date.valueOf(endOfWeek));
-        
+        List<Income> incomes = incomeRepository.findIncomeByUserIdAndDateRange(userId,startOfWeek, endOfWeek);
+        System.out.println("Start of week: " + startOfWeek);
+        System.out.println("End of week: " + endOfWeek);
+        System.out.println("Income List: " + incomes);
         return new ResponseEntity<>(incomes, HttpStatus.OK);
     }
     
 
     // Fetch monthly income
     @GetMapping("/monthly/{userId}")
-    public List<Income> getMonthlyIncome(@PathVariable Long userId) {
+    public ResponseEntity<List<Income>> getMonthlyIncome(@PathVariable Long userId) {
         LocalDate today = LocalDate.now();
         LocalDate startOfMonth = today.with(TemporalAdjusters.firstDayOfMonth());
         LocalDate endOfMonth = today.with(TemporalAdjusters.lastDayOfMonth());
-        return incomeRepository.findIncomeByUserIdAndDateRange(userId, java.sql.Date.valueOf(startOfMonth), java.sql.Date.valueOf(endOfMonth));
+        List<Income> incomes = incomeRepository.findIncomeByUserIdAndDateRange(userId, startOfMonth, endOfMonth);
+
+        return new ResponseEntity<>(incomes, HttpStatus.OK);
     }
 
     // Delete an income record
