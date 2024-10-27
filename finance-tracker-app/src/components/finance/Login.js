@@ -21,7 +21,7 @@ const Login = () => {
         event.preventDefault();
         try {
             setIsLoading(true);
-            const response = await fetch('https://vigilant-funicular-v669vqwrqqww24pq-8080.app.github.dev/login', { // Replace with your login API URL
+            const response = await fetch('http://localhost:8080/login', { // Replace with your login API URL
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

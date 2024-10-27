@@ -1,26 +1,12 @@
 // src/components/Income.js
 import React, { useState, useEffect, useCallback } from 'react';
 import './Income.css';
+import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 const Income = () => {
 
     const { userId } = useParams();  // Retrieve the userId from the URL
-
-    const fetchIncomeData = useCallback((type) => {
-        fetch(`https://vigilant-funicular-v669vqwrqqww24pq-8080.app.github.dev/income/${userId}/${type}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => setIncomeList(data))
-            .catch(error => console.error('Error fetching income data:', error));
-            console.log(`Fetching income data for userId: ${userId}, type: ${type}`);
-    }, [userId]);  
-
-
     const [modalVisible, setModalVisible] = useState(false);
     const [categoryModalVisible, setCategoryModalVisible] = useState(false);
     const [selectedIncome, setSelectedIncome] = useState('');
@@ -28,8 +14,9 @@ const Income = () => {
     const [category, setCategory] = useState('');
     const [incomeList, setIncomeList] = useState([]);
     const [viewType, setViewType] = useState('daily');
-
+    const [error, setError] = useState(null);
     const icons = ['fa-solid fa-wallet', 'fa-solid fa-briefcase', 'fa-solid fa-coins', 'fa-solid fa-plus-circle'];
+    const incomeApi = "http://localhost:8080/${userId}";
 
     const handleBoxClick = (incomeType) => {
        if(incomeType==='Add'){
@@ -62,15 +49,35 @@ const Income = () => {
     }, [viewType, fetchIncomeData]);
     
 
-    const handleDelete = (incomeId) => {
-        fetch(`https://vigilant-funicular-v669vqwrqqww24pq-8080.app.github.dev/${userId}/${incomeId}`, { method: 'DELETE' })
-            .then(() => {
-                // After deletion, refresh the current view
-                fetchIncomeData(viewType);
+    // Using useCallback for fetching income data
+    const fetchIncomeData = useCallback((type) => {
+        axios.get(incomeApi.concat('/')+type)
+            .then(response => {
+                setIncomeList(response.data);
             })
-            .catch(error => console.error('Error deleting income:', error));
-    };
-
+            .catch(error => {
+                console.error('Error fetching income data:', error);
+            });
+        console.log(`Fetching income data for userId: ${userId}, type: ${type}`);
+    }, [userId]);
+    
+    
+    // Handling delete request
+    const handleDelete = async (id) => {
+        console.log("id : -", id);
+        try {
+          const response = await fetch(incomeApi.concat("/") + id, {
+            method: "DELETE",
+          });
+          if (!response.ok) {
+            throw new Error("Failed to delete item");
+          }
+          setIncomeList(incomeList.filter((item) => item.id !== id));
+        } catch (error) {
+          setError(error.message);
+        } 
+      };
+    
 
     return (
         <div className="container mt-5">
@@ -109,6 +116,8 @@ const Income = () => {
                         <div className="modal-content income-modal-c">
                             <div className="modal-header">
                                 <h5>Add {selectedIncome}</h5>
+                                <h5>Add {selectedIncome}</h5>
+
                             </div>
                             <form onSubmit={handleSubmit}>
                                 <div className="modal-body income-body">
@@ -205,23 +214,10 @@ const Income = () => {
             </div>
         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
             
 
         </div>
     );
 };
-
+//testing
 export default Income;
