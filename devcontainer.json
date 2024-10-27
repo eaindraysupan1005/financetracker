@@ -1,5 +1,5 @@
 {
-    "name": "Finance Project",
+    "name": "financetracker",
     "image": "mcr.microsoft.com/vscode/devcontainers/java",
     "features": {
         "ghcr.io/devcontainers/features/java": {
@@ -17,11 +17,9 @@
         }
     },
     "postCreateCommand": [
-        "sudo apt update",
-        "sudo apt install -y openjdk-17-jdk",
-        "echo 'export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))) )' >> ~/.bashrc",
-        "echo 'export PATH=$JAVA_HOME/bin:$PATH' >> ~/.bashrc",
-        "source ~/.bashrc"
+        "sudo apt update && sudo apt install -y openjdk-17-jdk",
+        "echo 'export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64' >> ~/.bashrc",
+        "echo 'export PATH=$JAVA_HOME/bin:$PATH' >> ~/.bashrc"
     ],
     "remoteUser": "vscode"
 }
