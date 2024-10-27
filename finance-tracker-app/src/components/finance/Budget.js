@@ -5,6 +5,18 @@ const Budget = () => {
   const [category, setCategory] = useState('');
   const [newCategory, setNewCategory] = useState('');
   const [targetCategory, setTargetCategory] = useState('');
+  const [budgets, setBudgets] = useState([]);
+  const [targets, setTargets] = useState([]);
+  const [limit, setLimit] = useState('');
+  
+  const categories = [
+    { name: 'Food', icon: 'fas fa-utensils' },
+    { name: 'Shopping', icon: 'fa-solid fa-cart-shopping' },
+    { name: 'Transportation', icon: 'fa-solid fa-car' },
+    { name: 'Entertainment', icon: 'fa-solid fa-film' }
+  ];
+  
+
   const handleSetCategory = (categoryName) => {
     setCategory(categoryName);
   };
@@ -17,46 +29,43 @@ const Budget = () => {
     setTargetCategory(targetName);
   }
 
+  const handleAddBudget = () => {
+    if (category && limit) {
+      setBudgets([...budgets, {category, limit}]);
+      setCategory('');
+      setLimit('');
+    }
+  }
+
+  const availableCategories = categories.filter(cat => !budgets.includes(cat.name));
+
+  const handleAddNewCategory = () => {
+    if(newCategory && limit) {
+      setBudgets([...budgets, {category: newCategory, limit}]);
+      setNewCategory('');
+      setLimit('');
+    }
+  }
+
   return (
     <div>
       <main className="budget-main">
       <h3 className='fw-bold setBudget'>Set Budget for this month</h3>
       <div className="budget-categories">
-        <div className="mb-4 category-item">
-          <div><i className="fas fa-utensils me-3"></i> Food</div>
-          <button className="btn btn-outline-dark set-budget-btn"
-                data-bs-toggle="modal"
-                data-bs-target="#budgetModal" onClick={() => handleSetCategory('Food')}>
-            Set Budget
-          </button>
-        </div>
-        <div className="mb-4 category-item">
-          <div><i className="fa-solid fa-cart-shopping me-3"></i> Shopping</div>
-          <button className="btn btn-outline-dark set-budget-btn"
-                data-bs-toggle="modal"
-                data-bs-target="#budgetModal" onClick={() => handleSetCategory('Shopping')}>
-            Set Budget
-          </button>
-        </div>
-        <div className="mb-4 category-item">
-          <div><i className="fa-solid fa-car me-3"></i> Transportation</div>
-          <button className="btn btn-outline-dark set-budget-btn"
-                data-bs-toggle="modal"
-                data-bs-target="#budgetModal" onClick={() => handleSetCategory('Transportation')}>
-            Set Budget
-          </button>
-        </div>
-        <div className="mb-4 category-item">
-          <div><i class="fa-solid fa-film me-3"></i> Entertainment</div>
-          <button className="btn btn-outline-dark set-budget-btn"
-                data-bs-toggle="modal"
-                data-bs-target="#budgetModal" onClick={() => handleSetCategory('Entertainment')}>
-            Set Budget
-          </button>
-        </div>
+      {availableCategories.map(cat => (
+            <div key={cat.name} className="mb-4 category-item">
+              <div><i className={`${cat.icon} me-3`}></i> {cat.name}</div>
+              <button className="btn btn-outline-dark set-budget-btn"
+                      data-bs-toggle="modal"
+                      data-bs-target="#budgetModal"
+                      onClick={() => handleSetCategory(cat.name)}>
+                Set Budget
+              </button>
+            </div>
+          ))}
         <div className="mt-5 add-category">
         <button className="btn shadow add-category-btn" data-bs-toggle="modal"
-                data-bs-target="#newCategoryModal" onClick={() => handleSetNewCategory('Shopping')}>
+                data-bs-target="#newCategoryModal" onClick={() => handleSetNewCategory('newCategoryName')}>
               + Add New Category
             </button>
         </div>
@@ -64,9 +73,19 @@ const Budget = () => {
 
       <div className='set-budgeted'>
       <h3 className="fw-bold mt-5">Budgeted categories:</h3>
-          <p className="text-muted mt-5 no-budget">
-            Currently, no budget is applied. Set budget-limit for this month.
-          </p>
+      {budgets.length === 0 ? (
+            <p className="text-muted mt-5 no-budget">
+              Currently, no budget is applied. Set budget-limit for this month.
+            </p>
+          ) : (
+            <ul>
+              {budgets.map((budget, index) => (
+                <li key={index}>
+                  {budget.category}: ${budget.limit}
+                </li>
+              ))}
+            </ul>
+          )}
       </div>
 
       {/* Saving goal section */}
@@ -161,6 +180,8 @@ const Budget = () => {
       {/* End Saving goal section */}
 
       {/* Modal or other components can be added here */}
+
+      {/* set budget modal */}
       <div
       className="modal fade"
       id="budgetModal"
@@ -174,20 +195,22 @@ const Budget = () => {
           <div className="modal-body">
             <form>
               <div className="mb-3 d-flex me-2 budget-form">
-                <label for="category" className="form-label me-3 ">Category:</label>
+                <label htmlFor="category" className="form-label me-3 ">Category:</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="category"
+                  value={category}
                   readonly
                 />
               </div>
               <div className="mb-3 d-flex me-2 budget-form">
-                <label for="limit" className="form-label me-5 ">Limit:</label>
+                <label htmlFor="limit" className="form-label me-5 ">Limit:</label>
                 <input
                   type="text"
                   className="form-control"
                   id="limit"
+                  value={limit}
+                  onChange={(e) => setLimit(e.target.value)}
                   placeholder='0'
                 />
               </div>
@@ -204,13 +227,13 @@ const Budget = () => {
             >
               Cancel
             </button>
-            <button type="button" className="btn set-btn">Set</button>
+            <button type="button" className="btn set-btn" onClick={handleAddBudget} data-bs-dismiss='modal'>Set</button>
           </div>
         </div>
       </div>
     </div>
 
-    {/* Add New Category Pop up */}
+    {/* Add New Category Modal */}
     <div
       className="modal fade"
       id="newCategoryModal"
@@ -224,8 +247,8 @@ const Budget = () => {
 
         {/* Category Name Input  */} 
         <div className="mb-3 ms-3 me-3 text-start">
-          <label for="newCategoryName" className="form-label fw-bold">Enter Category Name</label>
-          <input type="text" className="form-control" id="newCategoryName" placeholder="Name"/>
+          <label htmlFor="newCategoryName" className="form-label fw-bold">Enter Category Name</label>
+          <input type="text" className="form-control" id="newCategoryName" value={newCategory} onChange={(e) => setNewCategory(e.target.value)} placeholder="Name"/>
         </div>
         
         {/* Icon Selection */}
@@ -287,7 +310,7 @@ const Budget = () => {
             >
               Cancel
             </button>
-            <button type="button" className="btn set-btn">Set</button>
+            <button type="button" className="btn set-btn" onClick={handleAddNewCategory} data-bs-dismiss="modal">Set</button>
           </div>
         </div>
       </div>
@@ -332,7 +355,7 @@ const Budget = () => {
             >
               Cancel
             </button>
-            <button type="button" className="btn set-btn">Add</button>
+            <button type="button" className="btn set-btn" data-bs-dismiss="modal">Add</button>
           </div>
         </div>
       </div>
