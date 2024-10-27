@@ -2,6 +2,9 @@ package com.finance.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -18,6 +21,7 @@ public class User {
 
     private String name;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Income> incomes;
 

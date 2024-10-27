@@ -15,7 +15,7 @@ const Income = () => {
     const [viewType, setViewType] = useState('daily'); // Default to daily
     const [error, setError] = useState(null);
     const icons = ['fa-solid fa-wallet', 'fa-solid fa-briefcase', 'fa-solid fa-coins', 'fa-solid fa-plus-circle'];
-    const incomeApi = `https://gloomy-spooky-goblin-4jj57w6vwvv927gp6-8080.app.github.dev/api/income`;
+    const incomeApi = `https://shadowy-monster-r44qgpw6pp4whpx9w-8080.app.github.dev/income`;
 
     // Function to fetch income data based on the view type
     const fetchIncomeData = useCallback(async (type) => {
@@ -59,9 +59,7 @@ const Income = () => {
 
     const handleDelete = async (id) => {
         try {
-            const response = await fetch(`${incomeApi}/${userId}/${id}`, {
-                method: 'DELETE',
-            });
+            const response = await axios.delete(`${incomeApi}/${userId}/${id}`);
             if (!response.ok) {
                 throw new Error('Failed to delete item');
             }

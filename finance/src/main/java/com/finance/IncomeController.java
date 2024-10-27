@@ -3,6 +3,8 @@ package com.finance;
 import com.finance.domain.Income;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -11,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/income")
+@RequestMapping("/income")
 public class IncomeController {
 
     @Autowired
@@ -23,16 +25,18 @@ public class IncomeController {
         return incomeRepository.findDailyIncomeByUserId(userId);
     }
 
-    // Fetch weekly income
     @GetMapping("/weekly/{userId}")
-    public List<Income> getWeeklyIncome(@PathVariable Long userId) {
+    public ResponseEntity<List<Income>> getWeeklyIncome(@PathVariable Long userId) {
         LocalDate today = LocalDate.now();
         LocalDate startOfWeek = today.with(TemporalAdjusters.previousOrSame(java.time.DayOfWeek.MONDAY));
         LocalDate endOfWeek = today.with(TemporalAdjusters.nextOrSame(java.time.DayOfWeek.SUNDAY));
-        System.out.println("Weekly Start: " + startOfWeek + ", End: " + endOfWeek);
-        return incomeRepository.findIncomeByUserIdAndDateRange(userId, java.sql.Date.valueOf(startOfWeek), java.sql.Date.valueOf(endOfWeek));
-
+    
+        List<Income> incomes = incomeRepository.findIncomeByUserIdAndDateRange(userId,
+                java.sql.Date.valueOf(startOfWeek), java.sql.Date.valueOf(endOfWeek));
+        
+        return new ResponseEntity<>(incomes, HttpStatus.OK);
     }
+    
 
     // Fetch monthly income
     @GetMapping("/monthly/{userId}")
