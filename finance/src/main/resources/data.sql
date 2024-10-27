@@ -30,8 +30,8 @@ INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-24', 'Sala
 INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-24', 'Freelance', 1500.00, 2);
 INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-24', 'Bonus', 2000.00, 1);
 INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-24', 'Rental Income', 800.00, 2);
-INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-24', 'Dividend', 300.00, 3);
-INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-24', 'Salary', 4800.00, 3);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-27', 'Salary', 300.00, 3);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-27', 'Pocket Money', 4800.00, 3);
 INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-24', 'Stock Gains', 1200.00, 3);
 INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-20', 'Consulting', 2500.00, 3);
 INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-20', 'Interest', 500.00, 3);
