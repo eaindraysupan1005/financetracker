@@ -111,7 +111,7 @@ const Income = () => {
                                 <h5>Add {selectedIncome}</h5>
                             </div>
                             <form onSubmit={handleSubmit}>
-                                <div className="modal-body">
+                                <div className="modal-body income-body">
                                     <div className="income-form">
                                        <div className='form-items-income'>
                                        <label htmlFor="amount">Amount: </label>
@@ -145,7 +145,7 @@ const Income = () => {
                                 <h5 className="modal-title">Add new Category</h5>
                             </div>
                             <form onSubmit={handleSubmit}>
-                                <div className="modal-body">
+                                <div className="modal-body income-body">
                                     <div className="income-form">
                                         <div className='form-items-income'>
                                     <label htmlFor="category">Enter Category Name: </label>
