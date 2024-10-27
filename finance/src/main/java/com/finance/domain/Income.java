@@ -1,7 +1,11 @@
 package com.finance.domain;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "income")
@@ -10,7 +14,7 @@ public class Income {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private Date date;
+    private LocalDate date;
     private String category;
     private double amount;
 
@@ -23,6 +27,7 @@ public class Income {
     
     @ManyToOne(fetch = FetchType.LAZY) // Or FetchType.EAGER if necessary
     @JoinColumn(name = "user_id", nullable = false) // Foreign key to the User entity
+    @JsonBackReference
     private User user;
 
     public long getId() {
@@ -33,11 +38,11 @@ public class Income {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
