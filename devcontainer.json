@@ -10,12 +10,18 @@
     "customizations": {
         "vscode": {
             "extensions": [
-                // Add any VSCode extensions you need, for example:
+                // Add any VSCode extensions you need
                 "vscjava.vscode-java-pack",
                 "redhat.java"
             ]
         }
     },
-    "postCreateCommand": "echo 'export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64' >> ~/.bashrc && echo 'export PATH=$JAVA_HOME/bin:$PATH' >> ~/.bashrc && source ~/.bashrc",
+    "postCreateCommand": [
+        "sudo apt update",
+        "sudo apt install -y openjdk-17-jdk",
+        "echo 'export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))) )' >> ~/.bashrc",
+        "echo 'export PATH=$JAVA_HOME/bin:$PATH' >> ~/.bashrc",
+        "source ~/.bashrc"
+    ],
     "remoteUser": "vscode"
 }

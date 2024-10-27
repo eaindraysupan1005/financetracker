@@ -33,7 +33,7 @@ const App = () => {
 
           <Route path="/dashboard" element={<div>Dashboard Page</div>} />
           <Route path="/budgets" element={<Budget />} />  {/* Route to Budget */}
-          <Route path="/income/:userId" element={<Income />}/>
+          <Route path="/income/:userId/daily" element={<Income />}/>
           <Route path="/settings" element={<Settings/>} />
           <Route path="/profile" element={<Profile/>} />
 
