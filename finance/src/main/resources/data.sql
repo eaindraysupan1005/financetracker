@@ -30,12 +30,18 @@ INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-24', 'Sala
 INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-24', 'Freelance', 1500.00, 2);
 INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-24', 'Bonus', 2000.00, 1);
 INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-24', 'Rental Income', 800.00, 2);
-INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-27', 'Salary', 300.00, 3);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-28', 'Salary', 1000.00, 3);
 INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-27', 'Pocket Money', 4800.00, 3);
-INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-24', 'Stock Gains', 1200.00, 3);
-INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-20', 'Consulting', 2500.00, 3);
-INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-20', 'Interest', 500.00, 3);
-INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-22', 'Bonus', 1800.00, 3);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-24', 'Bonus', 1200.00, 3);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-20', 'Lottery', 2500.00, 3);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-28', 'Interest', 500.00, 3);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-21', 'Bonus', 1800.00, 3);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-19', 'Salary', 3000.00, 3);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-22', 'Pocket Money', 4800.00, 3);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-18', 'Salary', 1900.00, 3);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-25', 'Salary', 500.00, 3);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-15', 'Lottery', 800.00, 3);
+INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-18', 'Bonus', 400.00, 3);
 
 
 

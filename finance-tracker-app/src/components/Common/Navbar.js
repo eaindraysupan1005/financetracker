@@ -26,6 +26,7 @@ const Navbar = ({ username }) => {
         <li><a href="/settings" className="link">Settings</a></li>
       </ul>
 
+      <div className='menu-c'>
       {/* Currency Dropdown */}
       <div className="currency">
         <label htmlFor="currency"></label>
@@ -43,6 +44,7 @@ const Navbar = ({ username }) => {
           </button>
         {/* You can add a profile picture or menu later */}
       
+      </div>
       </div>
     </nav>
   );

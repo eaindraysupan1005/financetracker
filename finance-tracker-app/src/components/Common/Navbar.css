@@ -11,6 +11,10 @@
   color: white;
 }
 
+.menu-c{
+  display: flex;
+  gap: 1px;
+}
 .logo {
   display: flex;
   align-items: center;
@@ -49,12 +53,13 @@
 .currency {
   display: flex;
   align-items: center;
+  font-size: 1.1rem;
 }
 
 .dropdown {
   padding: 10px 10px;
   border-radius: 5px;
-  color: #fff;
+  color: #000000;
   background-color: #eac60b;
 }
 .dropdown:hover{
@@ -65,10 +70,10 @@
   background-color: #fff;
 }
 .profile {
-  margin: auto 20px;
+    margin: auto 20px;
   padding: 10px;
   background-color: #eac60b;
-  color: #fff;
+  color: #000000;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -86,6 +91,7 @@
 }
 
 .profile-link{
+  font-size: 1.1rem;
   text-decoration: none;
-  color: #fff;
+  color: #000000;
 }
