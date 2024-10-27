@@ -21,8 +21,8 @@ const Budget = () => {
     setCategory(categoryName);
   };
 
-  const handleSetNewCategory = (newCategoryName) => {
-    setNewCategory(newCategoryName);
+  const handleSetNewCategory = (newCategory) => {
+    setNewCategory(newCategory);
   }
 
   const handleTargetCategory = (targetName) =>{
@@ -47,6 +47,23 @@ const Budget = () => {
     }
   }
 
+  
+    // Sample data for budgeted categories
+    const [budgetedCategories, setBudgetedCategories] = useState([
+      { id: 1, name: 'Food', limit: 1500, spent: 800, icon: 'fas fa-utensils' },
+      { id: 2, name: 'Shopping', limit: 1500, spent: 500, icon: 'fa-solid fa-cart-shopping' },
+      { id: 3, name: 'Beauty', limit: 1000, spent: 300, icon: 'fa-solid fa-heart' },
+    ]);
+  
+    const handleDelete = (id) => {
+      setBudgetedCategories(budgetedCategories.filter((category) => category.id !== id));
+    };
+  
+    const handleEdit = (id) => {
+      // Implement edit functionality here
+      console.log("Edit category with id:", id);
+    };
+
   return (
     <div>
       <main className="budget-main">
@@ -65,7 +82,7 @@ const Budget = () => {
           ))}
         <div className="mt-5 add-category">
         <button className="btn shadow add-category-btn" data-bs-toggle="modal"
-                data-bs-target="#newCategoryModal" onClick={() => handleSetNewCategory('newCategoryName')}>
+                data-bs-target="#newCategoryModal" onClick={() => handleSetNewCategory('')}>
               + Add New Category
             </button>
         </div>
@@ -80,8 +97,45 @@ const Budget = () => {
           ) : (
             <ul>
               {budgets.map((budget, index) => (
-                <li key={index}>
-                  {budget.category}: ${budget.limit}
+                <li key={index} className='budgeted-lists'>
+                  <div className="row">
+        {budgetedCategories.map((category) => {
+          const progress = (category.spent / category.limit) * 100;
+          return (
+            <div className="col-12 col-md-4 mt-3 mb-4" key={category.id}>
+              <div className="card shadow h-100">
+                <div className="card-body text-start">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <h5 className="card-title budgeted-title">
+                      <i className={`${category.icon} me-2`}></i> {category.name}
+                    </h5>
+                    <div>
+                      <button className="btn btn-edit me-2" onClick={() => handleEdit(category.id)}>
+                        <i className="fa-solid fa-pen-to-square"></i>
+                      </button>
+                      <button className="btn btn-trash" onClick={() => handleDelete(category.id)}>
+                        <i className="fa-solid fa-trash-can"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <p>Limit: {category.limit} $</p>
+                  <p>Spent: {category.spent} $</p>
+                  <div className="progress">
+                    <div
+                      className="progress-bar bg-warning"
+                      role="progressbar"
+                      style={{ width: `${progress}%` }}
+                      aria-valuenow={progress}
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
                 </li>
               ))}
             </ul>
@@ -247,8 +301,8 @@ const Budget = () => {
 
         {/* Category Name Input  */} 
         <div className="mb-3 ms-3 me-3 text-start">
-          <label htmlFor="newCategoryName" className="form-label fw-bold">Enter Category Name</label>
-          <input type="text" className="form-control" id="newCategoryName" value={newCategory} onChange={(e) => setNewCategory(e.target.value)} placeholder="Name"/>
+          <label htmlFor="newCategory" className="form-label fw-bold">Enter Category Name</label>
+          <input type="text" className="form-control" id="newCategory" value={newCategory} onChange={(e) => setNewCategory(e.target.value)} placeholder="Name"/>
         </div>
         
         {/* Icon Selection */}

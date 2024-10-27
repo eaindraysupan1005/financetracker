@@ -100,7 +100,7 @@ const Profile = () => {
             </div>
 
             <button
-              className="mt-3 profile-btn"
+              className="mt-3 border-rounded profile-btn"
               data-bs-toggle="modal"
               data-bs-target="#editProfileModal"
             >
@@ -137,7 +137,7 @@ const Profile = () => {
         aria-labelledby="editProfileModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog model-dialog-centered">
+        <div className="modal-dialog  modal-dialog-centered">
           <div className="modal-content edit-profile-popup">
               <h5 className="modal-title fw-bold m-auto mt-3 edit-profile-title" id="editProfileModalLabel">Edit Profile</h5>
               

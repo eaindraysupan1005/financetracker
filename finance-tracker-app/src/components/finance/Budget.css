@@ -111,14 +111,37 @@ background-color: #e7e7e7;
 .no-budget{
 font-size: 1.2rem;
 }
+
+
+.budgeted-lists{
+  list-style-type: none;
+}
+.budgeted-categories {
+  padding: 20px;
+}
+
+.budgeted-title {
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #1a6051;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+
+.progress-bar {
+  height: 15px;
+  background-color: #eac60b;
+}
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
 .saving-title{
   text-align: start;
 }
 
-/* Card shadow and styling */
-.card {
-  border-radius: 10px;
-}
 
 /* Circular progress container */
 .progress-circle {
