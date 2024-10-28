@@ -43,6 +43,25 @@ INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-25', 'Sala
 INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-15', 'Lottery', 800.00, 3);
 INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-18', 'Bonus', 400.00, 3);
 
+CREATE TABLE IF NOT EXISTS budget (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    date DATE NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    limit DOUBLE NOT NULL,
+    spent DOUBLE NOT NULL,
+    user_id BIGINT NOT NULL,
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES USERS(id) ON DELETE CASCADE
+);
 
+INSERT INTO BUDGET (date, category, limit, spent, user_id) VALUES ('2024-10-24', 'Food', 1500.00, 800.00, 1);
+INSERT INTO BUDGET (date, category, limit, spent, user_id) VALUES ('2024-10-24', 'Shopping', 1500.00, 500.00, 2);
+INSERT INTO BUDGET (date, category, limit, spent, user_id) VALUES ('2024-10-24', 'Beauty', 1000.00, 1000.00, 1);
+INSERT INTO BUDGET (date, category, limit, spent, user_id) VALUES ('2024-10-24', 'Transportation', 800.00, 300.00, 2);
+INSERT INTO BUDGET (date, category, limit, spent, user_id) VALUES ('2024-10-27', 'Entertainment', 300.00, 0.00, 3);
+INSERT INTO BUDGET (date, category, limit, spent, user_id) VALUES ('2024-10-27', 'Sports', 500.00, 100.00, 3);
+INSERT INTO BUDGET (date, category, limit, spent, user_id) VALUES ('2024-10-24', 'Education', 1800.00, 1000.00, 3);
+INSERT INTO BUDGET (date, category, limit, spent, user_id) VALUES ('2024-10-20', 'Clothing', 2500.00, 400.00 3);
+INSERT INTO BUDGET (date, category, limit, spent, user_id) VALUES ('2024-10-20', 'Bills', 500.00, 300.00, 3);
+INSERT INTO BUDGET (date, category, limit, spent, user_id) VALUES ('2024-10-22', 'Social', 1800.00, 1000.00, 3);
 
 
