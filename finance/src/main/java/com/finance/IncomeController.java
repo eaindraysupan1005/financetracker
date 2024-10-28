@@ -1,8 +1,9 @@
 package com.finance;
 
 import com.finance.domain.Income;
+import com.finance.domain.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/income")
@@ -18,6 +20,9 @@ public class IncomeController {
 
     @Autowired
     private IncomeRepository incomeRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     // Fetch daily income
     @GetMapping("/daily/{userId}")
@@ -55,4 +60,22 @@ public class IncomeController {
     public void deleteIncome(@PathVariable Long userId, @PathVariable Long incomeId) {
         incomeRepository.deleteByIdAndUserId(incomeId, userId);
     }
+
+     //Save an income Record
+    @PostMapping("/add/{userId}")
+    public ResponseEntity<Income> addIncome(@PathVariable Long userId, @RequestBody Income incomeData) {
+        incomeData.setDate(LocalDate.now()); // Set current date
+
+        // Retrieve the User directly using UserRepository
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        incomeData.setUser(userOptional.get()); // Set the User to the Income
+        Income savedIncome = incomeRepository.save(incomeData);
+        return new ResponseEntity<>(savedIncome, HttpStatus.CREATED); // Return saved Income
+    }
+
+    
 }

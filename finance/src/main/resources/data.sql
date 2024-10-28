@@ -44,5 +44,31 @@ INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-15', 'Lott
 INSERT INTO INCOME (date, category, amount, user_id) VALUES ('2024-10-18', 'Bonus', 400.00, 3);
 
 
+-- Create the expense table
+CREATE TABLE IF NOT EXISTS expense (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    date DATE NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    amount DOUBLE NOT NULL,
+    user_id BIGINT NOT NULL,
+    CONSTRAINT fk_user_expense FOREIGN KEY (user_id) REFERENCES USERS(id) ON DELETE CASCADE
+);
+
+-- Insert sample data into the expense table
+INSERT INTO EXPENSE (date, category, amount, user_id) VALUES ('2024-10-24', 'Entertainment', 1200.00, 1);
+INSERT INTO EXPENSE (date, category, amount, user_id) VALUES ('2024-10-24', 'Shopping', 300.00, 2);
+INSERT INTO EXPENSE (date, category, amount, user_id) VALUES ('2024-10-24', 'Shopping', 150.00, 1);
+INSERT INTO EXPENSE (date, category, amount, user_id) VALUES ('2024-10-28', 'Transportation', 80.00, 3);
+INSERT INTO EXPENSE (date, category, amount, user_id) VALUES ('2024-10-27', 'Food', 60.00, 3);
+INSERT INTO EXPENSE (date, category, amount, user_id) VALUES ('2024-10-27', 'Food', 200.00, 3);
+INSERT INTO EXPENSE (date, category, amount, user_id) VALUES ('2024-10-28', 'Entertainment', 450.00, 3);
+INSERT INTO EXPENSE (date, category, amount, user_id) VALUES ('2024-10-28', 'Transportation', 50.00, 3);
+INSERT INTO EXPENSE (date, category, amount, user_id) VALUES ('2024-10-28', 'Shopping', 100.00, 3);
+INSERT INTO EXPENSE (date, category, amount, user_id) VALUES ('2024-10-19', 'Entertainment', 200.00, 3);
+INSERT INTO EXPENSE (date, category, amount, user_id) VALUES ('2024-10-22', 'Food', 150.00, 3);
+INSERT INTO EXPENSE (date, category, amount, user_id) VALUES ('2024-10-18', 'Transportation', 300.00, 3);
+INSERT INTO EXPENSE (date, category, amount, user_id) VALUES ('2024-10-25', 'Food', 50.00, 3);
+INSERT INTO EXPENSE (date, category, amount, user_id) VALUES ('2024-10-20', 'Transportation', 200.00, 3);
+INSERT INTO EXPENSE (date, category, amount, user_id) VALUES ('2024-10-18', 'Food', 400.00, 3);
 
 
