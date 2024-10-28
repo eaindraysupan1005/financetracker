@@ -3,34 +3,36 @@
     #eac60b yellow
     #ffe662 hover
  */
- .navbar {
+.navbar {
   display: flex;
   justify-content: space-between;
-  align-items: center; 
+  align-items: center;
   background-color: #1f665e;
   color: white;
 }
 
-.menu-c{
+.menu-c {
   display: flex;
   gap: 1px;
 }
+
 .logo {
   display: flex;
   align-items: center;
 }
 
-.logo-title{
+.logo-title {
   color: #eac60b;
   font-size: 1.5rem;
 }
+
 .logo-img {
   width: 70px;
   height: 70px;
   margin-right: 10px;
 }
 
-.main-nav{
+.main-nav {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -62,15 +64,18 @@
   color: #000000;
   background-color: #eac60b;
 }
-.dropdown:hover{
+
+.dropdown:hover {
   background-color: #ffe662;
 }
-.dropdown-option{
+
+.dropdown-option {
   color: #000;
   background-color: #fff;
 }
+
 .profile {
-    margin: auto 20px;
+  margin: auto 20px;
   padding: 10px;
   background-color: #eac60b;
   color: #000000;
@@ -82,15 +87,16 @@
   text-decoration: none;
 }
 
-.profile:hover{
+.profile:hover {
   background-color: #ffe662;
 }
+
 .profile-icon {
-  font-size: 20px; 
+  font-size: 20px;
   margin-right: 10px;
 }
 
-.profile-link{
+.profile-link {
   font-size: 1.1rem;
   text-decoration: none;
   color: #000000;

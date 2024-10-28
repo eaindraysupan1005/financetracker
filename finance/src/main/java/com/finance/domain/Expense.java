@@ -6,8 +6,8 @@ import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name = "income")
-public class Income {
+@Table(name = "expense")
+public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -16,9 +16,9 @@ public class Income {
     private String category;
     private double amount;
 
-    private Income(){ }
+    private Expense(){ }
 
-    private Income(String category, double amount){
+    private Expense(String category, double amount){
         this.category=category;
         this.amount=amount;
     }
