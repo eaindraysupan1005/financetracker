@@ -1,14 +1,16 @@
-package com.example.budgetapp.controller;
+package com.finance;
 
-import com.example.budgetapp.model.Budget;
-import com.example.budgetapp.repository.BudgetRepository;
 import com.finance.domain.Budget;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -20,8 +22,8 @@ public class BudgetController {
 
     @GetMapping
     public ResponseEntity<List<Budget>> getAllCategories(){
-        List<Budget> categories = budgetRepository.findAll();
-        return new ResponseEntity<> (categories, HttpStatus.Ok);
+        List<BudgetRepository> categories = budgetRepository.findAll();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping
@@ -41,15 +43,15 @@ public class BudgetController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Budget> updateCategory(@PathVariable Long id, @RequestBody Budget updatedCategory) {
+    public ResponseEntity<BudgetRepository> updateCategory(@PathVariable Long id, @RequestBody Budget updatedCategory) {
         return budgetRepository.findById(id)
             .map(existingCategory -> {
-                existingCategory.setCategoryName(updateCategory.getCategoryName());
-                existingCategory.setLimit(updateCategory.getLimit());
+                existingCategory.setCategoryName(updatedCategory.getCategoryName());
+                existingCategory.setLimit(updatedCategory.getLimit());
                 existingCategory.setSpent(updatedCategory.getSpent());
                 existingCategory.setIcon(updatedCategory.getIcon());
                 existingCategory.setDate(updatedCategory.getDate());
-                Budget savedCategory = budgetRepository.save(existingCategory);
+                BudgetRepository savedCategory = budgetRepository.save(existingCategory);
                 return new ResponseEntity<>(savedCategory, HttpStatus.OK);
             })
             .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
