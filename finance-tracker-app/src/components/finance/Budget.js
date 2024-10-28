@@ -2,19 +2,24 @@ import React, { useState } from 'react';
 import './Budget.css';
 
 const Budget = () => {
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState([
+    { name: 'Food', icon: 'fas fa-utensils' },
+    { name: 'Shopping', icon: 'fa-solid fa-cart-shopping' },
+    { name: 'Transportation', icon: 'fa-solid fa-car' },
+    { name: 'Entertainment', icon: 'fa-solid fa-film' }
+  ]);
   const [newCategory, setNewCategory] = useState('');
   const [targetCategory, setTargetCategory] = useState('');
   const [budgets, setBudgets] = useState([]);
   const [targets, setTargets] = useState([]);
   const [limit, setLimit] = useState('');
   
-  const categories = [
-    { name: 'Food', icon: 'fas fa-utensils' },
-    { name: 'Shopping', icon: 'fa-solid fa-cart-shopping' },
-    { name: 'Transportation', icon: 'fa-solid fa-car' },
-    { name: 'Entertainment', icon: 'fa-solid fa-film' }
-  ];
+  // const categories = [
+  //   { name: 'Food', icon: 'fas fa-utensils' },
+  //   { name: 'Shopping', icon: 'fa-solid fa-cart-shopping' },
+  //   { name: 'Transportation', icon: 'fa-solid fa-car' },
+  //   { name: 'Entertainment', icon: 'fa-solid fa-film' }
+  // ];
   
 
   const handleSetCategory = (categoryName) => {
@@ -37,7 +42,7 @@ const Budget = () => {
     }
   }
 
-  const availableCategories = categories.filter(cat => !budgets.includes(cat.name));
+  const availableCategories = category.filter(cat => !budgets.includes(cat.name));
 
   const handleAddNewCategory = () => {
     if(newCategory && limit) {
@@ -266,6 +271,7 @@ const Budget = () => {
                   value={limit}
                   onChange={(e) => setLimit(e.target.value)}
                   placeholder='0'
+                  required
                 />
               </div>
               <div className="mb-3">
@@ -302,7 +308,7 @@ const Budget = () => {
         {/* Category Name Input  */} 
         <div className="mb-3 ms-3 me-3 text-start">
           <label htmlFor="newCategory" className="form-label fw-bold">Enter Category Name</label>
-          <input type="text" className="form-control" id="newCategory" value={newCategory} onChange={(e) => setNewCategory(e.target.value)} placeholder="Name"/>
+          <input type="text" className="form-control" id="newCategory" value={newCategory} onChange={(e) => setNewCategory(e.target.value)} placeholder="Name" required/>
         </div>
         
         {/* Icon Selection */}
@@ -353,7 +359,7 @@ const Budget = () => {
          {/* Amount Input  */}
         <div className="mb-4 ms-3 me-3 text-start">
           <label for="budgetAmount" className="form-label fw-bold">Enter Amount</label>
-          <input type="text" className="form-control" id="budgetAmount" placeholder="Amount"/>
+          <input type="text" className="form-control" id="budgetAmount" placeholder="Amount" required/>
         </div>
 
         <div className="mb-5 budget-form-btn">
@@ -385,19 +391,19 @@ const Budget = () => {
             <form>
             <div className="mb-3 ms-3 me-3 text-start">
           <label for="description" className="form-label fw-bold">Description</label>
-          <input type="text" className="form-control" id="description" placeholder="Description"/>
+          <input type="text" className="form-control" id="description" placeholder="Description" required/>
         </div>
         <div className="mb-3 ms-3 me-3 text-start">
           <label for="targetAmount" className="form-label fw-bold">Target Amount</label>
-          <input type="text" className="form-control" id="targetAmount" placeholder="amount"/>
+          <input type="text" className="form-control" id="targetAmount" placeholder="amount" required/>
         </div>
         <div className="mb-3 ms-3 me-3 text-start">
           <label for="savedAmount" className="form-label fw-bold">Saved Amount</label>
-          <input type="text" className="form-control" id="savedAmount" placeholder="amount"/>
+          <input type="text" className="form-control" id="savedAmount" placeholder="amount" required/>
         </div>
         <div className="mb-3 ms-3 me-3 text-start">
           <label for="deadline" className="form-label fw-bold">Deadline</label>
-          <input type="date" className="form-control" id="deadline" placeholder="mm/dd/yyyy"/>
+          <input type="date" className="form-control" id="deadline" placeholder="mm/dd/yyyy" required/>
         </div>
             </form>
           </div>
