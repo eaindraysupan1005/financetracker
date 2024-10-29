@@ -1,24 +1,19 @@
 package com.finance;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.*;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
 import com.finance.domain.Budget;
-import com.finance.domain.Income;
 
-public interface BudgetRepository extends JpaRepository<BudgetRepository, Long> {
+public interface BudgetRepository extends JpaRepository<Budget, Long> {
 
-    List<Budget> findDailyIncomeByUserId(Long userId);
+    List<Budget> findAll();
 
-    Budget save(Budget category);
+    List<Budget> findBudgetByUserId(Long userId);
 
-    void setCategoryName(String categoryName);
+    Optional<Budget> findByIdAndUserId(Long id, Long userId);
 
-    void setSpent(double spent);
-
-    void setLimit(double limit);
-
-    void setIcon(String icon);
-
-    void setDate(LocalDate date);
 }
