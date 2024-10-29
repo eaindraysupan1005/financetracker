@@ -3,7 +3,7 @@ import "./Budget.css";
 
 const Budget = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedIcon, setSelectedIcon] = useState("");
+  // const [selectedIcon, setSelectedIcon] = useState("");
   const categories = [
     { name: "Food", icon: "fas fa-utensils" },
     { name: "Shopping", icon: "fa-solid fa-cart-shopping" },
@@ -12,7 +12,7 @@ const Budget = () => {
   ];
   const [targetCategory, setTargetCategory] = useState("");
   const [budgets, setBudgets] = useState([]);
-  const [targets, setTargets] = useState([]);
+  // const [targets, setTargets] = useState([]);
   const [limit, setLimit] = useState("");
   const [icons, setIcons] = useState([
     { class: "fas fa-graduation-cap fa-2x", active: false },
@@ -28,7 +28,7 @@ const Budget = () => {
   ]);
 
   const availableCategories = categories.filter(
-    (cat) => !budgets.some((budget) => budget.name == cat.name)
+    (cat) => !budgets.some((budget) => budget.name === cat.name)
   );
 
   // Function to toggle the active state of an icon
@@ -55,10 +55,10 @@ const Budget = () => {
     if (icon) {
       icon = icon.class;
     } else {
-      let category = categories.find((cat) => cat.name == selectedCategory);
+      let category = categories.find((cat) => cat.name === selectedCategory);
       icon = category.icon;
     }
-
+    
     if (selectedCategory && limit) {
       setBudgets([
         ...budgets,
@@ -70,6 +70,7 @@ const Budget = () => {
           icon: icon,
         },
       ]);
+      
       setSelectedCategory("");
       setLimit("");
     }
@@ -77,7 +78,7 @@ const Budget = () => {
 
   const handleDelete = (id) => {
     setBudgets((prevBudgets) =>
-      prevBudgets.filter((budget) => budget.id != id)
+      prevBudgets.filter((budget) => budget.id !== id)
     );
   };
 
@@ -135,7 +136,7 @@ const Budget = () => {
                           <div className="card-body text-start">
                             <div className="d-flex justify-content-between align-items-center">
                               <h5 className="card-title budgeted-title">
-                                <i className={`${budget.icon} me-2`}></i>{" "}
+                                <i className={`${budget.icon} me-3 selected-icon`}></i>{" "}
                                 {budget.name}
                               </h5>
                               <div>
@@ -363,7 +364,7 @@ const Budget = () => {
           </div>
         </div>
 
-        {/* Add New Category Modal */}
+        {/* Add New Budget Modal */}
         <div
           className="modal fade"
           id="newCategoryModal"
