@@ -20,7 +20,7 @@ public class Budget {
     private Long id;
     private LocalDate Date;
     private String categoryName;
-    private Double limit;
+    private Double budget_limit;
     private Double spent;
     private String icon;
     
@@ -29,7 +29,7 @@ public class Budget {
 
     private Budget(String categoryName, double limit, double spent, String icon){
         this.categoryName =categoryName;
-        this.limit = limit;
+        this.budget_limit= limit;
         this.spent = spent;
         this.icon = icon;
     }
@@ -63,14 +63,6 @@ public class Budget {
         this.categoryName = categoryName;
     }
 
-    public double getLimit() {
-        return limit;
-    }
-
-    public void setLimit(Double limit) {
-        this.limit = limit;
-    }
-
     public double getSpent() {
         return spent;
     }
@@ -93,6 +85,14 @@ public class Budget {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Double getBudget_limit() {
+        return budget_limit;
+    }
+
+    public void setBudget_limit(Double budget_limit) {
+        this.budget_limit = budget_limit;
     }
 
 }
