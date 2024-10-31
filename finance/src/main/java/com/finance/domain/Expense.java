@@ -11,10 +11,10 @@ public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     private LocalDate date;
     private String category;
     private double amount;
+    private String icon;
 
     private Expense(){ }
 
@@ -68,5 +68,13 @@ public class Expense {
         this.user = user;
     }
     
+    
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 
 }
