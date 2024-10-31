@@ -18,6 +18,19 @@ const Expense = () => {
     const expenseApi = `http://localhost:8080/expense`;
     const dailyButtonRef = useRef(null);
 
+    // const [icons, setIcons] = useState([
+    //     { class: "fas fa-graduation-cap fa-2x", active: false },
+    //     { class: "fas fa-tshirt fa-2x", active: false },
+    //     { class: "fas fa-home fa-2x", active: false },
+    //     { class: "fa-solid fa-dollar fa-2x", active: false },
+    //     { class: "fa-solid fa-heart-pulse fa-2x", active: false },
+    //     { class: "fa-solid fa-circle-dollar-to-slot fa-2x", active: false },
+    //     { class: "fas fa-receipt fa-2x", active: false },
+    //     { class: "fa-solid fa-hand-holding-dollar fa-2x", active: false },
+    //     { class: "fas fa-users fa-2x", active: false },
+    //     { class: "fas fa-table-tennis fa-2x", active: false },
+    //   ]);
+
     // Function to fetch expense data based on the view type
     const fetchExpenseData = useCallback(async (type) => {
         try {
@@ -170,7 +183,7 @@ const Expense = () => {
                                     <div className="modal-body expense-body">
                                         <div className="expense-form category-form-e">
                                             <div className='form-items-category'>
-                                                <label htmlFor="category">Enter Category Name: </label>
+                                                <label htmlFor="category" className='form-head'>Enter Category Name: </label>
                                                 <input
                                                     type="text"
                                                     className="form-control expense-inputtext"
@@ -180,8 +193,25 @@ const Expense = () => {
                                                     required
                                                 />
                                             </div>
+                                            <div className='form-items-category icons'>
+                                            <label htmlFor="icon" className='form-head'>Choose Icon: </label>
+                                                <div className='icon-container'>
+                                                <i className="fas fa-graduation-cap fa-2x"></i>
+                                                <i className='fas fa-tshirt fa-2x'></i>
+                                                <i className='fas fa-home fa-2x'></i>
+                                                <i className='fa-solid fa-dollar fa-2x'></i>
+                                                <i className='fa-solid fa-heart-pulse fa-2x'></i>
+                                                </div>
+                                                <div className='icon-container'>
+                                                <i className="fa-solid fa-circle-dollar-to-slot fa-2x"></i>
+                                                <i className='fas fa-receipt fa-2x'></i>
+                                                <i className='fa-solid fa-hand-holding-dollar fa-2x'></i>
+                                                <i className='fas fa-users fa-2x'></i>
+                                                <i className='fas fa-table-tennis fa-2x'></i>
+                                                </div>
+                                            </div>
                                             <div className='form-items-category '>
-                                                <label htmlFor="amount">Enter Amount: </label>
+                                                <label htmlFor="amount" className='form-head' >Enter Amount: </label>
                                                 <input
                                                     type="text"
                                                     className="form-control expense-inputtext"
@@ -215,9 +245,11 @@ const Expense = () => {
                 <div className='expense-lists'>
                     {expenseList.map(expense => (
                         <div key={expense.id} className='expense-item'>
+                            <div className="circle-icon-elist mb-3">
+                                <i className="{expense.icon}" style={{ color: 'black' }}></i>
+                            </div>
                             <div className='expense-category'>{expense.category}</div>
                             <div className='expense-amount'>${expense.amount}</div>
-                            <div className='expense-date'>{new Date(expense.date).toLocaleDateString()}</div>
                         </div>
                     ))}
                 </div>
