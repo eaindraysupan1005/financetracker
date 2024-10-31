@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import "./Budget.css";
 
 const Budget = () => {
+  const { userId } = useParams();
   const [selectedCategory, setSelectedCategory] = useState("");
-  // const [selectedIcon, setSelectedIcon] = useState("");
   const categories = [
     { name: "Food", icon: "fas fa-utensils" },
     { name: "Shopping", icon: "fa-solid fa-cart-shopping" },
@@ -12,7 +14,6 @@ const Budget = () => {
   ];
   const [targetCategory, setTargetCategory] = useState("");
   const [budgets, setBudgets] = useState([]);
-  // const [targets, setTargets] = useState([]);
   const [limit, setLimit] = useState("");
   const [icons, setIcons] = useState([
     { class: "fas fa-graduation-cap fa-2x", active: false },
@@ -26,6 +27,62 @@ const Budget = () => {
     { class: "fas fa-users fa-2x", active: false },
     { class: "fas fa-table-tennis fa-2x", active: false },
   ]);
+  const budgetApi = `http://localhost:8080/budget`;
+
+  useEffect(() => {
+    fetchBudgets();
+  }, []);
+
+  //Fetch all budgets
+
+  const fetchBudgets = async () => {
+    try {
+      const response = await axios.get(`${budgetApi}/${userId}`);
+      setBudgets(response.data);
+    } catch (error) {
+      console.error("Error fetching budgets!", error);
+    }
+    console.log(`Fetching budget data for userId: ${userId}`);
+  };
+
+  // Add a new budget
+
+  const handleAddBudget = async () => {
+    let icon = icons.find((ic) => ic.active);
+
+    if (icon) {
+      icon = icon.class;
+    } else {
+      let category = categories.find((cat) => cat.name === selectedCategory);
+      icon = category.icon;
+    }
+
+    if (selectedCategory && limit) {
+      setBudgets([
+        ...budgets,
+        {
+          id: budgets.length + 1,
+          name: selectedCategory,
+          limit: limit,
+          spent: 0,
+          icon: icon,
+          date: new Date().toISOString().split("T")[0],
+        },
+      ]);
+
+      try {
+        const response = await axios.post(
+          `${budgetApi}/add/${userId}`,
+          budgets
+        );
+        setBudgets([...budgets, response.data]);
+        setSelectedCategory("");
+        setLimit("");
+      } catch (error) {
+        console.log("Error adding budget!", error);
+      }
+    }
+  };
 
   const availableCategories = categories.filter(
     (cat) => !budgets.some((budget) => budget.name === cat.name)
@@ -49,42 +106,42 @@ const Budget = () => {
     setTargetCategory(targetName);
   };
 
-  const handleAddBudget = () => {
-    let icon = icons.find((ic) => ic.active);
+  // Delete a budget
 
-    if (icon) {
-      icon = icon.class;
-    } else {
-      let category = categories.find((cat) => cat.name === selectedCategory);
-      icon = category.icon;
-    }
-    
-    if (selectedCategory && limit) {
-      setBudgets([
-        ...budgets,
-        {
-          id: budgets.length + 1,
-          name: selectedCategory,
-          limit: limit,
-          spent: 0,
-          icon: icon,
-        },
-      ]);
-      
-      setSelectedCategory("");
-      setLimit("");
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${budgetApi}/delete/${userId}/${id}`);
+      setBudgets((prevBudgets) =>
+        prevBudgets.filter((budget) => budget.id !== id)
+      );
+    } catch (error) {
+      console.error("Error deleting budget:", error);
     }
   };
 
-  const handleDelete = (id) => {
-    setBudgets((prevBudgets) =>
-      prevBudgets.filter((budget) => budget.id !== id)
-    );
+  // Update a budget
+
+  const handleEdit = async (id) => {
+    const updatedBudget = {
+      name: selectedCategory || budgets.find((b) => b.id === id).name,
+      limit: parseFloat(limit) || budgets.find((b) => b.id === id).limit,
+      spent: budgets.find((b) => b.id === id).spent,
+    };
+
+    try {
+      const response = await axios.put(`${budgetApi}/update/${userId}/${id}`);
+    } catch (error) {
+      console.log("Error updating budget:", error);
+    }
   };
 
-  const handleEdit = (id) => {
-    // Implement edit functionality here
-    console.log("Edit category with id:", id);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (!selectedCategory || !limit) {
+      alert("Please fill out all fields before submitting.");
+      return;
+    }
+    handleAddBudget();
   };
 
   return (
@@ -136,7 +193,9 @@ const Budget = () => {
                           <div className="card-body text-start">
                             <div className="d-flex justify-content-between align-items-center">
                               <h5 className="card-title budgeted-title">
-                                <i className={`${budget.icon} me-3 selected-icon`}></i>{" "}
+                                <i
+                                  className={`${budget.icon} me-3 selected-icon`}
+                                ></i>{" "}
                                 {budget.name}
                               </h5>
                               <div>
@@ -311,7 +370,7 @@ const Budget = () => {
                 Set Budget
               </h5>
               <div className="modal-body">
-                <form>
+                <form onSubmit={handleSubmit}>
                   <div className="mb-3 d-flex me-2 budget-form">
                     <label htmlFor="category" className="form-label me-3 ">
                       Category:
