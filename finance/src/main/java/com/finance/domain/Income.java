@@ -15,6 +15,7 @@ public class Income {
     private LocalDate date;
     private String category;
     private double amount;
+    private String icon;
 
     private Income(){ }
 
@@ -66,6 +67,14 @@ public class Income {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
     
 

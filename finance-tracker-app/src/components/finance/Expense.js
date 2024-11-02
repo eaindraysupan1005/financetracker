@@ -17,19 +17,13 @@ const Expense = () => {
     const icons = ['fa-solid fa-utensils', 'fa-solid fa-cart-shopping', 'fa-solid fa-car', 'fa-solid fa-film', 'fa-solid fa-plus-circle'];
     const expenseApi = `http://localhost:8080/expense`;
     const dailyButtonRef = useRef(null);
+    const categoryIcons = ["fas fa-graduation-cap", "fas fa-tshirt",
+        "fas fa-home", "fa-solid fa-dollar", "fa-solid fa-heart-pulse",
+        "fa-solid fa-circle-dollar-to-slot", "fas fa-receipt",
+        "fa-solid fa-hand-holding-dollar",
+        "fas fa-users", "fas fa-table-tennis"];
+    const [selectedIcon, setSelectedIcon] = useState(categoryIcons[0]); // Default icon
 
-    // const [icons, setIcons] = useState([
-    //     { class: "fas fa-graduation-cap fa-2x", active: false },
-    //     { class: "fas fa-tshirt fa-2x", active: false },
-    //     { class: "fas fa-home fa-2x", active: false },
-    //     { class: "fa-solid fa-dollar fa-2x", active: false },
-    //     { class: "fa-solid fa-heart-pulse fa-2x", active: false },
-    //     { class: "fa-solid fa-circle-dollar-to-slot fa-2x", active: false },
-    //     { class: "fas fa-receipt fa-2x", active: false },
-    //     { class: "fa-solid fa-hand-holding-dollar fa-2x", active: false },
-    //     { class: "fas fa-users fa-2x", active: false },
-    //     { class: "fas fa-table-tennis fa-2x", active: false },
-    //   ]);
 
     // Function to fetch expense data based on the view type
     const fetchExpenseData = useCallback(async (type) => {
@@ -71,12 +65,13 @@ const Expense = () => {
         setCategory('');
     };
 
-    const saveExpense = async () => {
+    const saveExpense = async (categoryName) => {
         try {
             const expenseData = {
-                category: selectedExpense,
+                category: categoryName,
                 amount: parseFloat(amount),
                 date: new Date().toISOString().split('T')[0], // Set to today's date in YYYY-MM-DD format
+                icon: selectedIcon,
             };
             const response = await axios.post(`${expenseApi}/add/${userId}`, expenseData);
 
@@ -92,16 +87,21 @@ const Expense = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if(selectedExpense === 'Add'){
+        if (selectedExpense === 'Add') {
             saveExpense(category);
-        }else{
+        } else {
             saveExpense(selectedExpense);
         }
-        
-        
+
+
         console.log(`Amount for ${selectedExpense}: ${amount}`);
         console.log(`Category: ${category}`);
         handleClose();
+    };
+
+    // Handle icon selection in the modal
+    const handleIconClick = (icon) => {
+        setSelectedIcon(icon);
     };
 
     // const handleDelete = async (id) => {
@@ -123,7 +123,7 @@ const Expense = () => {
             <div className="row-expense">
                 {['Food', 'Shopping', 'Transportation', 'Entertainment', 'Add'].map((expenseType, index) => (
                     <div key={index} className='expense-card-container'>
-                        <div className="expense-card text-center p-4" onClick={() => handleBoxClick(expenseType)}>
+                        <div className="expense-card text-center p-4" onClick={() => { handleBoxClick(expenseType); handleIconClick(icons[index]); }}>
                             <h5 className='expense-type'>{expenseType}</h5>
                             <div className="circle-icon-e mb-3">
                                 <i className={icons[index]} style={{ color: 'black' }}></i>
@@ -194,20 +194,20 @@ const Expense = () => {
                                                 />
                                             </div>
                                             <div className='form-items-category icons'>
-                                            <label htmlFor="icon" className='form-head'>Choose Icon: </label>
+                                                <label htmlFor="icon" className='form-head'>Choose Icon: </label>
                                                 <div className='icon-container'>
-                                                <i className="fas fa-graduation-cap fa-2x"></i>
-                                                <i className='fas fa-tshirt fa-2x'></i>
-                                                <i className='fas fa-home fa-2x'></i>
-                                                <i className='fa-solid fa-dollar fa-2x'></i>
-                                                <i className='fa-solid fa-heart-pulse fa-2x'></i>
-                                                </div>
-                                                <div className='icon-container'>
-                                                <i className="fa-solid fa-circle-dollar-to-slot fa-2x"></i>
-                                                <i className='fas fa-receipt fa-2x'></i>
-                                                <i className='fa-solid fa-hand-holding-dollar fa-2x'></i>
-                                                <i className='fas fa-users fa-2x'></i>
-                                                <i className='fas fa-table-tennis fa-2x'></i>
+
+                                                    {categoryIcons.map((icon, index) => (
+                                                        <div className='icon-griditems'>
+                                                            <i
+                                                                key={index}
+                                                                className={icon}
+                                                                style={{ color: selectedIcon === icon ? 'blue' : 'black', cursor: 'pointer' }}
+                                                                onClick={() => handleIconClick(icon)}
+                                                            ></i>
+                                                        </div>
+                                                    ))}
+
                                                 </div>
                                             </div>
                                             <div className='form-items-category '>
@@ -246,7 +246,7 @@ const Expense = () => {
                     {expenseList.map(expense => (
                         <div key={expense.id} className='expense-item'>
                             <div className="circle-icon-elist mb-3">
-                                <i className="{expense.icon}" style={{ color: 'black' }}></i>
+                                <i className={expense.icon} style={{ color: 'black' }}></i>
                             </div>
                             <div className='expense-category'>{expense.category}</div>
                             <div className='expense-amount'>${expense.amount}</div>
