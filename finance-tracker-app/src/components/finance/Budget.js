@@ -1,11 +1,9 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
 import "./Budget.css";
 
 const Budget = () => {
-  const { userId } = useParams();
   const [selectedCategory, setSelectedCategory] = useState("");
+  // const [selectedIcon, setSelectedIcon] = useState("");
   const categories = [
     { name: "Food", icon: "fas fa-utensils" },
     { name: "Shopping", icon: "fa-solid fa-cart-shopping" },
@@ -14,89 +12,36 @@ const Budget = () => {
   ];
   const [targetCategory, setTargetCategory] = useState("");
   const [budgets, setBudgets] = useState([]);
+  // const [targets, setTargets] = useState([]);
   const [limit, setLimit] = useState("");
-  const [icons, setIcons] = useState([
-    { class: "fas fa-graduation-cap fa-2x", active: false },
-    { class: "fas fa-tshirt fa-2x", active: false },
-    { class: "fas fa-home fa-2x", active: false },
-    { class: "fa-solid fa-dollar fa-2x", active: false },
-    { class: "fa-solid fa-heart-pulse fa-2x", active: false },
-    { class: "fa-solid fa-circle-dollar-to-slot fa-2x", active: false },
-    { class: "fas fa-receipt fa-2x", active: false },
-    { class: "fa-solid fa-hand-holding-dollar fa-2x", active: false },
-    { class: "fas fa-users fa-2x", active: false },
-    { class: "fas fa-table-tennis fa-2x", active: false },
-  ]);
-  const budgetApi = `http://localhost:8080/budget`;
+  const [editBudget, setEditBudget] = useState(null);
 
-  useEffect(() => {
-    fetchBudgets();
-  }, []);
-
-  //Fetch all budgets
-
-  const fetchBudgets = async () => {
-    try {
-      const response = await axios.get(`${budgetApi}/${userId}`);
-      setBudgets(response.data);
-    } catch (error) {
-      console.error("Error fetching budgets!", error);
-    }
-    console.log(`Fetching budget data for userId: ${userId}`);
-  };
-
-  // Add a new budget
-
-  const handleAddBudget = async () => {
-    let icon = icons.find((ic) => ic.active);
-
-    if (icon) {
-      icon = icon.class;
-    } else {
-      let category = categories.find((cat) => cat.name === selectedCategory);
-      icon = category.icon;
-    }
-
-    if (selectedCategory && limit) {
-      setBudgets([
-        ...budgets,
-        {
-          id: budgets.length + 1,
-          name: selectedCategory,
-          limit: limit,
-          spent: 0,
-          icon: icon,
-          date: new Date().toISOString().split("T")[0],
-        },
-      ]);
-
-      try {
-        const response = await axios.post(
-          `${budgetApi}/add/${userId}`,
-          budgets
-        );
-        setBudgets([...budgets, response.data]);
-        setSelectedCategory("");
-        setLimit("");
-      } catch (error) {
-        console.log("Error adding budget!", error);
-      }
-    }
-  };
+  // const [icons, setIcons] = useState([
+  //   { class: "fas fa-graduation-cap fa-2x", active: false },
+  //   { class: "fas fa-tshirt fa-2x", active: false },
+  //   { class: "fas fa-home fa-2x", active: false },
+  //   { class: "fa-solid fa-dollar fa-2x", active: false },
+  //   { class: "fa-solid fa-heart-pulse fa-2x", active: false },
+  //   { class: "fa-solid fa-circle-dollar-to-slot fa-2x", active: false },
+  //   { class: "fas fa-receipt fa-2x", active: false },
+  //   { class: "fa-solid fa-hand-holding-dollar fa-2x", active: false },
+  //   { class: "fas fa-users fa-2x", active: false },
+  //   { class: "fas fa-table-tennis fa-2x", active: false },
+  // ]);
 
   const availableCategories = categories.filter(
     (cat) => !budgets.some((budget) => budget.name === cat.name)
   );
 
   // Function to toggle the active state of an icon
-  const toggleActiveIcon = (index) => {
-    setIcons((prevIcons) =>
-      prevIcons.map((icon, i) => ({
-        ...icon,
-        active: i === index ? !icon.active : false, // Toggle active state
-      }))
-    );
-  };
+  // const toggleActiveIcon = (index) => {
+  //   setIcons((prevIcons) =>
+  //     prevIcons.map((icon, i) => ({
+  //       ...icon,
+  //       active: i === index ? !icon.active : false, // Toggle active state
+  //     }))
+  //   );
+  // };
 
   const handleSetSelectedCategory = (categoryName) => {
     setSelectedCategory(categoryName);
@@ -106,42 +51,55 @@ const Budget = () => {
     setTargetCategory(targetName);
   };
 
-  // Delete a budget
+  const handleAddBudget = () => {
+    // let icon = icons.find((ic) => ic.active);
 
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`${budgetApi}/delete/${userId}/${id}`);
-      setBudgets((prevBudgets) =>
-        prevBudgets.filter((budget) => budget.id !== id)
+    // if (icon) {
+    //   icon = icon.class;
+    // } else {
+    //   let category = categories.find((cat) => cat.name === selectedCategory);
+    //   icon = category.icon;
+    // }
+
+    if (selectedCategory && limit) {
+      setBudgets([
+        ...budgets,
+        {
+          id: budgets.length + 1,
+          name: selectedCategory,
+          limit: limit,
+          spent: 0,
+          // icon: icon,
+        },
+      ]);
+      setSelectedCategory("");
+      setLimit("");
+    }
+  };
+
+  const handleDelete = (id) => {
+    setBudgets((prevBudgets) =>
+      prevBudgets.filter((budget) => budget.id !== id)
+    );
+  };
+
+  const handleEdit = (budget) => {
+    setEditBudget(budget);
+    setSelectedCategory(budget.name);
+    setLimit(budget.limit);
+  };
+
+  const updateBudget = () => {
+    setBudgets((prevBudgets) => {
+      prevBudgets.map((budget) =>
+        budget.id === editBudget.id
+          ? { ...budget, name: selectedCategory, limit: limit }
+          : budget
       );
-    } catch (error) {
-      console.error("Error deleting budget:", error);
-    }
-  };
-
-  // Update a budget
-
-  const handleEdit = async (id) => {
-    const updatedBudget = {
-      name: selectedCategory || budgets.find((b) => b.id === id).name,
-      limit: parseFloat(limit) || budgets.find((b) => b.id === id).limit,
-      spent: budgets.find((b) => b.id === id).spent,
-    };
-
-    try {
-      const response = await axios.put(`${budgetApi}/update/${userId}/${id}`);
-    } catch (error) {
-      console.log("Error updating budget:", error);
-    }
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (!selectedCategory || !limit) {
-      alert("Please fill out all fields before submitting.");
-      return;
-    }
-    handleAddBudget();
+    });
+    setEditBudget(null);
+    setSelectedCategory("");
+    setLimit("");
   };
 
   return (
@@ -193,15 +151,13 @@ const Budget = () => {
                           <div className="card-body text-start">
                             <div className="d-flex justify-content-between align-items-center">
                               <h5 className="card-title budgeted-title">
-                                <i
-                                  className={`${budget.icon} me-3 selected-icon`}
-                                ></i>{" "}
+                                {/* <i className={`${budget.icon} me-2`}></i>{" "} */}
                                 {budget.name}
                               </h5>
                               <div>
                                 <button
                                   className="btn btn-edit me-2"
-                                  onClick={() => handleEdit(budget.id)}
+                                  
                                 >
                                   <i className="fa-solid fa-pen-to-square"></i>
                                 </button>
@@ -370,7 +326,7 @@ const Budget = () => {
                 Set Budget
               </h5>
               <div className="modal-body">
-                <form onSubmit={handleSubmit}>
+                <form>
                   <div className="mb-3 d-flex me-2 budget-form">
                     <label htmlFor="category" className="form-label me-3 ">
                       Category:
@@ -407,6 +363,7 @@ const Budget = () => {
                   type="button"
                   className="btn me-3 cancel-btn"
                   data-bs-dismiss="modal"
+                  
                 >
                   Cancel
                 </button>
@@ -423,7 +380,7 @@ const Budget = () => {
           </div>
         </div>
 
-        {/* Add New Budget Modal */}
+        {/* Add New Category Modal */}
         <div
           className="modal fade"
           id="newCategoryModal"
@@ -453,25 +410,6 @@ const Budget = () => {
                   onChange={(e) => setSelectedCategory(e.target.value)}
                   placeholder="Name"
                 />
-              </div>
-
-              {/* Icon Selection */}
-              <div className="mb-3 me-3 ms-3 text-start">
-                <label className="form-label fw-bold">Choose Icon</label>
-                <div className="row text-center">
-                  <div className="icon-grid d-flex flex-wrap justify-content-between">
-                    {/* First row of 5 icons */}
-                    {icons.map((icon, index) => (
-                      <div
-                        key={index}
-                        className={`icon-item ${icon.active ? "active" : ""}`} // Add 'active' class if the icon is active
-                        onClick={() => toggleActiveIcon(index)} // Toggle active state on click
-                      >
-                        <i className={icon.class}></i>
-                      </div>
-                    ))}
-                  </div>
-                </div>
               </div>
 
               {/* Amount Input  */}
