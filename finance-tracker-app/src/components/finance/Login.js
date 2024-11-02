@@ -34,7 +34,7 @@ const Login = () => {
                 localStorage.setItem('userId', data.user.id);  // Store user ID in localStorage
             
                 // Navigate to the income page, passing the user ID in the URL
-                navigate(`/income/${data.user.id}`);
+                navigate(`/dashboard/${data.user.id}`);
             }
             
             

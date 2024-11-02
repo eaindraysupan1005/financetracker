@@ -123,9 +123,10 @@ font-size: 1.1rem;
 font-weight: 300;
 }
 .icon-container{
-    margin-top: 10px;
-    display: flex;
-    gap: 25px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columns */
+    grid-gap: 10px; /* Spacing between items */
+    padding: 20px;
 }
 
 

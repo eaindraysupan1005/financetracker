@@ -17,6 +17,10 @@ const Income = () => {
     const icons = ['fa-solid fa-wallet', 'fa-solid fa-chart-line', 'fa-solid fa-coins', 'fa-solid fa-plus-circle'];
     const incomeApi = `http://localhost:8080/income`;
     const dailyButtonRef = useRef(null);
+    const categoryIcons = ["fa-solid fa-ticket-simple","fa-solid fa-user-graduate",
+        "fa-solid fa-tags","fa-solid fa-gift","fa-solid fa-comments-dollar"];
+    const [selectedIcon, setSelectedIcon] = useState(categoryIcons[0]); // Default icon
+
 
     // Function to fetch income data based on the view type
     const fetchIncomeData = useCallback(async (type) => {
@@ -91,6 +95,12 @@ const Income = () => {
         handleClose();
     };
 
+ // Handle icon selection in the modal
+ const handleIconClick = (icon) => {
+    setSelectedIcon(icon);
+};
+    
+
     // const handleDelete = async (id) => {
     //     try {
     //         const response = await axios.delete(`${incomeApi}/${userId}/${id}`);
@@ -110,7 +120,7 @@ const Income = () => {
             <div className="row-income">
                 {['Salary', 'Freelance', 'Pocket Money', 'Add'].map((incomeType, index) => (
                     <div key={index} className="col-md-3 d-flex justify-content-start" style={{ cursor: 'pointer', marginBottom: '20px' }} >
-                        <div className="income-card text-center p-4" onClick={() => handleBoxClick(incomeType)} >
+                        <div className="income-card text-center p-4" onClick={() => { handleBoxClick(incomeType); handleIconClick(icons[index]); }} >
                             <h5 className='income-type'>{incomeType}</h5>
                             <div className="circle-icon mb-3">
                                 <i className={icons[index]} style={{ color: 'black' }}></i>
@@ -169,7 +179,7 @@ const Income = () => {
                                 <form onSubmit={handleSubmit}>
                                     <div className="modal-body income-body">
                                         <div className="income-form">
-                                            <div className='form-items-income'>
+                                            <div className='form-items-category'>
                                                 <label htmlFor="category">Enter Category Name: </label>
                                                 <input
                                                     type="text"
@@ -180,7 +190,24 @@ const Income = () => {
                                                     required
                                                 />
                                             </div>
-                                            <div className='form-items-income'>
+                                            <div className='form-items-category icons'>
+                                                <label htmlFor="icon" className='form-head'>Choose Icon: </label>
+                                                <div className='icon-container'>
+
+                                                    {categoryIcons.map((icon, index) => (
+                                                        <div className='icon-griditems'>
+                                                            <i
+                                                                key={index}
+                                                                className={`${icon} fa-2x`}
+                                                                style={{ color: selectedIcon === icon ? '#1f665e' : 'black', cursor: 'pointer' }}
+                                                                onClick={() => handleIconClick(icon)}
+                                                            ></i>
+                                                        </div>
+                                                    ))}
+
+                                                </div>
+                                            </div>
+                                            <div className='form-items-category'>
                                                 <label htmlFor="amount">Enter Amount: </label>
                                                 <input
                                                     type="text"
@@ -215,9 +242,11 @@ const Income = () => {
                 <div className='income-lists'>
                     {incomeList.map(income => (
                         <div key={income.id} className='income-item'>
+                            <div className="circle-icon-ilist mb-3">
+                                <i className={income.icon} style={{ color: 'black' }}></i>
+                            </div>
                             <div className='income-category'>{income.category}</div>
                             <div className='income-amount'>${income.amount}</div>
-                            <div className='income-date'>{new Date(income.date).toLocaleDateString()}</div>
                         </div>
                     ))}
                 </div>
