@@ -68,6 +68,7 @@ const Income = () => {
                 category: categoryName,
                 amount: parseFloat(amount),
                 date: new Date().toISOString().split('T')[0], // Set to today's date in YYYY-MM-DD format
+                icon: selectedIcon,
             };
             const response = await axios.post(`${incomeApi}/add/${userId}`, incomeData);
 
@@ -96,7 +97,7 @@ const Income = () => {
     };
 
  // Handle icon selection in the modal
- const handleIconClick = (icon) => {
+const handleIconClick = (icon) => {
     setSelectedIcon(icon);
 };
     
@@ -243,7 +244,7 @@ const Income = () => {
                     {incomeList.map(income => (
                         <div key={income.id} className='income-item'>
                             <div className="circle-icon-ilist mb-3">
-                                <i className={income.icon} style={{ color: 'black' }}></i>
+                                <i className={income.icon} style={{color: 'black'}}></i>
                             </div>
                             <div className='income-category'>{income.category}</div>
                             <div className='income-amount'>${income.amount}</div>

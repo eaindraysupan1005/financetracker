@@ -16,19 +16,19 @@ public class Income {
     private String category;
     private double amount;
     private String icon;
-
-    private Income(){ }
-
-    private Income(String category, double amount){
-        this.category=category;
-        this.amount=amount;
-    }
     
     @ManyToOne(fetch = FetchType.LAZY) // Or FetchType.EAGER if necessary
     @JoinColumn(name = "user_id", nullable = false) // Foreign key to the User entity
     @JsonBackReference
     private User user;
 
+    public Income(){ }
+
+    public Income(String category, double amount){
+        this.category=category;
+        this.amount=amount;
+    }
+    
     public long getId() {
         return id;
     }

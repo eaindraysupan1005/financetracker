@@ -1,10 +1,10 @@
 .dashboard-container{
+    font-family: 'Battambang';
     display: flex;
     justify-content: center;
     padding: 20px;
     gap: 20px;
-    background-color: aqua;
-    height: 900vh;
+    height: 90vh;
 }
 .left-column,.right-column{
 display: flex;
