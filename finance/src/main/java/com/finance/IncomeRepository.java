@@ -5,9 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.sql.Date; // or java.util.Date depending on your entity
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface IncomeRepository extends JpaRepository<Income, Long> {
@@ -18,6 +20,8 @@ public interface IncomeRepository extends JpaRepository<Income, Long> {
     @Query("SELECT i FROM Income i WHERE i.user.id = :userId AND i.date BETWEEN :startDate AND :endDate")
     List<Income> findIncomeByUserIdAndDateRange(Long userId, LocalDate startDate, LocalDate endDate);
     
+    @Query("SELECT SUM(i.amount) FROM Income i WHERE i.user.id = :userId")
+    Optional<BigDecimal> getTotalIncomeByUserId(Long userId);
 
     void deleteByIdAndUserId(Long id, Long userId);
 }
