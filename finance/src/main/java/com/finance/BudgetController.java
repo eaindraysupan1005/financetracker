@@ -1,11 +1,9 @@
 package com.finance;
 
 
-import com.finance.domain.Budget;
-import com.finance.domain.Income;
-import com.finance.domain.User;
+import java.time.LocalDate;
 import java.util.List;
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,12 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 import com.finance.domain.Budget;
+import com.finance.domain.User;
 
 @RestController
 @RequestMapping("/budgets")
@@ -37,13 +31,13 @@ public class BudgetController {
     private UserRepository userRepository;
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<Budget>> getAllCategories(){
+    public ResponseEntity<List<Budget>> getAllBudgets(){
         List<Budget> categories = budgetRepository.findAll();
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
     @PostMapping("/add/{userId}")
-    public ResponseEntity<Budget> addIncome(@PathVariable Long userId, @RequestBody Budget budgetData) {
+    public ResponseEntity<Budget> addBudget(@PathVariable Long userId, @RequestBody Budget budgetData) {
         budgetData.setDate(LocalDate.now()); // Set current date
 
         // Retrieve the User directly using UserRepository

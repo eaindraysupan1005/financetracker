@@ -63,43 +63,31 @@ const Budget = () => {
         icon = category.icon;
       }
       if (selectedCategory && limit) {
-        // setBudgetList([
-        //   ...budgetList,
-        //   {
-        //     name: selectedCategory,
-        //     limit: limit,
-        //     spent: 0,
-        //     icon: icon,
-        //     date: new Date().toISOString().split("T")[0],
-        //   },
-        // ]);
-      }
+        const budgetData = {
+          category: selectedCategory,
+          budget_limit: limit,
+          spent: 0,
+          icon: icon,
+          date: new Date().toISOString().split("T")[0],
+        };
+        const response = await axios.post(
+          `${budgetApi}/add/${userId}`,
+          budgetData
+        );
 
-      const budgetData = {
-        name: selectedCategory,
-        limit: limit,
-        spent: 0,
-        icon: icon,
-        date: new Date().toISOString().split("T")[0],
-      };
-
-      const response = await axios.post(
-        `${budgetApi}/add/${userId}`,
-        budgetData
-      );
-      
-      console.log(response);
-      if (response.status === 201) {
-        setBudgetList((prevList) => [...prevList, response.data]);
-        setSelectedCategory("");
-        setLimit("");
-        let newIcons = icons.map((ic) => {
-          ic.active = false;
-          return ic;
-        });
-        console.log(newIcons);
-        setIcons(newIcons);
-        handleClose();
+        console.log(response);
+        if (response.status === 201) {
+          setBudgetList((prevList) => [...prevList, response.data]);
+          setSelectedCategory("");
+          setLimit("");
+          let newIcons = icons.map((ic) => {
+            ic.active = false;
+            return ic;
+          });
+          console.log(newIcons);
+          setIcons(newIcons);
+          handleClose();
+        }
       }
     } catch (error) {
       console.error("Error saving budget:", error);
@@ -134,7 +122,7 @@ const Budget = () => {
   };
 
   const availableCategories = categories.filter(
-    (cat) => !budgetList.some((budget) => budget.name === cat.name)
+    (cat) => !budgetList.some((budget) => budget.category === cat.name)
   );
 
   // const toggleActiveIcon = (index) => {
@@ -385,7 +373,7 @@ const Budget = () => {
               <li className="budgeted-lists">
                 <div className="row">
                   {budgetList.map((budget, index) => {
-                    const progress = (budget.spent / budget.limit) * 100;
+                    const progress = (budget.spent / budget.budget_limit) * 100;
                     return (
                       <div className="col-12 col-md-4 mt-3 mb-4" key={index}>
                         <div className="card shadow h-100">
@@ -394,8 +382,8 @@ const Budget = () => {
                               <h5 className="card-title budgeted-title">
                                 <i
                                   className={`${budget.icon} me-3 selected-icon`}
-                                ></i>{" "}
-                                {budget.name}
+                                ></i>
+                                {budget.category}
                               </h5>
                               <div>
                                 <button className="btn btn-edit me-2">
@@ -409,7 +397,7 @@ const Budget = () => {
                                 </button>
                               </div>
                             </div>
-                            <p>Limit: {budget.limit} $</p>
+                            <p>Limit: {budget.budget_limit} $</p>
                             <p>Spent: {budget.spent} $</p>
                             <p>Date: {budget.date}</p>
                             <div className="progress">
