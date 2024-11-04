@@ -1,7 +1,8 @@
 package com.finance.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,7 +20,7 @@ public class Budget {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate Date;
-    private String categoryName;
+    private String category;
     private Double budget_limit;
     private Double spent;
     private String icon;
@@ -27,9 +28,9 @@ public class Budget {
 
     private Budget(){ }
 
-    private Budget(String categoryName, double limit, double spent, String icon){
-        this.categoryName =categoryName;
-        this.budget_limit= limit;
+    private Budget(String category, Double budget_limit, Double spent, String icon){
+        this.category =category;
+        this.budget_limit= budget_limit;
         this.spent = spent;
         this.icon = icon;
     }
@@ -55,15 +56,15 @@ public class Budget {
         this.Date = date;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public double getSpent() {
+    public Double getSpent() {
         return spent;
     }
 
