@@ -9,7 +9,7 @@ const Budget = () => {
   const [category, setCategory] = useState("");
   const [budgetList, setBudgetList] = useState([]);
   const [limit, setLimit] = useState("");
-  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+  const [date, setDate] = useState("");
   const categories = [
     { name: "Food", icon: "fas fa-utensils" },
     { name: "Shopping", icon: "fa-solid fa-cart-shopping" },
@@ -235,17 +235,16 @@ const Budget = () => {
                       required
                     />
                   </div>
-                  <div className="mb-3">
+                  <div className="mb-3 d-flex me-2 budget-form">
                     <label htmlFor="date" className="form-label me-5 ">
                       Date:
                     </label>
                     <input
-                      type="text"
+                      type="date"
                       className="form-control"
                       id="date"
                       value={date}
                       onChange={(e) => setDate(e.target.value)}
-                      placeholder="0"
                       required
                     />
                   </div>

@@ -1,7 +1,6 @@
 package com.finance;
 
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +37,7 @@ public class BudgetController {
 
     @PostMapping("/add/{userId}")
     public ResponseEntity<Budget> addBudget(@PathVariable Long userId, @RequestBody Budget budgetData) {
-        budgetData.setDate(LocalDate.now()); // Set current date
+        // budgetData.setDate(date); // Set current date
 
         // Retrieve the User directly using UserRepository
         Optional<User> userOptional = userRepository.findById(userId);
