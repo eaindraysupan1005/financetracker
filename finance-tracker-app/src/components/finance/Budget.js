@@ -28,6 +28,9 @@ const Budget = () => {
     { class: "fas fa-users fa-2x", active: false },
     { class: "fas fa-table-tennis fa-2x", active: false },
   ]);
+  const [goal, setGoal] = useState("");
+  const [targetAmount, setTargetAmount] = useState("");
+  const [goalList, setGoalList] = useState("");
   const [targetCategory, setTargetCategory] = useState("");
 
   const budgetApi = `http://localhost:8080/budgets`;
@@ -68,7 +71,7 @@ const Budget = () => {
           budget_limit: limit,
           spent: 0,
           icon: icon,
-          date: new Date().toISOString().split("T")[0],
+          date: date || new Date().toISOString().split("T")[0],
         };
         const response = await axios.post(
           `${budgetApi}/add/${userId}`,
@@ -113,26 +116,9 @@ const Budget = () => {
     setSelectedCategory(categoryName);
   };
 
-  // const handleSelectedIcon = (icon) => {
-  //   setIcons(icon);
-  // };
-
-  const handleTargetCategory = (targetName) => {
-    setTargetCategory(targetName);
-  };
-
   const availableCategories = categories.filter(
     (cat) => !budgetList.some((budget) => budget.category === cat.name)
   );
-
-  // const toggleActiveIcon = (index) => {
-  //   setIcons((prevIcons) =>
-  //     prevIcons.map((icon, i) => {
-  //       icon.active = i == index ? !icon.active : false;
-  //       return icon;
-  //     })
-  //   );
-  // };
 
   const toggleActiveIcon = (index) => {
     let prevIcons = icons.map((icon, i) => {
@@ -151,10 +137,11 @@ const Budget = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${budgetApi}/${userId}/${id}`);
+      const response = await axios.delete(`${budgetApi}/${userId}/${id}`);
       setBudgetList((prevBudgets) =>
         prevBudgets.filter((budget) => budget.id !== id)
       );
+      console.log(response);
     } catch (error) {
       console.error("Error deleting budget:", error);
     }
@@ -324,7 +311,7 @@ const Budget = () => {
 
                 {/* Amount Input  */}
                 <div className="mb-4 ms-3 me-3 text-start">
-                  <label for="limit" className="form-label fw-bold">
+                  <label htmlFor="limit" className="form-label fw-bold">
                     Enter Amount
                   </label>
                   <input
@@ -334,6 +321,19 @@ const Budget = () => {
                     value={limit}
                     onChange={(e) => setLimit(e.target.value)}
                     placeholder="Amount"
+                  />
+                </div>
+
+                <div className="mb-4 ms-3 me-3 text-start">
+                  <label htmlFor="date" className="form-label fw-bold">
+                    Enter Amount
+                  </label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    id="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
                   />
                 </div>
 
@@ -398,7 +398,7 @@ const Budget = () => {
                             </div>
                             <p>Limit: {budget.budget_limit} $</p>
                             <p>Spent: {budget.spent} $</p>
-                            <p>Date: {budget.date}</p>
+                            <p>Date: {budget.date.join("-")}</p>
                             <div className="progress">
                               <div
                                 className="progress-bar bg-warning"
@@ -423,102 +423,64 @@ const Budget = () => {
         {/* Saving goal section */}
         <div className=" mt-5">
           <h3 className="fw-bold saving-title">Saving Goal</h3>
-
-          <div className="row row-cols-1 row-cols-md-3 g-5 mt-4">
-            {/* First Card - Summer Trip */}
-            <div className="col">
-              <div className="card h-100 shadow d-flex flex-row card-saving">
-                <div className="card-body text-start ms-3">
-                  <h5 className="card-title">Summer Trip</h5>
-                  <p>Target: 800 $</p>
-                  <p>Saved: 356 $</p>
-                  <p>
-                    Deadline: <strong>April 2025</strong>
-                  </p>
-                </div>
-                <div>
-                  <div className="me-3">
-                    <div>
-                      <button className="btn btn-edit">
-                        <i className="fa-solid fa-pen-to-square"></i>
-                      </button>
-                      <button className="btn btn-trash">
-                        <i className="fa-solid fa-trash-can"></i>
-                      </button>
-                    </div>
-                    <div
-                      className="progress-circle mt-3"
-                      style={{ width: "100px", height: "100px" }}
-                    >
-                      <svg viewBox="0 0 36 36">
-                        <path
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                          fill="none"
-                          stroke="#ccc"
-                          strokeWidth="4"
-                        />
-                        <path
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
-                          fill="none"
-                          stroke="#eac60b"
-                          strokeWidth="4"
-                          strokeDasharray="44.5, 100"
-                        />
-                      </svg>
-                      <div className="progress-text">44.5%</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Second Card - To Buy iPad */}
-            <div className="col">
-              <div className="card h-100 shadow d-flex flex-row card-saving">
-                <div className="card-body text-start ms-3">
-                  <h5 className="card-title">To buy iPad</h5>
-                  <p>Target: 1500 $</p>
-                  <p>Saved: 237 $</p>
-                  <p>
-                    Deadline: <strong>April 2025</strong>
-                  </p>
-                </div>
-                <div>
-                  <div className="me-3">
-                    <div>
-                      <button className="btn btn-edit">
-                        <i className="fa-solid fa-pen-to-square"></i>
-                      </button>
-                      <button className="btn btn-trash">
-                        <i className="fa-solid fa-trash-can"></i>
-                      </button>
-                    </div>
-                    <div
-                      className="progress-circle mt-3"
-                      style={{ width: "100px", height: "100px" }}
-                    >
-                      <svg viewBox="0 0 36 36">
-                        <path
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                          fill="none"
-                          stroke="#ccc"
-                          strokeWidth="4"
-                        />
-                        <path
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
-                          fill="none"
-                          stroke="#eac60b"
-                          strokeWidth="4"
-                          strokeDasharray="15.8, 100"
-                        />
-                      </svg>
-                      <div className="progress-text">15.8%</div>
+          {goalList === 0 ? (
+            <p className="text-muted mt-5 text-start no-budget">
+              No saving-goal is applied. Set saving-goals to be full your dream.
+            </p>
+          ) : (
+            <ul>
+              <li className="goal-list">
+                <div className="row row-cols-1 row-cols-md-3 g-5 mt-4">
+                  {/* First Card - Summer Trip */}
+                  <div className="col">
+                    <div className="card h-100 shadow d-flex flex-row card-saving">
+                      <div className="card-body text-start ms-3">
+                        <h5 className="card-title">Summer Trip</h5>
+                        <p>Target: 800 $</p>
+                        <p>Saved: 356 $</p>
+                        <p>
+                          Deadline: <strong>April 2025</strong>
+                        </p>
+                      </div>
+                      <div>
+                        <div className="me-3">
+                          <div>
+                            <button className="btn btn-edit">
+                              <i className="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button className="btn btn-trash">
+                              <i className="fa-solid fa-trash-can"></i>
+                            </button>
+                          </div>
+                          <div
+                            className="progress-circle mt-3"
+                            style={{ width: "100px", height: "100px" }}
+                          >
+                            <svg viewBox="0 0 36 36">
+                              <path
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none"
+                                stroke="#ccc"
+                                strokeWidth="4"
+                              />
+                              <path
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
+                                fill="none"
+                                stroke="#eac60b"
+                                strokeWidth="4"
+                                strokeDasharray="44.5, 100"
+                              />
+                            </svg>
+                            <div className="progress-text">44.5%</div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
+              </li>
+            </ul>
+          )}
 
           {/* Add New Target Button */}
           <div className="mt-5 mb-5 text-center">
@@ -526,7 +488,6 @@ const Budget = () => {
               className="btn shadow add-category-btn"
               data-bs-toggle="modal"
               data-bs-target="#targetModal"
-              onClick={() => handleTargetCategory("Shopping")}
             >
               + Add New Target
             </button>
