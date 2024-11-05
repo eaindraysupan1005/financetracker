@@ -50,7 +50,7 @@ public class BudgetController {
         return new ResponseEntity<>(savedBudget, HttpStatus.CREATED); // Return saved Income
     }
 
-    @DeleteMapping("/budgets/{id}")
+    @DeleteMapping("/{userId}/{id}")
     public ResponseEntity<Void> deleteCategory (@PathVariable Long id){
         if(budgetRepository.existsById(id)){
             budgetRepository.deleteById(id);
