@@ -92,3 +92,23 @@ INSERT INTO EXPENSE (date, category, amount, user_id) VALUES ('2024-10-20', 'Tra
 INSERT INTO EXPENSE (date, category, amount, user_id) VALUES ('2024-10-18', 'Food', 400.00, 3);
 
 
+CREATE TABLE IF NOT EXISTS savingGoal (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    deadline DATE NOT NULL,
+    saving_name VARCHAR(50) NOT NULL,
+    target_amount DOUBLE NOT NULL,
+    saved_amount DOUBLE NOT NULL,
+    user_id BIGINT NOT NULL,
+    CONSTRAINT fk_user_budget FOREIGN KEY (user_id) REFERENCES USERS(id) ON DELETE CASCADE
+);
+
+INSERT INTO savingGoal (deadline, saving_name, target_amount, saved_amount, user_id) VALUES ('2024-10-24', 'Summer Trip', 1500.00, 800.00, 1);
+INSERT INTO savingGoal (deadline, saving_name, target_amount, saved_amount, user_id) VALUES ('2024-10-24', 'Buying Ipad', 1500.00, 500.00, 2);
+INSERT INTO savingGoal (deadline, saving_name, target_amount, saved_amount, user_id) VALUES ('2024-10-24', 'Buying MacBook', 1000.00, 1000.00, 1);
+INSERT INTO savingGoal (deadline, saving_name, target_amount, saved_amount, user_id) VALUES ('2024-10-24', 'Buying Car', 800.00, 300.00, 2);
+INSERT INTO savingGoal (deadline, saving_name, target_amount, saved_amount, user_id) VALUES ('2024-10-27', 'Going Beach', 300.00, 0.00, 3);
+INSERT INTO savingGoal (deadline, saving_name, target_amount, saved_amount, user_id) VALUES ('2024-10-27', 'Trip to Cambodia', 500.00, 100.00, 3);
+INSERT INTO savingGoal (deadline, saving_name, target_amount, saved_amount, user_id) VALUES ('2024-10-24', 'Buying Skincare', 1800.00, 1000.00, 3);
+INSERT INTO savingGoal (deadline, saving_name, target_amount, saved_amount, user_id) VALUES ('2024-10-20', 'For Birthday', 2500.00, 400.00, 3);
+INSERT INTO savingGoal (deadline, saving_name, target_amount, saved_amount, user_id) VALUES ('2024-10-20', 'Buying Clothing', 500.00, 300.00, 3);
+INSERT INTO savingGoal (deadline, saving_name, target_amount, saved_amount, user_id) VALUES ('2024-10-22', 'Donation', 1800.00, 1000.00, 3);
