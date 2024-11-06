@@ -19,7 +19,7 @@
   box-sizing: border-box;
 }
 
-.setBudget{
+.setBudget {
   margin-top: 2rem;
   text-align: start;
 }
@@ -44,53 +44,53 @@
   transition: all 0.3s ease;
 }
 
-.set-budget-btn:hover{
+.set-budget-btn:hover {
   background-color: #1f665e;
 }
 
-.budget-popup{
+.budget-popup {
   max-width: 500px;
 }
 
-.budget-form{
+.budget-form {
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: 500;
 }
 
-.budget-form-title{
+.budget-form-title {
   color: #1f665e;
 }
 
-.budget-form-btn{
+.budget-form-btn {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.cancel-btn{
+.cancel-btn {
   border-color: #1f665e;
   transition: all 0.5s ease;
   width: 100px;
 }
-.cancel-btn:hover{
-background-color: #e7e7e7;
+.cancel-btn:hover {
+  background-color: #e7e7e7;
 }
 
-.set-btn{
+.set-btn {
   color: #fff;
   background-color: #eac60b;
   width: 100px;
   transition: all 0.5s ease;
 }
 
-.set-btn:hover{
+.set-btn:hover {
   color: #fff;
   background-color: #ffe662;
 }
 
-.add-category{
+.add-category {
   display: flex;
   max-width: 500px;
   justify-content: center;
@@ -100,20 +100,19 @@ background-color: #e7e7e7;
   width: 200px;
   transition: all 0.5s ease;
 }
-.add-category-btn:hover{
+.add-category-btn:hover {
   color: #fff;
   background-color: #1f665e;
 }
-.set-budgeted{
+.set-budgeted {
   text-align: start;
   max-height: 1000px;
 }
-.no-budget{
-font-size: 1.2rem;
+.no-budget {
+  font-size: 1.2rem;
 }
 
-
-.budgeted-lists{
+.budgeted-lists {
   list-style-type: none;
 }
 .budgeted-categories {
@@ -128,7 +127,7 @@ font-size: 1.2rem;
   border-radius: 5px;
 }
 
-.selected-icon{
+.selected-icon {
   font-size: 1.8rem;
 }
 
@@ -141,10 +140,9 @@ font-size: 1.2rem;
   border: 1px solid #ccc;
   border-radius: 10px;
 }
-.saving-title{
+.saving-title {
   text-align: start;
 }
-
 
 /* Circular progress container */
 .progress-circle {
@@ -166,14 +164,13 @@ font-size: 1.2rem;
   font-weight: bold;
 }
 
-
 /* Spacing and title */
 .saving-title {
   font-size: 24px;
   font-weight: bold;
 }
 
-.card-saving{
+.card-saving {
   color: #fff;
   background-color: #1f665e;
 }
@@ -187,20 +184,20 @@ font-size: 1.2rem;
   height: 36px;
 }
 
-.btn-edit:hover{
+.btn-edit:hover {
   color: #ffe662;
 }
 
-.btn-trash{
-    border: none;
-    color: #f01e2c;
-    font-size: 20px;
-    text-align: center;
-    width: 36px;
-    height: 36px;
+.btn-trash {
+  border: none;
+  color: #f01e2c;
+  font-size: 20px;
+  text-align: center;
+  width: 36px;
+  height: 36px;
 }
 
-.btn-trash:hover{
+.btn-trash:hover {
   color: #c30010;
 }
 
@@ -221,7 +218,7 @@ font-size: 1.2rem;
 }
 
 .icon-item {
-  width: 18%; 
+  width: 18%;
   text-align: center;
   padding: 10px;
   cursor: pointer;
@@ -229,6 +226,11 @@ font-size: 1.2rem;
   transition: color 0.3s ease;
 }
 
-.icon-item:hover {
+.icon-item:hover,
+.icon-item:visited {
   color: #eac60b;
+}
+
+.goal-list {
+  list-style-type: none;
 }
