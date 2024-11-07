@@ -84,13 +84,13 @@ const Budget = () => {
         console.log(response);
         if (response.status === 201) {
           setBudgetList((prevList) => [...prevList, response.data]);
-          setSelectedCategory("");
+          setCategory("");
           setLimit("");
+          setDate("");
           let newIcons = icons.map((ic) => {
             ic.active = false;
             return ic;
           });
-          console.log(newIcons);
           setIcons(newIcons);
           handleCloseForBudget();
         }
@@ -102,8 +102,9 @@ const Budget = () => {
   };
 
   const handleCloseForBudget = () => {
-    setCategory("");
+    setSelectedCategory("");
     setLimit("");
+    setDate("");
   };
 
   const handleSubmitForBudget = (event) => {
@@ -400,7 +401,7 @@ const Budget = () => {
 
                 <div className="mb-4 ms-3 me-3 text-start">
                   <label htmlFor="date" className="form-label fw-bold">
-                    Enter Amount
+                    Date
                   </label>
                   <input
                     type="date"
@@ -508,8 +509,9 @@ const Budget = () => {
               <li className="goal-list">
                 <div className="row row-cols-1 row-cols-md-3 g-5 mt-4">
                   {goalList.map((goal, index) => {
-                    const progress =
-                      Math.round((goal.saved_amount / goal.target_amount) * 100);
+                    const progress = Math.round(
+                      (goal.saved_amount / goal.target_amount) * 100
+                    );
                     return (
                       <div className="col" key={index}>
                         <div className="card h-100 shadow d-flex flex-row card-saving">
