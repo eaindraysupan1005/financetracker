@@ -28,16 +28,22 @@ const Budget = () => {
     { class: "fas fa-users fa-2x", active: false },
     { class: "fas fa-table-tennis fa-2x", active: false },
   ]);
-  const [targetCategory, setTargetCategory] = useState("");
+
+  const [goalName, setGoalName] = useState("");
+  const [targetAmount, setTargetAmount] = useState("");
+  const [savedAmount, setSavedAmount] = useState("");
+  const [deadline, setDeadline] = useState("");
+  const [goalList, setGoalList] = useState([]);
 
   const budgetApi = `http://localhost:8080/budgets`;
+  const savingGoalApi = `http://localhost:8080/saving`;
   const [error, setError] = useState(null);
+
+  //Fetch all budgets
 
   useEffect(() => {
     fetchBudgetData();
   }, []);
-
-  //Fetch all budgets
 
   const fetchBudgetData = useCallback(
     async (type) => {
@@ -68,7 +74,7 @@ const Budget = () => {
           budget_limit: limit,
           spent: 0,
           icon: icon,
-          date: new Date().toISOString().split("T")[0],
+          date: date || new Date().toISOString().split("T")[0],
         };
         const response = await axios.post(
           `${budgetApi}/add/${userId}`,
@@ -86,7 +92,7 @@ const Budget = () => {
           });
           console.log(newIcons);
           setIcons(newIcons);
-          handleClose();
+          handleCloseForBudget();
         }
       }
     } catch (error) {
@@ -95,44 +101,27 @@ const Budget = () => {
     }
   };
 
-  const handleClose = () => {
+  const handleCloseForBudget = () => {
     setCategory("");
     setLimit("");
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmitForBudget = (event) => {
     event.preventDefault();
     saveBudget(selectedCategory);
 
     console.log(`Category: ${selectedCategory}`);
     console.log(`Limit for ${selectedCategory}: ${limit}`);
-    handleClose();
+    handleCloseForBudget();
   };
 
   const handleSetSelectedCategory = (categoryName) => {
     setSelectedCategory(categoryName);
   };
 
-  // const handleSelectedIcon = (icon) => {
-  //   setIcons(icon);
-  // };
-
-  const handleTargetCategory = (targetName) => {
-    setTargetCategory(targetName);
-  };
-
   const availableCategories = categories.filter(
     (cat) => !budgetList.some((budget) => budget.category === cat.name)
   );
-
-  // const toggleActiveIcon = (index) => {
-  //   setIcons((prevIcons) =>
-  //     prevIcons.map((icon, i) => {
-  //       icon.active = i == index ? !icon.active : false;
-  //       return icon;
-  //     })
-  //   );
-  // };
 
   const toggleActiveIcon = (index) => {
     let prevIcons = icons.map((icon, i) => {
@@ -149,12 +138,84 @@ const Budget = () => {
 
   // Delete a budget
 
-  const handleDelete = async (id) => {
+  const handleDeleteForBudget = async (id) => {
     try {
-      await axios.delete(`${budgetApi}/${userId}/${id}`);
+      const response = await axios.delete(`${budgetApi}/${userId}/${id}`);
       setBudgetList((prevBudgets) =>
         prevBudgets.filter((budget) => budget.id !== id)
       );
+      console.log(response);
+    } catch (error) {
+      console.error("Error deleting budget:", error);
+    }
+  };
+
+  // Fetch Saving Goals
+
+  useEffect(() => {
+    fetchSavingGoalData();
+  }, []);
+
+  const fetchSavingGoalData = useCallback(
+    async (type) => {
+      try {
+        const response = await axios.get(`${savingGoalApi}/${userId}`);
+        console.log(response.data);
+        setGoalList(response.data);
+      } catch (error) {
+        console.log("Error fetching saving-goal data:", error);
+      }
+      console.log(`Fetching saving-goal data for userId: ${userId}`);
+    },
+    [userId, savingGoalApi]
+  );
+
+  const saveGoal = async () => {
+    try {
+      const savingGoalData = {
+        saving_name: goalName,
+        target_amount: targetAmount,
+        saved_amount: savedAmount,
+        deadline: deadline,
+      };
+      const response = await axios.post(
+        `${savingGoalApi}/add/${userId}`,
+        savingGoalData
+      );
+
+      console.log(response);
+      if (response.status === 201) {
+        setGoalList((prevList) => [...prevList, response.data]);
+        handleCloseForSaving();
+      }
+    } catch (error) {
+      console.error("Error saving goal:", error);
+      setError("Failed to save saving-goal");
+    }
+  };
+
+  const handleSubmitForSaving = (event) => {
+    event.preventDefault();
+    saveGoal();
+
+    console.log(`Description: ${goalName}`);
+    console.log(`Target Amount: ${targetAmount}`);
+    console.log(`Saved Amount: ${savedAmount}`);
+    console.log(`Deadline: ${deadline}`);
+  };
+
+  const handleCloseForSaving = () => {
+    setGoalName("");
+    setTargetAmount("");
+    setSavedAmount("");
+    setDeadline("");
+  };
+
+  const handleDeleteForSaving = async (id) => {
+    try {
+      const response = await axios.delete(`${savingGoalApi}/${userId}/${id}`);
+      setGoalList((prevGoals) => prevGoals.filter((goal) => goal.id !== id));
+      console.log(response);
     } catch (error) {
       console.error("Error deleting budget:", error);
     }
@@ -208,7 +269,7 @@ const Budget = () => {
                 Set Budget
               </h5>
               <div className="modal-body">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmitForBudget}>
                   <div className="mb-3 d-flex me-2 budget-form">
                     <label htmlFor="category" className="form-label me-3 ">
                       Category:
@@ -253,7 +314,7 @@ const Budget = () => {
                       type="button"
                       className="btn me-3 cancel-btn"
                       data-bs-dismiss="modal"
-                      onClick={handleClose}
+                      onClick={handleCloseForBudget}
                     >
                       Cancel
                     </button>
@@ -324,7 +385,7 @@ const Budget = () => {
 
                 {/* Amount Input  */}
                 <div className="mb-4 ms-3 me-3 text-start">
-                  <label for="limit" className="form-label fw-bold">
+                  <label htmlFor="limit" className="form-label fw-bold">
                     Enter Amount
                   </label>
                   <input
@@ -337,12 +398,25 @@ const Budget = () => {
                   />
                 </div>
 
+                <div className="mb-4 ms-3 me-3 text-start">
+                  <label htmlFor="date" className="form-label fw-bold">
+                    Enter Amount
+                  </label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    id="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                  />
+                </div>
+
                 <div className="mb-5 budget-form-btn">
                   <button
                     type="button"
                     className="btn me-3 cancel-btn"
                     data-bs-dismiss="modal"
-                    onClick={handleClose}
+                    onClick={handleCloseForBudget}
                   >
                     Cancel
                   </button>
@@ -390,7 +464,9 @@ const Budget = () => {
                                 </button>
                                 <button
                                   className="btn btn-trash"
-                                  onClick={() => handleDelete(budget.id)}
+                                  onClick={() =>
+                                    handleDeleteForBudget(budget.id)
+                                  }
                                 >
                                   <i className="fa-solid fa-trash-can"></i>
                                 </button>
@@ -398,7 +474,7 @@ const Budget = () => {
                             </div>
                             <p>Limit: {budget.budget_limit} $</p>
                             <p>Spent: {budget.spent} $</p>
-                            <p>Date: {budget.date}</p>
+                            <p>Date: {budget.date.join("-")}</p>
                             <div className="progress">
                               <div
                                 className="progress-bar bg-warning"
@@ -423,102 +499,73 @@ const Budget = () => {
         {/* Saving goal section */}
         <div className=" mt-5">
           <h3 className="fw-bold saving-title">Saving Goal</h3>
-
-          <div className="row row-cols-1 row-cols-md-3 g-5 mt-4">
-            {/* First Card - Summer Trip */}
-            <div className="col">
-              <div className="card h-100 shadow d-flex flex-row card-saving">
-                <div className="card-body text-start ms-3">
-                  <h5 className="card-title">Summer Trip</h5>
-                  <p>Target: 800 $</p>
-                  <p>Saved: 356 $</p>
-                  <p>
-                    Deadline: <strong>April 2025</strong>
-                  </p>
+          {goalList.length === 0 ? (
+            <p className="text-muted mt-5 text-start no-budget">
+              No saving-goal is applied. Set saving-goals to be full your dream.
+            </p>
+          ) : (
+            <ul>
+              <li className="goal-list">
+                <div className="row row-cols-1 row-cols-md-3 g-5 mt-4">
+                  {goalList.map((goal, index) => {
+                    const progress =
+                      Math.round((goal.saved_amount / goal.target_amount) * 100);
+                    return (
+                      <div className="col" key={index}>
+                        <div className="card h-100 shadow d-flex flex-row card-saving">
+                          <div className="card-body text-start ms-3">
+                            <h5 className="card-title">{goal.saving_name}</h5>
+                            <p>Target: {goal.target_amount} $</p>
+                            <p>Saved: {goal.saved_amount} $</p>
+                            <p>
+                              Deadline:{" "}
+                              <strong>{goal.deadline.join("-")}</strong>
+                            </p>
+                          </div>
+                          <div>
+                            <div className="me-3">
+                              <div>
+                                <button className="btn btn-edit">
+                                  <i className="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <button
+                                  className="btn btn-trash"
+                                  onClick={() => handleDeleteForSaving(goal.id)}
+                                >
+                                  <i className="fa-solid fa-trash-can"></i>
+                                </button>
+                              </div>
+                              <div
+                                className="progress-circle mt-3"
+                                style={{ width: "100px", height: "100px" }}
+                              >
+                                <svg viewBox="0 0 36 36">
+                                  <path
+                                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                    fill="none"
+                                    stroke="#ccc"
+                                    strokeWidth="4"
+                                  />
+                                  <path
+                                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
+                                    fill="none"
+                                    stroke="#eac60b"
+                                    strokeWidth="4"
+                                    strokeDasharray={progress + ", 100"}
+                                  />
+                                </svg>
+                                <div className="progress-text">{progress}%</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-                <div>
-                  <div className="me-3">
-                    <div>
-                      <button className="btn btn-edit">
-                        <i className="fa-solid fa-pen-to-square"></i>
-                      </button>
-                      <button className="btn btn-trash">
-                        <i className="fa-solid fa-trash-can"></i>
-                      </button>
-                    </div>
-                    <div
-                      className="progress-circle mt-3"
-                      style={{ width: "100px", height: "100px" }}
-                    >
-                      <svg viewBox="0 0 36 36">
-                        <path
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                          fill="none"
-                          stroke="#ccc"
-                          strokeWidth="4"
-                        />
-                        <path
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
-                          fill="none"
-                          stroke="#eac60b"
-                          strokeWidth="4"
-                          strokeDasharray="44.5, 100"
-                        />
-                      </svg>
-                      <div className="progress-text">44.5%</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Second Card - To Buy iPad */}
-            <div className="col">
-              <div className="card h-100 shadow d-flex flex-row card-saving">
-                <div className="card-body text-start ms-3">
-                  <h5 className="card-title">To buy iPad</h5>
-                  <p>Target: 1500 $</p>
-                  <p>Saved: 237 $</p>
-                  <p>
-                    Deadline: <strong>April 2025</strong>
-                  </p>
-                </div>
-                <div>
-                  <div className="me-3">
-                    <div>
-                      <button className="btn btn-edit">
-                        <i className="fa-solid fa-pen-to-square"></i>
-                      </button>
-                      <button className="btn btn-trash">
-                        <i className="fa-solid fa-trash-can"></i>
-                      </button>
-                    </div>
-                    <div
-                      className="progress-circle mt-3"
-                      style={{ width: "100px", height: "100px" }}
-                    >
-                      <svg viewBox="0 0 36 36">
-                        <path
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                          fill="none"
-                          stroke="#ccc"
-                          strokeWidth="4"
-                        />
-                        <path
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
-                          fill="none"
-                          stroke="#eac60b"
-                          strokeWidth="4"
-                          strokeDasharray="15.8, 100"
-                        />
-                      </svg>
-                      <div className="progress-text">15.8%</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+              </li>
+            </ul>
+          )}
 
           {/* Add New Target Button */}
           <div className="mt-5 mb-5 text-center">
@@ -526,7 +573,6 @@ const Budget = () => {
               className="btn shadow add-category-btn"
               data-bs-toggle="modal"
               data-bs-target="#targetModal"
-              onClick={() => handleTargetCategory("Shopping")}
             >
               + Add New Target
             </button>
@@ -547,52 +593,62 @@ const Budget = () => {
                 className="modal-title fw-bold m-auto mt-3 budget-form-title"
                 id="budgetModalLabel"
               >
-                Add New Target
+                Add New Saving-Goal
               </h5>
               <div className="modal-body">
                 <form>
                   <div className="mb-3 ms-3 me-3 text-start">
-                    <label for="description" className="form-label fw-bold">
+                    <label htmlFor="description" className="form-label fw-bold">
                       Description
                     </label>
                     <input
                       type="text"
                       className="form-control"
                       id="description"
+                      value={goalName}
+                      onChange={(e) => setGoalName(e.target.value)}
                       placeholder="Description"
                     />
                   </div>
                   <div className="mb-3 ms-3 me-3 text-start">
-                    <label for="targetAmount" className="form-label fw-bold">
+                    <label
+                      htmlFor="targetAmount"
+                      className="form-label fw-bold"
+                    >
                       Target Amount
                     </label>
                     <input
                       type="text"
                       className="form-control"
                       id="targetAmount"
-                      placeholder="amount"
+                      value={targetAmount}
+                      onChange={(e) => setTargetAmount(e.target.value)}
+                      placeholder="Amount"
                     />
                   </div>
                   <div className="mb-3 ms-3 me-3 text-start">
-                    <label for="savedAmount" className="form-label fw-bold">
+                    <label htmlFor="savedAmount" className="form-label fw-bold">
                       Saved Amount
                     </label>
                     <input
                       type="text"
                       className="form-control"
                       id="savedAmount"
-                      placeholder="amount"
+                      value={savedAmount}
+                      onChange={(e) => setSavedAmount(e.target.value)}
+                      placeholder="Amount"
                     />
                   </div>
                   <div className="mb-3 ms-3 me-3 text-start">
-                    <label for="deadline" className="form-label fw-bold">
+                    <label htmlFor="deadline" className="form-label fw-bold">
                       Deadline
                     </label>
                     <input
                       type="date"
                       className="form-control"
                       id="deadline"
-                      placeholder="mm/dd/yyyy"
+                      value={deadline}
+                      onChange={(e) => setDeadline(e.target.value)}
                     />
                   </div>
                 </form>
@@ -602,6 +658,7 @@ const Budget = () => {
                   type="button"
                   className="btn me-3 cancel-btn"
                   data-bs-dismiss="modal"
+                  onClick={handleCloseForSaving}
                 >
                   Cancel
                 </button>
@@ -609,6 +666,7 @@ const Budget = () => {
                   type="button"
                   className="btn set-btn"
                   data-bs-dismiss="modal"
+                  onClick={handleSubmitForSaving}
                 >
                   Add
                 </button>

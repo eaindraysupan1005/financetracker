@@ -1,6 +1,5 @@
 package com.finance;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -16,28 +15,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.finance.domain.Budget;
+import com.finance.domain.SavingGoal;
 import com.finance.domain.User;
 
 @RestController
-@RequestMapping("/budgets")
-public class BudgetController {
+@RequestMapping("/saving")
+public class SavingGoalController {
     
     @Autowired
-    private BudgetRepository budgetRepository;
+    private SavingGoalRepository savingGoalRepository;
 
     @Autowired
     private UserRepository userRepository;
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<Budget>> getAllBudgets(){
-        List<Budget> categories = budgetRepository.findAll();
-        return new ResponseEntity<>(categories, HttpStatus.OK);
+    public ResponseEntity<List<SavingGoal>> getAllSavingGoals(){
+        List<SavingGoal> savingGoals = savingGoalRepository.findAll();
+        return new ResponseEntity<>(savingGoals, HttpStatus.OK);
     }
 
     @PostMapping("/add/{userId}")
-    public ResponseEntity<Budget> addBudget(@PathVariable Long userId, @RequestBody Budget budgetData) {
-        // budgetData.setDate(date); // Set current date
+    public ResponseEntity<SavingGoal> addGoal(@PathVariable Long userId, @RequestBody SavingGoal savingGoalData) {
 
         // Retrieve the User directly using UserRepository
         Optional<User> userOptional = userRepository.findById(userId);
@@ -45,15 +43,15 @@ public class BudgetController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        budgetData.setUser(userOptional.get()); // Set the User to the Income
-        Budget savedBudget = budgetRepository.save(budgetData);
-        return new ResponseEntity<>(savedBudget, HttpStatus.CREATED); // Return saved Income
+        savingGoalData.setUser(userOptional.get()); 
+        SavingGoal savedGoal = savingGoalRepository.save(savingGoalData);
+        return new ResponseEntity<>(savedGoal, HttpStatus.CREATED); // Return saved Income
     }
 
     @DeleteMapping("/{userId}/{id}")
-    public ResponseEntity<Void> deleteCategory (@PathVariable Long id){
-        if(budgetRepository.existsById(id)){
-            budgetRepository.deleteById(id);
+    public ResponseEntity<Void> deleteGoal (@PathVariable Long id){
+        if(savingGoalRepository.existsById(id)){
+            savingGoalRepository.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<> (HttpStatus.NOT_FOUND);
@@ -61,15 +59,17 @@ public class BudgetController {
     }
 
     @PutMapping("/{userId}/{id}")
-    public ResponseEntity<Budget> updateCategory(@RequestBody Budget budgetData, @PathVariable Long userId, @PathVariable long id ){
+    public ResponseEntity<SavingGoal> updateCategory(@RequestBody SavingGoal savingGoalData, @PathVariable Long userId, @PathVariable long id ){
 
-        Optional<Budget>  budget = budgetRepository.findByIdAndUserId(id, userId);
-        if(!budget.isPresent()){
+        Optional<SavingGoal> savingGoal = savingGoalRepository.findByIdAndUserId(id, userId);
+        if(!savingGoal.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        budgetData.setId(id);
+        savingGoalData.setId(id);
 
-        budgetRepository.save(budgetData);
-        return new ResponseEntity<> (budgetData, HttpStatus.OK);
+        savingGoalRepository.save(savingGoalData);
+        return new ResponseEntity<> (savingGoalData, HttpStatus.OK);
     }
 }
+
+
