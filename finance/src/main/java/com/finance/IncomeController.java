@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
@@ -72,6 +73,10 @@ public class IncomeController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        if(incomeData.getAmount().compareTo(BigDecimal.ZERO) == 0)
+        {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         incomeData.setUser(userOptional.get()); // Set the User to the Income
         Income savedIncome = incomeRepository.save(incomeData);
         return new ResponseEntity<>(savedIncome, HttpStatus.CREATED); // Return saved Income

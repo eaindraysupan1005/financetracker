@@ -1,5 +1,5 @@
 import './App.css';
-import React from "react";
+import React,{useState,useEffect  } from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout/Layout';  // Import the Layout component
 import Home from './components/Layout/Home';  // Import Home
@@ -17,6 +17,15 @@ import Settings from './components/finance/Settings';
 
 const App = () => {
   const username = 'Eaindray Su Pan';
+  const [mainUserId, setMainUserId] = useState(null);
+
+  useEffect(() => {
+    // You can load userId from localStorage or sessionStorage
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      setMainUserId(storedUserId);
+    }
+  }, []);
 
   return (
     <div className="App">
@@ -28,10 +37,10 @@ const App = () => {
               <Home />
             </>
           } />
-          <Route path="/login" element={<Login/>}/>
+          <Route path="/login" element={<Login setUserId={mainUserId} />} />  {/* Pass setUserId to Login */}
           <Route path="/signup" element={<SignUp/>}/>
           {/* NavHome only on home page */}
-          <Route element={<Layout username={username} />}>  {/* Layout for the rest */}
+          <Route element={<Layout username={username} userId={mainUserId}/>}>  {/* Layout for the rest */}
 
           <Route path="/dashboard/:userId" element={<Dashboard/>} />
           <Route path="/budgets/:userId" element={<Budget />} />  {/* Route to Budget */}

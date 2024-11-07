@@ -63,6 +63,7 @@ const Expense = () => {
         setCategoryModalVisible(false);
         setAmount('');
         setCategory('');
+        setError(null); // Clear error message on close
     };
 
     const saveExpense = async (categoryName) => {
@@ -80,8 +81,15 @@ const Expense = () => {
                 handleClose(); // Close the modal after saving
             }
         } catch (error) {
+            if (error.response && error.response.status === 403) {
+                // Set the error message from the backend if available
+                setError("Your Total Expense is larger than Total Income!");
+            } else if(error.response && error.response.status === 400){
+                setError("Expense Cannot be Zero!!");
+            } else{
+                setError("Failed to save expense");
+            }
             console.error('Error saving expense:', error);
-            setError("Failed to save expense");
         }
     };
 
@@ -119,6 +127,17 @@ const Expense = () => {
 
     return (
         <div className="expense-container mt-5">
+         {/* Error Alert Box */}
+        {error && (
+                <div className="error-alert">
+                    <div className="alert-content">
+                        <h5 style={{fontWeight: 'bold',color: 'red'}}>Warning!!</h5>
+                        <p>{error}</p>
+                        <button onClick={() => setError(null)}>Close</button>
+                    </div>
+                </div>
+            )}
+
             <p className='expense-head'>Choose Category</p>
             <div className="row-expense">
                 {['Food', 'Shopping', 'Transportation', 'Entertainment', 'Add'].map((expenseType, index) => (

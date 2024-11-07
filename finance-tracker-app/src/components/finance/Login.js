@@ -1,5 +1,4 @@
-// src/components/Login.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Login.css'; // Make sure to create this CSS file
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 
@@ -7,6 +6,7 @@ const Login = () => {
     const navigate = useNavigate();
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [userId, setUserId] = useState(null);  // State for storing userId
     const [user, setUser] = useState({
         email: '',
         password: ''
@@ -17,33 +17,42 @@ const Login = () => {
         setUser({ ...user, [name]: value });
     };
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            setIsLoading(true);
-            const response = await fetch('http://localhost:8080/login', { // Replace with your login API URL
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(user),
-            });
-            if (response.ok) {
-                const data = await response.json();
-                // Store user data in localStorage or context here
-                localStorage.setItem('userId', data.user.id);  // Store user ID in localStorage
-            
-                // Navigate to the income page, passing the user ID in the URL
-                navigate(`/dashboard/${data.user.id}`);
-            }
-            
-            
-        } catch (error) {
-            setError('An error occurred: ' + error.message);
-        } finally {
-            setIsLoading(false);
+   const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+        setIsLoading(true);
+        const response = await fetch('http://localhost:8080/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(user),
+        });
+        if (response.ok) {
+            const data = await response.json();
+            // Store userId in localStorage
+            localStorage.setItem('userId', data.user.id);
+            // Update the userId state to trigger a re-render in the parent component
+            setUserId(data.user.id);
+            console.log("Logged in with userId:", data.user.id);
+            // Navigate to the dashboard page
+            navigate(`/dashboard/${data.user.id}`);
         }
-    };
+    } catch (error) {
+        setError('An error occurred: ' + error.message);
+    } finally {
+        setIsLoading(false);
+    }
+};
+
+
+    // Use useEffect to log userId after it's updated
+    useEffect(() => {
+        if (userId) {
+            console.log("UserID after update: ", userId);  // Log after state update
+            navigate(`/dashboard/${userId}`);  // Navigate to the dashboard page with userId
+        }
+    }, [userId]);  // This effect runs whenever userId changes
 
     const color = 'black';
     return (
