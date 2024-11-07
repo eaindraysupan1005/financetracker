@@ -60,6 +60,7 @@ const Income = () => {
         setCategoryModalVisible(false);
         setAmount('');
         setCategory('');
+        setError(null);
     };
 
     const saveIncome = async (categoryName) => {
@@ -76,9 +77,15 @@ const Income = () => {
                 setIncomeList(prevList => [...prevList, response.data]); // Update the list with the new income
                 handleClose(); // Close the modal after saving
             }
+            console.log(incomeList);
         } catch (error) {
+            if (error.response && error.response.status === 403) {
+                // Set the error message from the backend if available
+                setError("Income cannot be Zero!!");
+            } else {
+                setError("Failed to save Income");
+            }
             console.error('Error saving Income:', error);
-            setError("Failed to save Income");
         }
     };
 
@@ -89,7 +96,6 @@ const Income = () => {
         }else{
             saveIncome(selectedIncome);
         }
-        
         
         console.log(`Amount for ${selectedIncome}: ${amount}`);
         console.log(`Category: ${category}`);
@@ -117,6 +123,17 @@ const handleIconClick = (icon) => {
 
     return (
         <div className="income-container mt-5">
+             {/* Error Alert Box */}
+        {error && (
+                <div className="error-alert">
+                    <div className="alert-content">
+                        <h5 style={{fontWeight: 'bold',color: 'red'}}>Warning!!</h5>
+                        <p>{error}</p>
+                        <button onClick={() => setError(null)}>Close</button>
+                    </div>
+                </div>
+            )}
+
             <p className='income-head'>Choose Category</p>
             <div className="row-income">
                 {['Salary', 'Freelance', 'Pocket Money', 'Add'].map((incomeType, index) => (

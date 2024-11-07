@@ -3,11 +3,11 @@ package com.finance;
 import com.finance.domain.Expense;
 import com.finance.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
@@ -22,6 +22,9 @@ public class ExpenseController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private IncomeRepository incomeRepository;
 
     // Fetch daily expenses
     @GetMapping("/daily/{userId}")
@@ -57,19 +60,31 @@ public class ExpenseController {
         expenseRepository.deleteByIdAndUserId(expenseId, userId);
     }
 
-    //Save an Expense Record
+      // Save an Expense Record
     @PostMapping("/add/{userId}")
     public ResponseEntity<Expense> addExpense(@PathVariable Long userId, @RequestBody Expense expenseData) {
-        expenseData.setDate(LocalDate.now()); // Set current date
+        expenseData.setDate(LocalDate.now());
 
-        // Retrieve the User directly using UserRepository
         Optional<User> userOptional = userRepository.findById(userId);
         if (userOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        User user = userOptional.get();
 
-        expenseData.setUser(userOptional.get()); // Set the User to the Expense
-        Expense savedExpense = expenseRepository.save(expenseData);
-        return new ResponseEntity<>(savedExpense, HttpStatus.CREATED); // Return saved expense
+        BigDecimal totalIncome = incomeRepository.getTotalIncomeByUserId(userId).orElse(BigDecimal.ZERO);
+        BigDecimal totalExpense = expenseRepository.getTotalExpensesByUserId(userId).orElse(BigDecimal.ZERO);
+        BigDecimal projectedExpenseTotal = totalExpense.add(expenseData.getAmount());
+
+        if(expenseData.getAmount().compareTo(BigDecimal.ZERO) == 0){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }else if (totalIncome.compareTo(BigDecimal.ZERO) == 0) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }else if (projectedExpenseTotal.compareTo(totalIncome) > 0) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN); // Forbidden if expense would exceed income
+        }else{
+            expenseData.setUser(user);
+            Expense savedExpense = expenseRepository.save(expenseData);
+            return new ResponseEntity<>( savedExpense, HttpStatus.CREATED); // Return saved expense
+        }
     }
 }
