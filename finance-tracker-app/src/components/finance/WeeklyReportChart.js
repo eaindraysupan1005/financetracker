@@ -27,6 +27,8 @@ const WeeklyReportChart = ({ userId }) => {
                     color: categoryColors[category] || '#808080',  // Use color from categoryColors map, default to gray
                 }));
 
+                console.log(data);
+
                 // Update the state with formatted data
                 setData(formattedData);
             })
