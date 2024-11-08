@@ -1,6 +1,7 @@
 package com.finance;
 
 import com.finance.domain.Expense;
+import com.finance.domain.Income;
 import com.finance.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,12 +55,6 @@ public class ExpenseController {
         return new ResponseEntity<>(expenses, HttpStatus.OK);
     }
 
-    // Delete an expense record
-    @DeleteMapping("/{userId}/{expenseId}")
-    public void deleteExpense(@PathVariable Long userId, @PathVariable Long expenseId) {
-        expenseRepository.deleteByIdAndUserId(expenseId, userId);
-    }
-
       // Save an Expense Record
     @PostMapping("/add/{userId}")
     public ResponseEntity<Expense> addExpense(@PathVariable Long userId, @RequestBody Expense expenseData) {
@@ -85,6 +80,43 @@ public class ExpenseController {
             expenseData.setUser(user);
             Expense savedExpense = expenseRepository.save(expenseData);
             return new ResponseEntity<>( savedExpense, HttpStatus.CREATED); // Return saved expense
+        }
+    }
+
+     // Update expense
+    @PutMapping("/update/{userId}")
+    public ResponseEntity<Expense> updateExpense(@PathVariable Long userId, @RequestBody Expense expenseData) {
+        Optional<Expense> existingExpense = expenseRepository.findByIdAndUserId(expenseData.getId(), userId);
+        if (existingExpense.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        if (expenseData.getAmount().compareTo(BigDecimal.ZERO) == 0) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        
+        Expense updatedExpense = existingExpense.get();
+        updatedExpense.setAmount(expenseData.getAmount());
+        updatedExpense.setCategory(expenseData.getCategory());
+
+        expenseRepository.save(updatedExpense);
+        return new ResponseEntity<>(updatedExpense, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{userId}/{expenseId}")
+    public ResponseEntity<String> deleteExpense(@PathVariable Long userId, @PathVariable Long expenseId) {
+        try {
+            Optional<Expense> expense = expenseRepository.findByIdAndUserId(expenseId, userId);
+            if (expense.isPresent()) {
+                expenseRepository.deleteByIdAndUserId(expenseId, userId);
+                return new ResponseEntity<>("Expense Deleted", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Expense not found", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            // Log the exception to see the details
+            e.printStackTrace();
+            return new ResponseEntity<>("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

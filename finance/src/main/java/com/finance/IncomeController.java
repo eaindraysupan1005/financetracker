@@ -36,14 +36,13 @@ public class IncomeController {
         LocalDate today = LocalDate.now();
         LocalDate startOfWeek = today.with(TemporalAdjusters.previousOrSame(java.time.DayOfWeek.MONDAY));
         LocalDate endOfWeek = today.with(TemporalAdjusters.nextOrSame(java.time.DayOfWeek.SUNDAY));
-    
-        List<Income> incomes = incomeRepository.findIncomeByUserIdAndDateRange(userId,startOfWeek, endOfWeek);
+
+        List<Income> incomes = incomeRepository.findIncomeByUserIdAndDateRange(userId, startOfWeek, endOfWeek);
         System.out.println("Start of week: " + startOfWeek);
         System.out.println("End of week: " + endOfWeek);
         System.out.println("Income List: " + incomes);
         return new ResponseEntity<>(incomes, HttpStatus.OK);
     }
-    
 
     // Fetch monthly income
     @GetMapping("/monthly/{userId}")
@@ -56,13 +55,25 @@ public class IncomeController {
         return new ResponseEntity<>(incomes, HttpStatus.OK);
     }
 
-    // Delete an income record
     @DeleteMapping("/{userId}/{incomeId}")
-    public void deleteIncome(@PathVariable Long userId, @PathVariable Long incomeId) {
-        incomeRepository.deleteByIdAndUserId(incomeId, userId);
+    public ResponseEntity<String> deleteIncome(@PathVariable Long userId, @PathVariable Long incomeId) {
+        try {
+            Optional<Income> income = incomeRepository.findByIdAndUserId(incomeId, userId);
+            if (income.isPresent()) {
+                incomeRepository.deleteByIdAndUserId(incomeId, userId);
+                return new ResponseEntity<>("Income Deleted", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Income not found", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            // Log the exception to see the details
+            e.printStackTrace();
+            return new ResponseEntity<>("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+    
 
-     //Save an income Record
+    // Save an income Record
     @PostMapping("/add/{userId}")
     public ResponseEntity<Income> addIncome(@PathVariable Long userId, @RequestBody Income incomeData) {
         incomeData.setDate(LocalDate.now()); // Set current date
@@ -73,8 +84,7 @@ public class IncomeController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        if(incomeData.getAmount().compareTo(BigDecimal.ZERO) == 0)
-        {
+        if (incomeData.getAmount().compareTo(BigDecimal.ZERO) == 0) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         incomeData.setUser(userOptional.get()); // Set the User to the Income
@@ -82,5 +92,24 @@ public class IncomeController {
         return new ResponseEntity<>(savedIncome, HttpStatus.CREATED); // Return saved Income
     }
 
-    
+    // Update income
+    @PutMapping("/update/{userId}")
+    public ResponseEntity<Income> updateIncome(@PathVariable Long userId, @RequestBody Income incomeData) {
+        Optional<Income> existingIncome = incomeRepository.findByIdAndUserId(incomeData.getId(), userId);
+        if (existingIncome.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        if (incomeData.getAmount().compareTo(BigDecimal.ZERO) == 0) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        
+        Income updatedIncome = existingIncome.get();
+        updatedIncome.setAmount(incomeData.getAmount());
+        updatedIncome.setCategory(incomeData.getCategory());
+
+        incomeRepository.save(updatedIncome);
+        return new ResponseEntity<>(updatedIncome, HttpStatus.OK);
+    }
+
 }

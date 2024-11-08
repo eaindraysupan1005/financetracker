@@ -2,11 +2,13 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import './Income.css';
 import axios from 'axios';
+import { format } from 'date-fns';
 import { useParams } from 'react-router-dom';
 
 const Income = () => {
     const { userId } = useParams();  // Retrieve the userId from the URL
     const [modalVisible, setModalVisible] = useState(false);
+    const [editModalVisible, setEditModalVisible] = useState(false); // For editing income
     const [categoryModalVisible, setCategoryModalVisible] = useState(false);
     const [selectedIncome, setSelectedIncome] = useState('');
     const [amount, setAmount] = useState('');
@@ -17,8 +19,8 @@ const Income = () => {
     const icons = ['fa-solid fa-wallet', 'fa-solid fa-chart-line', 'fa-solid fa-coins', 'fa-solid fa-plus-circle'];
     const incomeApi = `http://localhost:8080/income`;
     const dailyButtonRef = useRef(null);
-    const categoryIcons = ["fa-solid fa-ticket-simple","fa-solid fa-user-graduate",
-        "fa-solid fa-tags","fa-solid fa-gift","fa-solid fa-comments-dollar"];
+    const categoryIcons = ["fa-solid fa-ticket-simple", "fa-solid fa-user-graduate",
+        "fa-solid fa-tags", "fa-solid fa-gift", "fa-solid fa-comments-dollar"];
     const [selectedIcon, setSelectedIcon] = useState(categoryIcons[0]); // Default icon
 
 
@@ -58,6 +60,7 @@ const Income = () => {
     const handleClose = () => {
         setModalVisible(false);
         setCategoryModalVisible(false);
+        setEditModalVisible(false);
         setAmount('');
         setCategory('');
         setError(null);
@@ -91,43 +94,78 @@ const Income = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if(selectedIncome === 'Add'){
+        if (selectedIncome === 'Add') {
             saveIncome(category);
-        }else{
+        } else {
             saveIncome(selectedIncome);
         }
-        
+
         console.log(`Amount for ${selectedIncome}: ${amount}`);
         console.log(`Category: ${category}`);
         handleClose();
     };
 
- // Handle icon selection in the modal
-const handleIconClick = (icon) => {
-    setSelectedIcon(icon);
-};
+    // Handle icon selection in the modal
+    const handleIconClick = (icon) => {
+        setSelectedIcon(icon);
+    };
+
+
+    const handleEditIncome = (income) => {
+        setAmount('');
+        setCategory(income.category);
+        setSelectedIncome(income.id);  // Store the income ID for editing
+        setEditModalVisible(true);
+    };
+
+    const handleDeleteIncome = async (incomeId) => {
+        try {
+            const response = await axios.delete(`${incomeApi}/${userId}/${incomeId}`);
+            if (response.status === 200) {
+                setIncomeList(incomeList.filter(item => item.id !== incomeId));
+            }
+        } catch (error) {
+            // Log full error response
+            console.error('Error response:', error.response);
+            setError("Failed to delete Income");
+        }
+    };
     
 
-    // const handleDelete = async (id) => {
-    //     try {
-    //         const response = await axios.delete(`${incomeApi}/${userId}/${id}`);
-    //         if (!response.ok) {
-    //             throw new Error('Failed to delete item');
-    //         }
-    //         setIncomeList(incomeList.filter((item) => item.id !== id));
-    //     } catch (error) {
-    //         setError(error.message);
-    //         console.log(error);
-    //     }
-    // };
+    const handleEditSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            const updatedIncome = {
+                amount: parseFloat(amount),
+                category: category,
+                id: selectedIncome
+            };
+
+            const response = await axios.put(`${incomeApi}/update/${userId}`, updatedIncome);
+            if (response.status === 200) {
+                setIncomeList(prevList => prevList.map(item => item.id === selectedIncome ? response.data : item));
+                handleClose();
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 403) {
+                // Set the error message from the backend if available
+                setError("Income cannot be Zero!!");
+                setEditModalVisible(false);
+            }else{
+                setError("Failed to update Income");
+                console.error('Error updating Income:', error);
+                setEditModalVisible(false);
+            }
+        }
+    };
 
     return (
         <div className="income-container mt-5">
-             {/* Error Alert Box */}
-        {error && (
+            {/* Error Alert Box */}
+            {error && (
                 <div className="error-alert">
                     <div className="alert-content">
-                        <h5 style={{fontWeight: 'bold',color: 'red'}}>Warning!!</h5>
+                        <h5 style={{ fontWeight: 'bold', color: 'red' }}>Warning!!</h5>
                         <p>{error}</p>
                         <button onClick={() => setError(null)}>Close</button>
                     </div>
@@ -138,12 +176,11 @@ const handleIconClick = (icon) => {
             <div className="row-income">
                 {['Salary', 'Freelance', 'Pocket Money', 'Add'].map((incomeType, index) => (
                     <div key={index} className="col-md-3 d-flex justify-content-start" style={{ cursor: 'pointer', marginBottom: '20px' }} >
-                        <div className="income-card text-center p-4" onClick={() => { handleBoxClick(incomeType); handleIconClick(icons[index]); }} >
-                            <h5 className='income-type'>{incomeType}</h5>
-                            <div className="circle-icon mb-3">
+                        <div className="income-card text-center" onClick={() => { handleBoxClick(incomeType); handleIconClick(icons[index]); }} >
+                            <div className='income-type'>{incomeType}</div>
+                            <div className="circle-icon">
                                 <i className={icons[index]} style={{ color: 'black' }}></i>
                             </div>
-
                         </div>
                     </div>
                 ))}
@@ -249,6 +286,43 @@ const handleIconClick = (icon) => {
                 </div>
             )}
 
+            {/* Edit Modal for editing income */}
+            {editModalVisible && (
+                <div className="modal-overlay" onClick={handleClose}>
+                    <div className="modal show" style={{ display: 'block' }} onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-dialog modal-dialog-centered income-m">
+                            <div className="modal-content income-modal-c">
+                                <div className="modal-header">
+                                    <h5 className='income-heading'>Edit Income</h5>
+                                </div>
+                                <form onSubmit={handleEditSubmit}>
+                                    <div className="modal-body income-body">
+                                        <div className="income-form">
+                                            <div className='form-items-income'>
+                                                <label htmlFor="amount">Amount: </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control income-inputtext"
+                                                    id="amount"
+                                                    value={amount}
+                                                    onChange={(e) => setAmount(e.target.value)}
+                                                    required
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="modal-footer income-mfoot">
+                                        <button type="button" className="income-cbtn" onClick={handleClose}>Cancel</button>
+                                        <button type="submit" className="btn income-addbtn">Update</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+
             {/* Income List */}
             <div>
                 <div className='buttongroup' style={{ marginBottom: '20px' }}>
@@ -260,11 +334,20 @@ const handleIconClick = (icon) => {
                 <div className='income-lists'>
                     {incomeList.map(income => (
                         <div key={income.id} className='income-item'>
-                            <div className="circle-icon-ilist mb-3">
-                                <i className={income.icon} style={{color: 'black'}}></i>
+                            <div className='category-income'>
+                                <div className="circle-icon-ilist mb-3">
+                                    <i className={income.icon} style={{ color: 'black' }}></i>
+                                </div>
+                                <div className='income-category'>{income.category}</div>
                             </div>
-                            <div className='income-category'>{income.category}</div>
-                            <div className='income-amount'>${income.amount}</div>
+                            <div className="income-date">
+                                {format(new Date(income.date), 'dd MMM yyyy')}
+                            </div>
+                            <div className='income-amount'>{income.amount} $</div>
+                            <div className='buttons'>
+                                <button onClick={() => handleEditIncome(income)} className="income-edit"><i className="fa-solid fa-pen-to-square"></i></button>
+                                <button onClick={() => handleDeleteIncome(income.id)} className="income-delete"> <i className="fa-solid fa-trash-can"></i></button>
+                            </div>
                         </div>
                     ))}
                 </div>

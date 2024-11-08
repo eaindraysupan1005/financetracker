@@ -2,11 +2,13 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import './Expense.css';
 import axios from 'axios';
+import { format } from 'date-fns';
 import { useParams } from 'react-router-dom';
 
 const Expense = () => {
     const { userId } = useParams();  // Retrieve the userId from the URL
     const [modalVisible, setModalVisible] = useState(false);
+    const [editModalVisible, setEditModalVisible] = useState(false); // For editing expense
     const [categoryModalVisible, setCategoryModalVisible] = useState(false);
     const [selectedExpense, setSelectedExpense] = useState('');
     const [amount, setAmount] = useState('');
@@ -61,6 +63,7 @@ const Expense = () => {
     const handleClose = () => {
         setModalVisible(false);
         setCategoryModalVisible(false);
+        setEditModalVisible(false);
         setAmount('');
         setCategory('');
         setError(null); // Clear error message on close
@@ -83,10 +86,10 @@ const Expense = () => {
         } catch (error) {
             if (error.response && error.response.status === 403) {
                 // Set the error message from the backend if available
-                setError("Your Total Expense is larger than Total Income!");
-            } else if(error.response && error.response.status === 400){
+                setError("Your Total Expense is larger than Total Expense!");
+            } else if (error.response && error.response.status === 400) {
                 setError("Expense Cannot be Zero!!");
-            } else{
+            } else {
                 setError("Failed to save expense");
             }
             console.error('Error saving expense:', error);
@@ -100,8 +103,6 @@ const Expense = () => {
         } else {
             saveExpense(selectedExpense);
         }
-
-
         console.log(`Amount for ${selectedExpense}: ${amount}`);
         console.log(`Category: ${category}`);
         handleClose();
@@ -112,26 +113,61 @@ const Expense = () => {
         setSelectedIcon(icon);
     };
 
-    // const handleDelete = async (id) => {
-    //     try {
-    //         const response = await axios.delete(`${expenseApi}/${userId}/${id}`);
-    //         if (!response.ok) {
-    //             throw new Error('Failed to delete item');
-    //         }
-    //         setExpenseList(expenseList.filter((item) => item.id !== id));
-    //     } catch (error) {
-    //         setError(error.message);
-    //         console.log(error);
-    //     }
-    // };
+    const handleDeleteExpense = async (expenseId) => {
+        try {
+            const response = await axios.delete(`${expenseApi}/${userId}/${expenseId}`);
+            if (response.status === 200) {
+                setExpenseList(expenseList.filter(item => item.id !== expenseId));
+            }
+        } catch (error) {
+            // Log full error response
+            console.error('Error response:', error.response);
+            setError("Failed to delete Expense");
+        }
+    };
+
+    const handleEditExpense = (expense) => {
+        setAmount('');
+        setCategory(expense.category);
+        setSelectedExpense(expense.id);  // Store the income ID for editing
+        setEditModalVisible(true);
+    };
+
+
+    const handleEditSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            const updatedExpense = {
+                amount: parseFloat(amount),
+                category: category,
+                id: selectedExpense
+            };
+
+            const response = await axios.put(`${expenseApi}/update/${userId}`, updatedExpense);
+            if (response.status === 200) {
+                setExpenseList(prevList => prevList.map(item => item.id === selectedExpense ? response.data : item));
+                handleClose();
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 403) {
+                // Set the error message from the backend if available
+                setError("Expense cannot be Zero!!");
+                setEditModalVisible(false);
+            } else {
+                setError("Failed to update Expense");
+                console.error('Error updating Expense:', error);
+                setEditModalVisible(false);
+            }
+        }
+    };
 
     return (
         <div className="expense-container mt-5">
-         {/* Error Alert Box */}
-        {error && (
+            {/* Error Alert Box */}
+            {error && (
                 <div className="error-alert">
                     <div className="alert-content">
-                        <h5 style={{fontWeight: 'bold',color: 'red'}}>Warning!!</h5>
+                        <h5 style={{ fontWeight: 'bold', color: 'red' }}>Warning!!</h5>
                         <p>{error}</p>
                         <button onClick={() => setError(null)}>Close</button>
                     </div>
@@ -141,10 +177,10 @@ const Expense = () => {
             <p className='expense-head'>Choose Category</p>
             <div className="row-expense">
                 {['Food', 'Shopping', 'Transportation', 'Entertainment', 'Add'].map((expenseType, index) => (
-                    <div key={index} className='expense-card-container'>
-                        <div className="expense-card text-center p-4" onClick={() => { handleBoxClick(expenseType); handleIconClick(icons[index]); }}>
+                    <div key={index} className='col-md-2 d-flex justify-content-start' style={{ cursor: 'pointer', marginBottom: '20px' }} >
+                        <div className="expense-card text-center" onClick={() => { handleBoxClick(expenseType); handleIconClick(icons[index]); }}>
                             <h5 className='expense-type'>{expenseType}</h5>
-                            <div className="circle-icon-e mb-3">
+                            <div className="circle-icon-e">
                                 <i className={icons[index]} style={{ color: 'black' }}></i>
                             </div>
 
@@ -220,7 +256,7 @@ const Expense = () => {
                                                         <div className='icon-griditems'>
                                                             <i
                                                                 key={index}
-                                                                className={icon}
+                                                                className={`${icon} fa-2x`}
                                                                 style={{ color: selectedIcon === icon ? 'blue' : 'black', cursor: 'pointer' }}
                                                                 onClick={() => handleIconClick(icon)}
                                                             ></i>
@@ -253,6 +289,43 @@ const Expense = () => {
                 </div>
             )}
 
+            {/* Edit Modal for editing Expense */}
+            {editModalVisible && (
+                <div className="modal-overlay" onClick={handleClose}>
+                    <div className="modal show" style={{ display: 'block' }} onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-dialog modal-dialog-centered expense-m">
+                            <div className="modal-content expense-modal-c">
+                                <div className="modal-header">
+                                    <h5 className='expense-heading'>Edit Expense</h5>
+                                </div>
+                                <form onSubmit={handleEditSubmit}>
+                                    <div className="modal-body expense-body">
+                                        <div className="expense-form">
+                                            <div className='form-items-expense'>
+                                                <label htmlFor="amount">Amount: </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control expense-inputtext"
+                                                    id="amount"
+                                                    value={amount}
+                                                    onChange={(e) => setAmount(e.target.value)}
+                                                    required
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="modal-footer expense-mfoot">
+                                        <button type="button" className="expense-cbtn" onClick={handleClose}>Cancel</button>
+                                        <button type="submit" className="btn expense-addbtn">Update</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+
             {/* Expense List */}
             <div>
                 <div className='buttongroup' style={{ marginBottom: '20px' }}>
@@ -264,12 +337,22 @@ const Expense = () => {
                 <div className='expense-lists'>
                     {expenseList.map(expense => (
                         <div key={expense.id} className='expense-item'>
-                            <div className="circle-icon-elist mb-3">
-                                <i className={expense.icon} style={{ color: 'black' }}></i>
+                            <div className='category-expense'>
+                                <div className="circle-icon-elist mb-3">
+                                    <i className={expense.icon} style={{ color: 'black' }}></i>
+                                </div>
+                                <div className='expense-category'>{expense.category}</div>
                             </div>
-                            <div className='expense-category'>{expense.category}</div>
+                            <div className="expense-date">
+                                {format(new Date(expense.date), 'dd MMM yyyy')}
+                            </div>
                             <div className='expense-amount'>${expense.amount}</div>
+                            <div className='buttons'>
+                                <button onClick={() => handleEditExpense(expense)} className="expense-edit"><i className="fa-solid fa-pen-to-square"></i></button>
+                                <button onClick={() => handleDeleteExpense(expense.id)} className="expense-delete"> <i className="fa-solid fa-trash-can"></i></button>
+                            </div>
                         </div>
+
                     ))}
                 </div>
 
