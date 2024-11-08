@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ExpenseRepository extends JpaRepository<Expense, Long>{
+public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
     @Query("SELECT e FROM Expense e WHERE e.user.id = :userId AND e.date = CURRENT_DATE")
     List<Expense> findDailyExpenseByUserId(Long userId);
@@ -34,4 +34,12 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long>{
     @Transactional
     @Query("DELETE FROM Expense e WHERE e.id = :expenseId AND e.user.id = :userId")
     int deleteByIdAndUserId(@Param("expenseId") Long incomeId, @Param("userId") Long userId);
+
+    @Query("SELECT e.category, SUM(e.amount) " +
+            "FROM Expense e " +
+            "WHERE e.user.id = :userId AND e.date >= :startOfWeek AND e.date <= :endOfWeek " +
+            "GROUP BY e.category")
+    List<Object[]> findExpensesByUserIdAndDateRangeGroupedByCategory(@Param("userId") long userId,
+            @Param("startOfWeek") LocalDate startOfWeek,
+            @Param("endOfWeek") LocalDate endOfWeek);
 }
