@@ -51,7 +51,7 @@ const WeeklyReportChart = ({ userId }) => {
                             dataKey={entry.category}
                             fill={entry.color}  // Use the dynamically assigned color for each category
                         />
-                    ))}
+                    ))} 
                 </BarChart>
             </ResponsiveContainer>
         </div>
