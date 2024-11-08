@@ -23,7 +23,7 @@ const Navbar = ({ username, userId }) => {
         <ul className="nav-links">
           <li>
             <NavLink
-              to={`{/dashboard/${userId}}`}
+              to={`/dashboard/${userId}`}
               className="link"
               activeClassName="active-link"
             >
@@ -32,7 +32,7 @@ const Navbar = ({ username, userId }) => {
           </li>
           <li>
             <NavLink
-              to={`{/budgets/${userId}}`}
+              to={`/budgets/${userId}`}
               className="link"
               activeClassName="active-link"
             >
@@ -41,7 +41,7 @@ const Navbar = ({ username, userId }) => {
           </li>
           <li>
             <NavLink
-              to={`{/settings/${userId}}`}
+              to={`/settings/${userId}`}
               className="link"
               activeClassName="active-link"
             >
@@ -75,7 +75,7 @@ const Navbar = ({ username, userId }) => {
           {/* Profile Section */}
           <button className="profile">
             <i className="fas fa-user-circle profile-icon"></i>
-            <NavLink to={`{/profile/${userId}}`} className="profile-link">
+            <NavLink to={`/profile/${userId}`} className="profile-link">
               {username}
             </NavLink>
           </button>
