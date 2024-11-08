@@ -1,4 +1,5 @@
 import axios from "axios";
+import WeeklyReportChart from "./WeeklyReportChart";
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./Dashboard.css";
@@ -40,7 +41,8 @@ const Dashboard = () => {
         <div className="left-items"></div>
       </div>
       <div className="right-column">
-        <div className="right-items"></div>
+        <div className="right-items">      <WeeklyReportChart userId={2} /> {/* Pass the user ID here */}
+        </div>
         <div className="right-items"></div>
       </div>
     </div>

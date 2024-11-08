@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -26,6 +27,9 @@ public class ExpenseController {
 
     @Autowired
     private IncomeRepository incomeRepository;
+
+    @Autowired
+    private ExpenseService expenseService;
 
     // Fetch daily expenses
     @GetMapping("/daily/{userId}")
@@ -44,6 +48,13 @@ public class ExpenseController {
         return new ResponseEntity<>(expenses, HttpStatus.OK);
     }
 
+    @GetMapping("/weekly-report/{userId}")
+    public ResponseEntity<Map<String, BigDecimal>> getWeeklyReport(@PathVariable long userId) {
+        Map<String, BigDecimal> weeklyReport = expenseService.getWeeklyReportForUser(userId);
+        System.out.printf("Weekly",weeklyReport);
+        return ResponseEntity.ok(weeklyReport);
+    }
+    
     // Fetch monthly expenses
     @GetMapping("/monthly/{userId}")
     public ResponseEntity<List<Expense>> getMonthlyExpenses(@PathVariable Long userId) {
