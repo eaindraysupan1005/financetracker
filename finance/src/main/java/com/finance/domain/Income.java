@@ -2,6 +2,7 @@ package com.finance.domain;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -14,7 +15,7 @@ public class Income {
 
     private LocalDate date;
     private String category;
-    private double amount;
+    private BigDecimal amount;
     private String icon;
     
     @ManyToOne(fetch = FetchType.LAZY) // Or FetchType.EAGER if necessary
@@ -24,7 +25,7 @@ public class Income {
 
     public Income(){ }
 
-    public Income(String category, double amount){
+    public Income(String category, BigDecimal amount){
         this.category=category;
         this.amount=amount;
     }
@@ -53,11 +54,11 @@ public class Income {
         this.category = category;
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
