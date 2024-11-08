@@ -18,7 +18,6 @@ import Settings from './components/finance/Settings';
 const App = () => {
   const username = 'Eaindray Su Pan';
   const [mainUserId, setMainUserId] = useState(null);
-
   useEffect(() => {
     // You can load userId from localStorage or sessionStorage
     const storedUserId = localStorage.getItem('userId');
