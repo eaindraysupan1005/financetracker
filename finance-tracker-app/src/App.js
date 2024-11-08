@@ -46,8 +46,8 @@ const App = () => {
           <Route path="/budgets/:userId" element={<Budget />} />  {/* Route to Budget */}
           <Route path="/income/:userId" element={<Income />}/>
           <Route path="/expense/:userId" element={<Expense />}/>
-          <Route path="/settings" element={<Settings/>} />
-          <Route path="/profile" element={<Profile/>} />
+          <Route path="/settings/:userId" element={<Settings/>} />
+          <Route path="/profile/:userId" element={<Profile/>} />
 
           </Route>
         </Routes>

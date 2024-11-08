@@ -1100,6 +1100,7 @@ Caused by: org.h2.jdbc.JdbcSQLNonTransientConnectionException: The connection wa
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
 	... 16 more
+<<<<<<< HEAD
 2024-11-03 12:31:55.761010+07:00 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Column "USERID" not found; SQL statement:
 select * from income
@@ -1426,3 +1427,5 @@ Caused by: org.h2.jdbc.JdbcSQLNonTransientConnectionException: The connection wa
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
 	... 16 more
+=======
+>>>>>>> f6c033fc9561cd0d709dd5c26aa4e5cf01ffcb3b

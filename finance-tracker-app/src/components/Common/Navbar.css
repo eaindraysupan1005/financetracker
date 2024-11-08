@@ -52,6 +52,13 @@
   color: white;
 }
 
+.link:hover,
+.link:focus,
+.active-link {
+  color: #eac60b;
+}
+
+
 .currency {
   display: flex;
   align-items: center;
