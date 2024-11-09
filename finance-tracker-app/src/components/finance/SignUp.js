@@ -63,14 +63,14 @@ const SignUp = () => {
     <div className="signup-container">
       <div className="col-lg-6 col-md-8 col-sm-12 signup-form">
         <div className="logo-section logo-signup">
-          <img src="/logo.png" alt="Logo" className="logo-signup" />
-          <h1 className="logohead">Budget Bee</h1>
+          <img src="/logo.png" alt="Logo" className="logo-pic" />
+          <h1 className="signup-logo">Budget Bee</h1>
         </div>
         <h1>{isLoading ? "Signing up..." : "Sign Up"}</h1>
         {error && <p className="error-message">{error}</p>}{" "}
         {/* Display error message */}
         <form className="signup-flex-form" onSubmit={handleSubmit}>
-          <div className="form-group">
+          <div className="form-group form-signup">
             <label htmlFor="name" className="signup-label">
               Enter Your Name
             </label>
@@ -85,7 +85,7 @@ const SignUp = () => {
               onChange={handleInput}
             />
           </div>
-          <div className="form-group">
+          <div className="form-group form-signup">
             <label htmlFor="email" className="signup-label">
               Enter Your Email Address
             </label>
@@ -100,7 +100,7 @@ const SignUp = () => {
               onChange={handleInput}
             />
           </div>
-          <div className="form-group">
+          <div className="form-group form-signup">
             <label htmlFor="password" className="signup-label">
               Enter Your Password
             </label>
@@ -115,7 +115,7 @@ const SignUp = () => {
               onChange={handleInput}
             />
           </div>
-          <div className="form-group">
+          <div className="form-group form-signup">
             <label htmlFor="retype-password" className="signup-label">
               Retype Your Password
             </label>
@@ -150,11 +150,10 @@ const SignUp = () => {
             </button>
           </div>
         </form>
-        <div>
-          <p>
-            Already have an account? <a href="/login">Log in</a>
-          </p>
-        </div>
+        <p>
+          Already have an account? <a href="/login">Log in</a>
+        </p>
+        <div></div>
       </div>
       <div className="col-lg-6 d-none d-lg-flex signup-image">
         <img src="/Login.png" alt="Sign Up Visual" />
