@@ -4,6 +4,8 @@ import com.finance.domain.Income;
 import com.finance.domain.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable; 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -71,7 +73,6 @@ public class IncomeController {
             return new ResponseEntity<>("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
 
     // Save an income Record
     @PostMapping("/add/{userId}")
@@ -103,13 +104,20 @@ public class IncomeController {
         if (incomeData.getAmount().compareTo(BigDecimal.ZERO) == 0) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        
+
         Income updatedIncome = existingIncome.get();
         updatedIncome.setAmount(incomeData.getAmount());
         updatedIncome.setCategory(incomeData.getCategory());
 
         incomeRepository.save(updatedIncome);
         return new ResponseEntity<>(updatedIncome, HttpStatus.OK);
+    }
+
+    @GetMapping("/latest/{userId}")
+    public ResponseEntity<List<Income>> getLatestIncomes(@PathVariable Long userId) {
+        Pageable pageable = PageRequest.of(0, 3); // Fetch the first 3 records
+        List<Income> latestIncomes = incomeRepository.findLatestIncomesByUserId(userId, pageable);
+        return new ResponseEntity<>(latestIncomes, HttpStatus.OK);
     }
 
 }

@@ -7,11 +7,11 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
-import java.sql.Date; // or java.util.Date depending on your entity
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -34,5 +34,8 @@ public interface IncomeRepository extends JpaRepository<Income, Long> {
     @Transactional
     @Query("DELETE FROM Income i WHERE i.id = :incomeId AND i.user.id = :userId")
     int deleteByIdAndUserId(@Param("incomeId") Long incomeId, @Param("userId") Long userId);
+
+    @Query("SELECT i FROM Income i WHERE i.user.id = :userId ORDER BY i.date DESC, i.id DESC")
+    List<Income> findLatestIncomesByUserId(@Param("userId") Long userId, Pageable pageable);
 
 }

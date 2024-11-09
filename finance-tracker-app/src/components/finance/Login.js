@@ -35,7 +35,7 @@ const Login = () => {
         localStorage.setItem("userId", data.user.id); // Store user ID in localStorage
 
         // Navigate to the income page, passing the user ID in the URL
-        navigate(`/dashboard/${data.user.id}`);
+        navigate(`/dashboard/${data.user.id}`,{state: {userId: data.user.id}}); // Pass user ID as state
       }
     } catch (error) {
       setError("An error occurred: " + error.message);
