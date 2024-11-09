@@ -38,9 +38,9 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
         @Query("SELECT e FROM Expense e WHERE e.user.id = :userId ORDER BY e.date DESC, e.id DESC")
         List<Expense> findLatestExpensesByUserId(@Param("userId") Long userId, Pageable pageable);
 
-        @Query("SELECT NEW map(FUNCTION('MONTH', e.date) AS month, e.category AS category, SUM(e.amount) AS total) " +
-                        "FROM Expense e WHERE e.user.id = :userId AND e.date >= :startDate " +
-                        "GROUP BY FUNCTION('MONTH', e.date), e.category"+ "ORDER BY e.category")
-        List<Map<String, Object>> findMonthlyExpenseByCategory(@Param("userId") Long userId,
-                        @Param("startDate") LocalDate startDate);
+        @Query("SELECT NEW map(EXTRACT(MONTH FROM e.date) AS month, e.category AS category, SUM(e.amount) AS total) " +
+        "FROM Expense e WHERE e.user.id = :userId AND e.date >= :startDate " +
+        "GROUP BY EXTRACT(MONTH FROM e.date), e.category")
+ List<Map<String, Object>> findMonthlyExpenseByCategory(@Param("userId") Long userId, @Param("startDate") LocalDate startDate);
+ 
 }
