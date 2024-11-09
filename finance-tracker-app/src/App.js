@@ -1,6 +1,6 @@
 import './App.css';
 import React,{useState,useEffect  } from "react";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {  Routes, Route, useLocation } from 'react-router-dom';
 import Layout from './components/Layout/Layout';  // Import the Layout component
 import Home from './components/Layout/Home';  // Import Home
 import Footer from './components/Common/Footer';//Import Footer
@@ -17,18 +17,20 @@ import Settings from './components/finance/Settings';
 
 const App = () => {
   const username = 'Eaindray Su Pan';
-  const [mainUserId, setMainUserId] = useState(null);
+  const location = useLocation();
+  const userId = location?.state?.userId;
+
+  const [mainUserId, setMainUserId] = useState(userId);
   useEffect(() => {
     // You can load userId from localStorage or sessionStorage
     const storedUserId = localStorage.getItem('userId');
     if (storedUserId) {
       setMainUserId(storedUserId);
     }
-  }, []);
+  }, [userId]);
 
   return (
     <div className="App">
-      <BrowserRouter>
         <Routes>
           <Route path="/" element={
             <>
@@ -51,7 +53,6 @@ const App = () => {
           </Route>
         </Routes>
         <Footer />
-      </BrowserRouter>
     </div>
   );
 };

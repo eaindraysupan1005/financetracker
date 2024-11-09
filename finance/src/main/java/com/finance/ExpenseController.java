@@ -1,10 +1,11 @@
 package com.finance;
 
 import com.finance.domain.Expense;
-import com.finance.domain.Income;
 import com.finance.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,10 +52,10 @@ public class ExpenseController {
     @GetMapping("/weekly-report/{userId}")
     public ResponseEntity<Map<String, BigDecimal>> getWeeklyReport(@PathVariable long userId) {
         Map<String, BigDecimal> weeklyReport = expenseService.getWeeklyReportForUser(userId);
-        System.out.printf("Weekly",weeklyReport);
+        System.out.printf("Weekly", weeklyReport);
         return ResponseEntity.ok(weeklyReport);
     }
-    
+
     // Fetch monthly expenses
     @GetMapping("/monthly/{userId}")
     public ResponseEntity<List<Expense>> getMonthlyExpenses(@PathVariable Long userId) {
@@ -66,7 +67,7 @@ public class ExpenseController {
         return new ResponseEntity<>(expenses, HttpStatus.OK);
     }
 
-      // Save an Expense Record
+    // Save an Expense Record
     @PostMapping("/add/{userId}")
     public ResponseEntity<Expense> addExpense(@PathVariable Long userId, @RequestBody Expense expenseData) {
         expenseData.setDate(LocalDate.now());
@@ -81,20 +82,20 @@ public class ExpenseController {
         BigDecimal totalExpense = expenseRepository.getTotalExpensesByUserId(userId).orElse(BigDecimal.ZERO);
         BigDecimal projectedExpenseTotal = totalExpense.add(expenseData.getAmount());
 
-        if(expenseData.getAmount().compareTo(BigDecimal.ZERO) == 0){
+        if (expenseData.getAmount().compareTo(BigDecimal.ZERO) == 0) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }else if (totalIncome.compareTo(BigDecimal.ZERO) == 0) {
+        } else if (totalIncome.compareTo(BigDecimal.ZERO) == 0) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }else if (projectedExpenseTotal.compareTo(totalIncome) > 0) {
+        } else if (projectedExpenseTotal.compareTo(totalIncome) > 0) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN); // Forbidden if expense would exceed income
-        }else{
+        } else {
             expenseData.setUser(user);
             Expense savedExpense = expenseRepository.save(expenseData);
-            return new ResponseEntity<>( savedExpense, HttpStatus.CREATED); // Return saved expense
+            return new ResponseEntity<>(savedExpense, HttpStatus.CREATED); // Return saved expense
         }
     }
 
-     // Update expense
+    // Update expense
     @PutMapping("/update/{userId}")
     public ResponseEntity<Expense> updateExpense(@PathVariable Long userId, @RequestBody Expense expenseData) {
         Optional<Expense> existingExpense = expenseRepository.findByIdAndUserId(expenseData.getId(), userId);
@@ -105,7 +106,7 @@ public class ExpenseController {
         if (expenseData.getAmount().compareTo(BigDecimal.ZERO) == 0) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        
+
         Expense updatedExpense = existingExpense.get();
         updatedExpense.setAmount(expenseData.getAmount());
         updatedExpense.setCategory(expenseData.getCategory());
@@ -130,4 +131,13 @@ public class ExpenseController {
             return new ResponseEntity<>("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    // fetch latest 3 income
+    @GetMapping("/latest/{userId}")
+    public ResponseEntity<List<Expense>> getLatestExpenses(@PathVariable Long userId) {
+        Pageable pageable = PageRequest.of(0, 3); // Fetch 3 latest expenses
+        List<Expense> latestExpenses = expenseRepository.findLatestExpensesByUserId(userId, pageable);
+        return ResponseEntity.ok(latestExpenses);
+    }
+
 }
