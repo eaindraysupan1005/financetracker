@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -29,9 +30,6 @@ public class ExpenseController {
     @Autowired
     private IncomeRepository incomeRepository;
 
-    @Autowired
-    private ExpenseService expenseService;
-
     // Fetch daily expenses
     @GetMapping("/daily/{userId}")
     public List<Expense> getDailyExpenses(@PathVariable Long userId) {
@@ -47,13 +45,6 @@ public class ExpenseController {
 
         List<Expense> expenses = expenseRepository.findExpenseByUserIdAndDateRange(userId, startOfWeek, endOfWeek);
         return new ResponseEntity<>(expenses, HttpStatus.OK);
-    }
-
-    @GetMapping("/weekly-report/{userId}")
-    public ResponseEntity<Map<String, BigDecimal>> getWeeklyReport(@PathVariable long userId) {
-        Map<String, BigDecimal> weeklyReport = expenseService.getWeeklyReportForUser(userId);
-        System.out.printf("Weekly", weeklyReport);
-        return ResponseEntity.ok(weeklyReport);
     }
 
     // Fetch monthly expenses
@@ -139,5 +130,50 @@ public class ExpenseController {
         List<Expense> latestExpenses = expenseRepository.findLatestExpensesByUserId(userId, pageable);
         return ResponseEntity.ok(latestExpenses);
     }
+
+    // weeklyreport
+    @GetMapping("/weekly/categories/{userId}")
+    public ResponseEntity<Map<String, BigDecimal>> getWeeklyCategoryExpenses(@PathVariable Long userId) {
+        LocalDate today = LocalDate.now();
+        LocalDate startOfWeek = today.with(TemporalAdjusters.previousOrSame(java.time.DayOfWeek.MONDAY));
+        LocalDate endOfWeek = today.with(TemporalAdjusters.nextOrSame(java.time.DayOfWeek.SUNDAY));
+
+        List<Expense> expenses = expenseRepository.findExpenseByUserIdAndDateRange(userId, startOfWeek, endOfWeek);
+
+        // Create a map to store total expenses for each category
+        Map<String, BigDecimal> categorySums = new HashMap<>();
+        for (Expense expense : expenses) {
+            String category = expense.getCategory();
+            categorySums.put(category, categorySums.getOrDefault(category, BigDecimal.ZERO).add(expense.getAmount()));
+        }
+
+        return ResponseEntity.ok(categorySums);
+    }
+
+    @GetMapping("/monthly/categories/{userId}")
+    public ResponseEntity<Map<String, Map<String, BigDecimal>>> getMonthlyCategoryExpenses(@PathVariable Long userId) {
+        LocalDate oneYearAgo = LocalDate.now().minusMonths(11).withDayOfMonth(1); // Start date for past 12 months
+
+        // Query database for monthly expenses grouped by category
+        List<Map<String, Object>> rawData = expenseRepository.findMonthlyExpenseByCategory(userId, oneYearAgo);
+
+        Map<String, Map<String, BigDecimal>> monthlyCategoryExpenses = new HashMap<>();
+        for (Map<String, Object> entry : rawData) {
+            int monthValue = (int) entry.get("month");
+            String category = (String) entry.get("category");
+            BigDecimal total = (BigDecimal) entry.get("total");
+
+            // Format month as "Jan", "Feb", etc.
+            String monthName = LocalDate.of(LocalDate.now().getYear(), monthValue, 1)
+                    .getMonth()
+                    .getDisplayName(java.time.format.TextStyle.SHORT, java.util.Locale.ENGLISH);
+
+            monthlyCategoryExpenses.putIfAbsent(monthName, new HashMap<>());
+            monthlyCategoryExpenses.get(monthName).put(category, total);
+        }
+
+        return ResponseEntity.ok(monthlyCategoryExpenses);
+    }
+    
 
 }

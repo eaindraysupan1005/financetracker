@@ -16,7 +16,7 @@ const Expense = () => {
     const [expenseList, setExpenseList] = useState([]);
     const [viewType, setViewType] = useState('daily'); // Default to daily
     const [error, setError] = useState(null);
-    const icons = ['fa-solid fa-utensils', 'fa-solid fa-cart-shopping', 'fa-solid fa-car', 'fa-solid fa-film', 'fa-solid fa-plus-circle'];
+    const icons = ['fa-solid fa-utensils', 'fa-solid fa-film','fa-solid fa-car', 'fa-solid fa-cart-shopping',  'fa-solid fa-plus-circle'];
     const expenseApi = `http://localhost:8080/expense`;
     const dailyButtonRef = useRef(null);
     const categoryIcons = ["fas fa-graduation-cap", "fas fa-tshirt",
@@ -176,7 +176,7 @@ const Expense = () => {
 
             <p className='expense-head'>Choose Category</p>
             <div className="row-expense">
-                {['Food', 'Shopping', 'Transportation', 'Entertainment', 'Add'].map((expenseType, index) => (
+                {['Food', 'Entertainment', 'Transportation', 'Shopping', 'Add'].map((expenseType, index) => (
                     <div key={index} className='col-md-2 d-flex justify-content-start' style={{ cursor: 'pointer', marginBottom: '20px' }} >
                         <div className="expense-card text-center" onClick={() => { handleBoxClick(expenseType); handleIconClick(icons[index]); }}>
                             <h5 className='expense-type'>{expenseType}</h5>
