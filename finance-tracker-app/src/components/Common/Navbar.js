@@ -6,6 +6,7 @@ const Navbar = ({ username, userId }) => {
   // to select currency
   const [currency, setCurrency] = useState("USD");
 
+  console.log("UserName",username);
   const handleCurrencyChange = (event) => {
     setCurrency(event.target.value);
   };

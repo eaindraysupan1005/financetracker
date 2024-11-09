@@ -43,7 +43,7 @@ public class UserController {
             User user = existingUser.get();
             if (user.getPassword().equals(loginRequest.getPassword())) {
                 response.put("message", "Login successful");
-                response.put("user", Map.of("id", user.getId())); // Add user ID to the response
+                response.put("user", Map.of("id", user.getId(),"name", user.getName())); // Add user ID to the response
                 return new ResponseEntity<>(response, HttpStatus.OK);
             } else {
                 response.put("message", "Invalid password");

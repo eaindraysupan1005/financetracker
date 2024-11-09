@@ -33,7 +33,7 @@ const Login = () => {
         const data = await response.json();
         // Store user data in localStorage or context here
         localStorage.setItem("userId", data.user.id); // Store user ID in localStorage
-
+        localStorage.setItem("userName",data.user.name);
         // Navigate to the income page, passing the user ID in the URL
         navigate(`/dashboard/${data.user.id}`,{state: {userId: data.user.id}}); // Pass user ID as state
       }

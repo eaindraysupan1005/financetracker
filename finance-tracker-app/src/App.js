@@ -16,18 +16,26 @@ import Settings from './components/finance/Settings';
 
 
 const App = () => {
-  const username = 'Eaindray Su Pan';
+  const [username, setUsername] = useState('');
   const location = useLocation();
   const userId = location?.state?.userId;
 
   const [mainUserId, setMainUserId] = useState(userId);
+  
   useEffect(() => {
-    // You can load userId from localStorage or sessionStorage
+    // Retrieve username and userId from localStorage on initial load
+    const storedUsername = localStorage.getItem('userName');
     const storedUserId = localStorage.getItem('userId');
-    if (storedUserId) {
-      setMainUserId(storedUserId);
+    
+    if (storedUsername) {
+      setUsername(storedUsername); // Update the username state
     }
-  }, [userId]);
+    
+    if (storedUserId) {
+      setMainUserId(storedUserId); // Update the mainUserId state
+    }
+  }, [userId]); // Reload username if userId changes
+
 
   return (
     <div className="App">
