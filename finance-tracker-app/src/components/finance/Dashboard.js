@@ -1,7 +1,8 @@
 import axios from "axios";
-import WeeklyReportChart from "./WeeklyReportChart";
 import React, { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,Link } from "react-router-dom";
+import ExpenseCategoryChart from "./ExpenseCategoryChart";
+import MonthlyLineChart from './MonthlyLineChart';
 import { format } from 'date-fns';
 import "./Dashboard.css";
 
@@ -10,7 +11,7 @@ const Dashboard = () => {
   const [currentBalance, setCurrentBalance] = useState(0);
   const [latestIncomes, setLatestIncomes] = useState([]);
   const [latestExpenses, setLatestExpenses] = useState([]);
-  
+
   const balanceApi = `http://localhost:8080/balance`;
   const incomeApi = `http://localhost:8080/income/latest`; // API for latest incomes
   const expenseApi = `http://localhost:8080/expense/latest`; // API for latest expenses
@@ -65,16 +66,17 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">
       <div className="left-column">
-        <div className="left-items">
+        <div className="left-items balance">
           <div className="balance-heading">
-          <i className="fa-solid fa-wallet" style={{fontSize: '25px'}}></i>
-          <h4 style={{ color: "white" }}>Total Balance</h4>
+            <i className="fa-solid fa-wallet" style={{ fontSize: '30px' }}></i>
+            <h2 style={{ color: "white" }}>Total Balance</h2>
           </div>
           <div className="current">
-          <p>${currentBalance.toFixed(2)}</p> {/* Display balance */}
+            ${currentBalance.toFixed(2)} {/* Display balance */}
           </div>
         </div>
 
+        <Link to={`/income/${userId}`} style={{ textDecoration: 'none' }}> 
         <div className="left-items">
           <div className="ilatest-head">
             <div className="header-latest"><h4 style={{ color: "white" }}>Latest Incomes</h4></div>
@@ -101,9 +103,11 @@ const Dashboard = () => {
             )}
           </div>
         </div>
+        </Link>
 
+        <Link to={`/expense/${userId}`} style={{ textDecoration: 'none' }}> 
         <div className="left-items">
-        <div className="ilatest-head">
+          <div className="ilatest-head">
             <div className="header-latest"><h4 style={{ color: "white" }}>Latest Expenses</h4></div>
             <div className="icon-l"><i className="fa-solid fa-circle-minus"></i></div>
           </div>
@@ -128,12 +132,19 @@ const Dashboard = () => {
             )}
           </div>
         </div>
-
+        </Link>
       </div>
 
       <div className="right-column">
         <div className="right-items">
-          <WeeklyReportChart userId={userId} /> {/* Pass the user ID here */}
+          <div className="weekly-chart">
+            <ExpenseCategoryChart userId={userId} />
+          </div>
+        </div>
+        <div className="right-items">
+          <div className="monthly-chart">
+          <MonthlyLineChart userId={userId} />
+          </div>
         </div>
       </div>
     </div>

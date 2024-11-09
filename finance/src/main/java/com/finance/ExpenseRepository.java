@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -34,14 +35,12 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
         @Query("DELETE FROM Expense e WHERE e.id = :expenseId AND e.user.id = :userId")
         int deleteByIdAndUserId(@Param("expenseId") Long incomeId, @Param("userId") Long userId);
 
-        @Query("SELECT e.category, SUM(e.amount) " +
-                        "FROM Expense e " +
-                        "WHERE e.user.id = :userId AND e.date >= :startOfWeek AND e.date <= :endOfWeek " +
-                        "GROUP BY e.category")
-        List<Object[]> findExpensesByUserIdAndDateRangeGroupedByCategory(@Param("userId") long userId,
-                        @Param("startOfWeek") LocalDate startOfWeek,
-                        @Param("endOfWeek") LocalDate endOfWeek);
-
         @Query("SELECT e FROM Expense e WHERE e.user.id = :userId ORDER BY e.date DESC, e.id DESC")
         List<Expense> findLatestExpensesByUserId(@Param("userId") Long userId, Pageable pageable);
+
+        @Query("SELECT NEW map(FUNCTION('MONTH', e.date) AS month, e.category AS category, SUM(e.amount) AS total) " +
+                        "FROM Expense e WHERE e.user.id = :userId AND e.date >= :startDate " +
+                        "GROUP BY FUNCTION('MONTH', e.date), e.category"+ "ORDER BY e.category")
+        List<Map<String, Object>> findMonthlyExpenseByCategory(@Param("userId") Long userId,
+                        @Param("startDate") LocalDate startDate);
 }
