@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import React, { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./Dashboard.css";
+
 import ExpenseCategoryChart from "./ExpenseCategoryChart";
 import MonthlyLineChart from "./MonthlyLineChart";
 
@@ -68,7 +69,11 @@ const Dashboard = () => {
       <div className="left-column">
         <div className="left-items balance">
           <div className="balance-heading">
+
             <i className="fa-solid fa-wallet" style={{ fontSize: "30px" }}></i>
+
+            
+
             <h2 style={{ color: "white" }}>Total Balance</h2>
           </div>
           <div className="current">

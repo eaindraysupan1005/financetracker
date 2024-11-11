@@ -220,7 +220,24 @@ const Expense = () => {
                 <div className="circle-icon-e">
                   <i className={icons[index]} style={{ color: "black" }}></i>
                 </div>
+
               </div>
+
+            )}
+
+            <p className='expense-head'>Choose Category</p>
+            <div className="row-expense">
+                {['Food', 'Entertainment', 'Transportation', 'Shopping', 'Add'].map((expenseType, index) => (
+                    <div key={index} className='col-md-2 d-flex justify-content-start' style={{ cursor: 'pointer', marginBottom: '20px' }} >
+                        <div className="expense-card text-center" onClick={() => { handleBoxClick(expenseType); handleIconClick(icons[index]); }}>
+                            <h5 className='expense-type'>{expenseType}</h5>
+                            <div className="circle-icon-e">
+                                <i className={icons[index]} style={{ color: 'black' }}></i>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+
             </div>
           )
         )}
@@ -406,6 +423,7 @@ const Expense = () => {
         </div>
       )}
 
+
       {/* Expense List */}
       <div>
         <div className="buttongroup" style={{ marginBottom: "20px" }}>
@@ -430,6 +448,26 @@ const Expense = () => {
             Monthly
           </button>
         </div>
+
+                <div className='expense-lists'>
+                    {expenseList.map(expense => (
+                        <div key={expense.id} className='expense-item'>
+                            <div className='category-expense'>
+                                <div className="circle-icon-elist mb-3">
+                                    <i className={expense.icon} style={{ color: 'black', size: '18' }}></i>
+                                </div>
+                                <div className='expense-category'>{expense.category}</div>
+                            </div>
+                            <div className="expense-date">
+                                {format(new Date(expense.date), 'dd MMM yyyy')}
+                            </div>
+                            <div className='expense-amount'>${expense.amount}</div>
+                            <div className='buttons'>
+                                <button onClick={() => handleEditExpense(expense)} className="expense-edit"><i className="fa-solid fa-pen-to-square"></i></button>
+                                <button onClick={() => handleDeleteExpense(expense.id)} className="expense-delete"> <i className="fa-solid fa-trash-can"></i></button>
+                            </div>
+                        </div>
+
 
         <div className="expense-lists">
           {expenseList.map((expense) => (
