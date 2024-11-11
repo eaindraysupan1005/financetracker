@@ -5,12 +5,12 @@ import "./Profile.css";
 
 const Profile = () => {
   const [profile, setProfile] = useState({
-    username: "",
+    name: "",
     email: "",
     password: "",
   });
   const { userId } = useParams();
-  const getUserApi = "http://localhost:8080/login";
+  const getUserApi = "http://localhost:8080/user";
 
   // Fetch profile data from backend
   useEffect(() => {
@@ -28,23 +28,8 @@ const Profile = () => {
         console.log(error);
       });
   };
-  // useEffect(() => {
-  //   fetch("http://localhost:8080/login", {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setProfile({
-  //         username: data.username,
-  //         email: data.email,
-  //         password: data.password,
-  //       });
-  //     })
-  //     .catch((error) => console.error("Error fetching profile:", error));
-  // }, []);
+
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -83,7 +68,7 @@ const Profile = () => {
       })
         .then(() => {
           alert("Account deleted successfully.");
-          setProfile({ username: "", email: "", password: "" });
+          setProfile({ name: "", email: "", password: "" });
         })
         .catch((error) => {
           console.error("Error deleting account:", error);
@@ -101,28 +86,34 @@ const Profile = () => {
               <i className="fa fa-user-circle fa-5x" aria-hidden="true"></i>
             </div>
             <div className="form-group row mb-4 me-3 profile-form">
-              <label className="col-sm-3 col-form-label text-white text-end profile-label">
+              <label
+                htmlFor="name"
+                className="col-sm-3 col-form-label text-white text-end profile-label"
+              >
                 Name
               </label>
               <div className="col-sm-9">
                 <input
                   type="text"
-                  name="username"
+                  id="name"
                   className="form-control"
-                  value={profile.username}
+                  value={profile.name}
                   readOnly
                 />
               </div>
             </div>
 
             <div className="form-group row mb-4 me-3 profile-form">
-              <label className="col-sm-3 col-form-label text-white text-end profile-label">
+              <label
+                htmlFor="email"
+                className="col-sm-3 col-form-label text-white text-end profile-label"
+              >
                 Email
               </label>
               <div className="col-sm-9">
                 <input
                   type="email"
-                  name="email"
+                  id="email"
                   className="form-control"
                   value={profile.email}
                   readOnly
@@ -131,13 +122,16 @@ const Profile = () => {
             </div>
 
             <div className="form-group row mb-4 me-3 profile-form profile-form">
-              <label className="col-sm-3 col-form-label text-white text-end profile-label">
+              <label
+                htmlFor="password"
+                className="col-sm-3 col-form-label text-white text-end profile-label"
+              >
                 Password
               </label>
               <div className="col-sm-9">
                 <input
                   type="password"
-                  name="password"
+                  id="password"
                   className="form-control"
                   value={profile.password}
                   readOnly
