@@ -1,14 +1,19 @@
 package com.finance;
 
-import com.finance.domain.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.finance.domain.User;
 
 // @CrossOrigin(origins = "https://miniature-succotash-x557wvxpvvqphggg-3000.app.github.dev") // Adjust the URL accordingly
 @RestController
@@ -16,6 +21,12 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Optional<User>> getUser(@PathVariable Long userId){
+        Optional<User> user = userRepository.findById(userId);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 
     // Signup method
     @PostMapping("/signup")
