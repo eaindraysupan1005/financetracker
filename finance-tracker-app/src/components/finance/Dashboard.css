@@ -147,3 +147,47 @@
 .monthly-chart{
     padding: 20px;
 }
+
+/*Responsive*/
+@media only screen and (max-width: 600px) {
+
+.dashboard-container{
+    align-items: center;
+    height: auto;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.left-column, .right-column{
+    width: 90%;
+}
+.balance{
+    gap: 10px;
+}
+.balance-heading h2{
+    font-size: 1.4rem;
+}
+.current{
+    font-size: 1.6rem;
+}
+.latest-income-category,
+.latest-expense-category{
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+.latest-income-amount,
+.latest-expense-amount {
+    width: 40px;
+    font-size: 0.9rem;
+}
+
+.latest-category-income,
+.latest-category-expense {
+    width: 170px;
+}
+
+.latest-income-date,
+.latest-expense-date {
+    font-size: 0.8rem;
+}
+}

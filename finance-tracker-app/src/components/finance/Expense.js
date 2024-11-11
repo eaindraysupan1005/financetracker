@@ -183,7 +183,6 @@ const Expense = () => {
                             <div className="circle-icon-e">
                                 <i className={icons[index]} style={{ color: 'black' }}></i>
                             </div>
-
                         </div>
                     </div>
                 ))}
@@ -339,7 +338,7 @@ const Expense = () => {
                         <div key={expense.id} className='expense-item'>
                             <div className='category-expense'>
                                 <div className="circle-icon-elist mb-3">
-                                    <i className={expense.icon} style={{ color: 'black' }}></i>
+                                    <i className={expense.icon} style={{ color: 'black', size: '18' }}></i>
                                 </div>
                                 <div className='expense-category'>{expense.category}</div>
                             </div>
