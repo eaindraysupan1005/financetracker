@@ -5,7 +5,7 @@ import ExpenseCategoryChart from "./ExpenseCategoryChart";
 import MonthlyLineChart from './MonthlyLineChart';
 import { format } from 'date-fns';
 import "./Dashboard.css";
-
+ 
 const Dashboard = () => {
   const { userId } = useParams();
   const [currentBalance, setCurrentBalance] = useState(0);
@@ -68,7 +68,7 @@ const Dashboard = () => {
       <div className="left-column">
         <div className="left-items balance">
           <div className="balance-heading">
-            <i className="fa-solid fa-wallet" style={{ fontSize: '30px' }}></i>
+            <i className="fa-solid fa-wallet" style={{ fontSize: '25px' }}></i>
             <h2 style={{ color: "white" }}>Total Balance</h2>
           </div>
           <div className="current">

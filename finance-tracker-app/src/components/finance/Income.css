@@ -161,7 +161,7 @@
 }
 .filter-income{
     width: 130px;
-    height: 30px;
+    padding: 5px;
     border: none;
     border-radius: 5px;
     box-shadow: 2px 3px  5px rgba(0, 0, 0, 0.4);
