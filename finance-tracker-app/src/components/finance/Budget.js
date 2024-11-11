@@ -17,16 +17,16 @@ const Budget = () => {
     { name: "Entertainment", icon: "fa-solid fa-film" },
   ];
   const [icons, setIcons] = useState([
-    { class: "fas fa-graduation-cap fa-2x", active: false },
-    { class: "fas fa-tshirt fa-2x", active: false },
-    { class: "fas fa-home fa-2x", active: false },
-    { class: "fa-solid fa-dollar fa-2x", active: false },
-    { class: "fa-solid fa-heart-pulse fa-2x", active: false },
-    { class: "fa-solid fa-circle-dollar-to-slot fa-2x", active: false },
-    { class: "fas fa-receipt fa-2x", active: false },
-    { class: "fa-solid fa-hand-holding-dollar fa-2x", active: false },
-    { class: "fas fa-users fa-2x", active: false },
-    { class: "fas fa-table-tennis fa-2x", active: false },
+    { class: "fas fa-graduation-cap", active: false },
+    { class: "fas fa-tshirt", active: false },
+    { class: "fas fa-home", active: false },
+    { class: "fa-solid fa-dollar", active: false },
+    { class: "fa-solid fa-heart-pulse", active: false },
+    { class: "fa-solid fa-circle-dollar-to-slot", active: false },
+    { class: "fas fa-receipt", active: false },
+    { class: "fa-solid fa-hand-holding-dollar", active: false },
+    { class: "fas fa-users", active: false },
+    { class: "fas fa-table-tennis", active: false },
   ]);
 
   const [goalName, setGoalName] = useState("");
@@ -272,7 +272,11 @@ const Budget = () => {
               <div className="modal-body">
                 <form onSubmit={handleSubmitForBudget}>
                   <div className="mb-3 d-flex me-2 budget-form">
-                    <label htmlFor="category" className="form-label me-3 ">
+                    <label
+                      htmlFor="category"
+                      style={{ marginRight: "10px" }}
+                      className="form-label"
+                    >
                       Category:
                     </label>
                     <input
@@ -284,7 +288,11 @@ const Budget = () => {
                     />
                   </div>
                   <div className="mb-3 d-flex me-2 budget-form">
-                    <label htmlFor="limit" className="form-label me-5 ">
+                    <label
+                      htmlFor="limit"
+                      className="form-label"
+                      style={{ marginRight: "30px" }}
+                    >
                       Limit:
                     </label>
                     <input
@@ -298,7 +306,11 @@ const Budget = () => {
                     />
                   </div>
                   <div className="mb-3 d-flex me-2 budget-form">
-                    <label htmlFor="date" className="form-label me-5 ">
+                    <label
+                      htmlFor="date"
+                      className="form-label"
+                      style={{ marginRight: "36px" }}
+                    >
                       Date:
                     </label>
                     <input
@@ -313,7 +325,7 @@ const Budget = () => {
                   <div className="mb-5 budget-form-btn">
                     <button
                       type="button"
-                      className="btn me-3 cancel-btn"
+                      className="btn me-3 budget-cancel-btn"
                       data-bs-dismiss="modal"
                       onClick={handleCloseForBudget}
                     >
@@ -344,7 +356,7 @@ const Budget = () => {
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content budget-popup">
               <h5
-                className="modal-title fw-bold m-auto mt-3 mb-4 budget-form-title"
+                className="modal-title fw-bold m-auto mt-3 mb-2 budget-form-title"
                 id="budgetModalLabel"
               >
                 Add New Category
@@ -352,7 +364,7 @@ const Budget = () => {
 
               <div className="modal-body">
                 {/* Category Name Input  */}
-                <div className="mb-3 ms-3 me-3 text-start">
+                <div className="mb-2 ms-3 me-3 text-start">
                   <label htmlFor="newCategory" className="form-label fw-bold">
                     Enter Category Name
                   </label>
@@ -367,7 +379,7 @@ const Budget = () => {
                 </div>
 
                 {/* Icon Selection */}
-                <div className="mb-3 me-3 ms-3 text-start">
+                <div className="mb-2 me-3 ms-3 text-start">
                   <label className="form-label fw-bold">Choose Icon</label>
                   <div className="row text-center">
                     <div className="icon-grid d-flex flex-wrap justify-content-between">
@@ -385,7 +397,7 @@ const Budget = () => {
                 </div>
 
                 {/* Amount Input  */}
-                <div className="mb-4 ms-3 me-3 text-start">
+                <div className="mb-2 ms-3 me-3 text-start">
                   <label htmlFor="limit" className="form-label fw-bold">
                     Enter Amount
                   </label>
@@ -412,10 +424,10 @@ const Budget = () => {
                   />
                 </div>
 
-                <div className="mb-5 budget-form-btn">
+                <div className="mb-3 budget-form-btn">
                   <button
                     type="button"
-                    className="btn me-3 cancel-btn"
+                    className="btn me-3 budget-cancel-btn"
                     data-bs-dismiss="modal"
                     onClick={handleCloseForBudget}
                   >
@@ -599,7 +611,7 @@ const Budget = () => {
               </h5>
               <div className="modal-body">
                 <form>
-                  <div className="mb-3 ms-3 me-3 text-start">
+                  <div className="mb-2 ms-3 me-3 text-start">
                     <label htmlFor="description" className="form-label fw-bold">
                       Description
                     </label>
@@ -612,7 +624,7 @@ const Budget = () => {
                       placeholder="Description"
                     />
                   </div>
-                  <div className="mb-3 ms-3 me-3 text-start">
+                  <div className="mb-2 ms-3 me-3 text-start">
                     <label
                       htmlFor="targetAmount"
                       className="form-label fw-bold"
@@ -628,7 +640,7 @@ const Budget = () => {
                       placeholder="Amount"
                     />
                   </div>
-                  <div className="mb-3 ms-3 me-3 text-start">
+                  <div className="mb-2 ms-3 me-3 text-start">
                     <label htmlFor="savedAmount" className="form-label fw-bold">
                       Saved Amount
                     </label>
@@ -641,7 +653,7 @@ const Budget = () => {
                       placeholder="Amount"
                     />
                   </div>
-                  <div className="mb-3 ms-3 me-3 text-start">
+                  <div className="mb-2 ms-3 me-3 text-start">
                     <label htmlFor="deadline" className="form-label fw-bold">
                       Deadline
                     </label>
@@ -658,7 +670,7 @@ const Budget = () => {
               <div className="mb-5 budget-form-btn">
                 <button
                   type="button"
-                  className="btn me-3 cancel-btn"
+                  className="btn me-3 budget-cancel-btn"
                   data-bs-dismiss="modal"
                   onClick={handleCloseForSaving}
                 >
